@@ -47,6 +47,9 @@ import AddFormPerMed from './dashboard/pages/AddFormPerMed'
 import Representants from './dashboard/pages/Representants'
 import AddRepresentant from './dashboard/pages/AddRepresentant'
 
+import Benificaires from './dashboard/pages/Benificaires'
+// import AddRepresentant from './dashboard/pages/AddRepresentant'
+
 function App() {
   const { store } = useContext(storeContext)
 
@@ -109,6 +112,8 @@ function App() {
 
               <Route path="representant/add" element={<AddRepresentant />} />
               <Route path="representants" element={<Representants />} />
+
+              <Route path="benificaires" element={<Benificaires />} />
              
             </Route>
 
