@@ -1,0 +1,32 @@
+const { model, Schema } = require('mongoose');
+
+const prestationSchema = new Schema({
+
+    etat: {
+        type: String,
+        default: "Désactivé"
+    },
+    validationMar: {
+        type: String,
+        default: "Non valide"
+    },
+    societe: {
+        type: String,
+        required: true
+    },
+    designation: {
+        type: String,
+        required: true
+    },
+    unite: {
+        type: String,
+        required: true
+    },
+    Geste: {
+        type: String,
+        required: true
+    },
+    
+}, { timestamps: true });
+
+module.exports = model('Prestation', prestationSchema); 

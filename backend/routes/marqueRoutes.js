@@ -10,5 +10,6 @@ router.get('/api/marque/:marques_id',middleware.auth, marqueControllers.getione)
 router.put('/api/marques/update/:id',middleware.auth, marqueControllers.updati)
 router.delete('/api/marques/delete/:id',middleware.auth, marqueControllers.deleti)
 router.put('/api/marques/status-update/:marques_id', middleware.auth, marqueControllers.update_marque_status)
+router.put('/api/marques/status-update-validate/:marques_id', middleware.auth, marqueControllers.update_marque_status_validation)
 
 module.exports = router

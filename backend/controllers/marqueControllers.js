@@ -119,6 +119,19 @@ class MarqueController {
                       return res.status(401).json({ message: 'You cannot access this api' })
                   }
               }
+
+              update_marque_status_validation = async (req, res) => {
+                const { role } = req.userInfo
+                const { marques_id } = req.params
+                const { validationMar } = req.body
+        
+                if (role === 'admin') {
+                    const marques = await marqueModel.findByIdAndUpdate(marques_id, { validationMar }, { new: true })
+                    return res.status(200).json({ message: 'marque status update success', marques })
+                } else {
+                    return res.status(401).json({ message: 'You cannot access this api' })
+                }
+            }
 }
 
 module.exports = new MarqueController();

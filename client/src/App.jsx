@@ -54,6 +54,9 @@ import BenificaireDetails from './dashboard/pages/BenificaireDetails'
 import Marque from './dashboard/pages/Marques'
 import AddMarque from './dashboard/pages/AddMarque'
 
+import Prestation from './dashboard/pages/Prestations'
+// import AddMarque from './dashboard/pages/AddMarque'
+
 function App() {
   const { store } = useContext(storeContext)
 
@@ -123,6 +126,10 @@ function App() {
 
               <Route path="marques" element={<Marque />} />
               <Route path="marque/add" element={<AddMarque />} />
+
+              
+              <Route path="prestations" element={<Prestation />} />
+              {/* <Route path="marque/add" element={<AddMarque />} /> */}
              
             </Route>
 

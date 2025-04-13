@@ -6,42 +6,44 @@ import { base_url } from '../config/config';
 import storeContext from '../../context/storeContext';
 import toast from 'react-hot-toast';
 
-const Marques = () => {
+const Prestations = () => {
   const { store } = useContext(storeContext);
-  const [marques, setMarques] = useState([]);
-  const [editMarque, setEditMarque] = useState(null);
+  const [prestations, setPrestations] = useState([]);
+  const [editPrestation, setEditPrestation] = useState(null);
   const [newsociete, setNewsociete] = useState('');
-  const [newintitule, setNewintitule] = useState('');
+  const [newdesignation, setNewdesignation] = useState('');
+  const [newunite, setNewunite] = useState('');
+  const [newGeste, setNewGeste] = useState('');
   
    const [res, set_res] = useState({ id: '', loader: false }); 
 
-  const get_marques = async () => {
+  const get_prestations = async () => {
     try {
-      const { data } = await axios.get(`${base_url}/api/marques`, {
+      const { data } = await axios.get(`${base_url}/api/prestations`, {
         headers: { Authorization: `Bearer ${store.token}` },
       });
-      setMarques(data.marques);
+      setPrestations(data.prestations);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    get_marques();
+    get_prestations();
   }, []);
 
 
-  const update_status = async (etat, marques_id) => {
+  const update_status = async (etat, prestations_id) => {
     try {
-        set_res({ id: marques_id, loader: true });
-        const { data } = await axios.put(`${base_url}/api/marques/status-update/${marques_id}`, { etat }, {
+        set_res({ id: prestations_id, loader: true });
+        const { data } = await axios.put(`${base_url}/api/prestations/status-update/${prestations_id}`, { etat }, {
             headers: {
                 'Authorization': `Bearer ${store.token}`,
             },
         });
         set_res({ id: '', loader: false });
         toast.success(data.message);
-        get_marques();
+        get_prestations();
     } catch (error) {
         set_res({ id: '', loader: false });
         console.log(error);
@@ -49,17 +51,17 @@ const Marques = () => {
     }
 };
 
-const update_status_validate = async (validationMar, marques_id) => {
+const update_status_validate = async (validationMar, prestations_id) => {
     try {
-        set_res({ id: marques_id, loader: true });
-        const { data } = await axios.put(`${base_url}/api/marques/status-update-validate/${marques_id}`, { validationMar }, {
+        set_res({ id: prestations_id, loader: true });
+        const { data } = await axios.put(`${base_url}/api/prestations/status-update-validate/${prestations_id}`, { validationMar }, {
             headers: {
                 'Authorization': `Bearer ${store.token}`,
             },
         });
         set_res({ id: '', loader: false });
         toast.success(data.message);
-        get_marques();
+        get_prestations();
     } catch (error) {
         set_res({ id: '', loader: false });
         console.log(error);
@@ -73,61 +75,65 @@ const update_status_validate = async (validationMar, marques_id) => {
     try {
       const updateData = {
         societe: newsociete.trim(),
-        intitule: newintitule.trim(),
+        designation: newdesignation.trim(),
+        unite: newunite.trim(),
+        Geste: newGeste.trim(),
       };
 
       
 
       const { data } = await axios.put(
-        `${base_url}/api/marques/update/${id}`,
+        `${base_url}/api/prestations/update/${id}`,
         updateData,
         {
           headers: { Authorization: `Bearer ${store.token}` },
         }
       );
 
-      setMarques((prev) =>
+      setPrestations((prev) =>
         prev.map((op) =>
           op._id === id
-            ? { ...op, societe: newsociete, intitule: newintitule }
+            ? { ...op, societe: newsociete, designation: newdesignation, unite: newunite, Geste: newGeste }
             : op
         )
       );
 
-      setEditMarque(null);
+      setEditPrestation(null);
       setNewsociete('');
-      setNewintitule('');
+      setNewdesignation('');
+      setNewunite('');
+      setNewGeste('');
       alert(data.message);
     } catch (error) {
-      console.error('Error updating marque:', error);
+      console.error('Error updating Prestation:', error);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this marque?'))
+    if (!window.confirm('Are you sure you want to delete this Prestation?'))
       return;
 
     try {
-      await axios.delete(`${base_url}/api/marques/delete/${id}`, {
+      await axios.delete(`${base_url}/api/prestations/delete/${id}`, {
         headers: { Authorization: `Bearer ${store.token}` },
       });
 
-      setMarques((prev) => prev.filter((op) => op._id !== id));
-      alert('marque deleted successfully');
+      setPrestations((prev) => prev.filter((op) => op._id !== id));
+      alert('prestation deleted successfully');
     } catch (error) {
-      console.error('Error deleting marque:', error);
+      console.error('Error deleting prestation:', error);
     }
   };
 
   return (
     <div className='bg-white rounded-md'>
       <div className='flex justify-between p-4'>
-        <h2 className='text-xl  text-[#1960a9] hover:text-[#9fc327] font-bold'>Marques</h2>
+        <h2 className='text-xl  text-[#1960a9] hover:text-[#9fc327] font-bold'>prestations</h2>
         <Link
           className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]'
-          to='/dashboard/marque/add'
+          to='/dashboard/prestation/add'
         >
-          Ajoute Marque
+          Ajoute prestation
         </Link>
       </div>
       <div className='relative overflow-y-auto p-4'>
@@ -137,12 +143,13 @@ const update_status_validate = async (validationMar, marques_id) => {
               <th className='px-7 py-3'>Etat</th>
               <th className='px-7 py-3'>Validation Mar</th>
               <th className='px-7 py-3'>Société</th>
-              <th className='px-7 py-3'>Intitulé</th>
+              <th className='px-7 py-3'>Désignation</th>
+              <th className='px-7 py-3'>Geste</th>
               <th className='px-7 py-3'>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {marques.map((r, i) => (
+            {prestations.map((r, i) => (
               <tr key={i} className='bg-white border-b'>
                 <td className='px-6 py-4'>
                   {r.etat === 'Activé' && (
@@ -169,7 +176,7 @@ const update_status_validate = async (validationMar, marques_id) => {
                   )}
                 </td>
 
-                {editMarque === r._id ? (
+                {editPrestation === r._id ? (
                   <>
                     <td className='px-6 py-4'>
                       <input
@@ -182,8 +189,25 @@ const update_status_validate = async (validationMar, marques_id) => {
                     <td className='px-6 py-4'>
                       <input
                         type='text'
-                        value={newintitule}
-                        onChange={(e) => setNewintitule(e.target.value)}
+                        value={newdesignation}
+                        onChange={(e) => setNewdesignation(e.target.value)}
+                        className='border px-2 py-1 w-full'
+                      />
+                    </td>
+
+                    <td className='px-6 py-4'>
+                      <input
+                        type='text'
+                        value={newunite}
+                        onChange={(e) => setNewunite(e.target.value)}
+                        className='border px-2 py-1 w-full'
+                      />
+                    </td>
+                    <td className='px-6 py-4'>
+                      <input
+                        type='text'
+                        value={newGeste}
+                        onChange={(e) => setNewGeste(e.target.value)}
                         className='border px-2 py-1 w-full'
                       />
                     </td>
@@ -195,14 +219,16 @@ const update_status_validate = async (validationMar, marques_id) => {
                     
                     
                     <td className='px-6 py-4'>{r.societe}</td>
-                    <td className='px-6 py-4'>{r.intitule}</td>
+                    <td className='px-6 py-4'>{r.designation}</td>
+                    <td className='px-6 py-4'>{r.unite}</td>
+                    <td className='px-6 py-4'>{r.Geste}</td>
                   </>
                 )}
 
                 <td className='px-6 py-4'>
                   <div className='flex justify-start items-center gap-x-4 text-white'>
                     
-                    {editMarque === r._id ? (
+                    {editPrestation === r._id ? (
                       <>
                         <button
                           onClick={() => handleUpdate(r._id)}
@@ -211,7 +237,7 @@ const update_status_validate = async (validationMar, marques_id) => {
                           <FaSave />
                         </button>
                         <button
-                          onClick={() => setEditMarque(null)}
+                          onClick={() => setEditPrestation(null)}
                           className='p-[6px] bg-gray-500 rounded hover:shadow-lg hover:shadow-gray-500/50'
                         >
                           <FaTimes />
@@ -220,9 +246,11 @@ const update_status_validate = async (validationMar, marques_id) => {
                     ) : (
                       <button
                         onClick={() => {
-                            setEditMarque(r._id);
+                            setEditPrestation(r._id);
                             setNewsociete(r.societe);
-                            setNewintitule(r.intitule);
+                            setNewdesignation(r.designation);
+                            setNewunite(r.unite);
+                            setNewGeste(r.Geste);
                         }}
                         className='p-[6px] bg-[#1960a9] rounded hover:shadow-lg hover:shadow-yellow-500/50'
                       >
@@ -271,4 +299,4 @@ const update_status_validate = async (validationMar, marques_id) => {
   );
 };
 
-export default Marques;
+export default Prestations;
