@@ -28,6 +28,7 @@ app.use('/', require('./routes/dossierRoutes'))
 app.use('/', require('./routes/commentRoutes'))
 app.use('/', require('./routes/representantRoutes'))
 app.use('/', require('./routes/benificaireRoutes'))
+app.use('/', require('./routes/marqueRoutes'))
 
 app.get('/', (req, res) => res.send('Hello Glob-G'))
 

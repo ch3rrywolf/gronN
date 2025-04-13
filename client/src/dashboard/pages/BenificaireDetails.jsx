@@ -136,20 +136,29 @@ useEffect(() => {
       <div className="grid grid-cols-2 gap-x-2">
 
         <div className="w-full p-2 flex flex-col items-left bg-white text-slate-700">
-          
-          <span className="text-xs font-bold">Numéro de téléphone: {genre}</span>
-          <span className="text-xs font-bold">Date de naissance : {nomBeni}</span>
-          <span className="text-xs font-bold">Email (1): {prenomBeni}</span>
-          <span className="text-xs font-bold">Adresse: {datenaiBeni}</span>
-          <span className="text-red-600 text-center">-------------------------------------------- Anah --------------------------------------------</span>
-          <span className="text-xs font-bold">Email : {emailBeni}</span>
-          <span className="text-xs font-bold">Mot de passe : {emailAnah}</span>
-          <span className="text-xs font-bold">N°: {passwordAnah}</span>
-          <span className="text-xs font-bold">Voie: {villeBeni}</span>
-          <span className="text-xs font-bold">Code Postal: {numBeni}</span>
-          <span className="text-xs font-bold">Ville: {voieBeni}</span>
-          <span className="text-red-600 text-center">-------------------------------------------- Ménage --------------------------------------------</span>
-          <span className="text-xs font-bold">Commune: {codepostalBeni}</span>
+        <div className="flex flex-col items-center justify-center space-y-2">
+  <div className="w-[50px] h-[50px] rounded-full bg-gray-300 flex items-center justify-center">
+    <span className="text-md font-bold">
+      {nomBeni.charAt(0)}{prenomBeni.charAt(0)}
+    </span>
+  </div>
+
+  <span className="text-md font-bold">
+    {nomBeni} {prenomBeni}
+  </span>
+</div>
+          <span className="text-md font-bold">Date de naissance : {datenaiBeni}</span>
+          <span className="text-md font-bold">Email (1): {emailBeni}</span>
+          <span className="text-md font-bold">Adresse: {numBeni} {voieBeni}</span>
+          <span className="text-red-600 font-bold text-center">-------------------------------------------- Anah --------------------------------------------</span>
+          <span className="text-md font-bold">Email : {emailBeni}</span>
+          <span className="text-md font-bold">Mot de passe : {passwordAnah}</span>
+          <span className="text-md font-bold">N°: {numBeni}</span>
+          <span className="text-md font-bold">Voie: {voieBeni}</span>
+          <span className="text-md font-bold">Code Postal: {codepostalBeni}</span>
+          <span className="text-md font-bold">Ville: {villeBeni}</span>
+          <span className="text-red-600 font-bold text-center">-------------------------------------------- Ménage --------------------------------------------</span>
+          <span className="text-md font-bold">Commune: {communeBeni}</span>
           {/* <span className="text-xs font-bold">Mèl: </span><span>{etageBeni}</span>
           <span className="text-xs font-bold">Mèl: </span><span>{escalierBeni}</span>
           <span className="text-xs font-bold">Mèl: </span><span>{communeBeni}</span>
@@ -169,15 +178,10 @@ useEffect(() => {
         
       </div>
 
-      
-
-    
-
-
 
       <div className="bg-white p-4 mt-5">
         <form onSubmit={submitFile}>
-          <div className="grid grid-cols-2 gap-x-8 mb-3">
+          <div className="grid grid-cols-1 gap-x-8 mb-3">
             <div className="flex flex-col gap-y-2">
               <label className="text-md font-medium text-gray-600">Titre*</label>
               <input
@@ -206,8 +210,12 @@ useEffect(() => {
           
           </div>
 
-          
-          <h3 className="text-lg font-bold">Rapports téléchargés</h3>
+       
+          </div> 
+
+          <div>
+               
+          <h3 className="text-lg font-bold">Liste des fichiers</h3>
   {filesList.length > 0 ? (
     <div className="mt-3 flex gap-4 overflow-x-auto">
       {filesList.map((file, index) => (
@@ -231,11 +239,15 @@ useEffect(() => {
       ))}
     </div>
   ) : (
-    <p>Aucun fichier téléchargé.</p>
+    <p>Aucun document ajouté.</p>
   )}
-          </div> 
+          </div>
+          
+          
         </form>
+        
       </div>
+      
 
       <div className="bg-white p-4 mt-5">
 </div>

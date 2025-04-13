@@ -51,6 +51,9 @@ import Benificaires from './dashboard/pages/Benificaires'
 import AddBenificaire from './dashboard/pages/AddBenificaire'
 import BenificaireDetails from './dashboard/pages/BenificaireDetails'
 
+import Marque from './dashboard/pages/Marques'
+import AddMarque from './dashboard/pages/AddMarque'
+
 function App() {
   const { store } = useContext(storeContext)
 
@@ -117,6 +120,9 @@ function App() {
               <Route path="benificaires" element={<Benificaires />} />
               <Route path="benificaire/add" element={<AddBenificaire />} />
               <Route path="benificaires/view/:benificaires_id" element={<BenificaireDetails />} />
+
+              <Route path="marques" element={<Marque />} />
+              <Route path="marque/add" element={<AddMarque />} />
              
             </Route>
 
