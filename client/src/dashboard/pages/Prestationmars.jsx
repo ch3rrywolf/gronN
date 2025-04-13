@@ -12,8 +12,8 @@ const Prestationmars = () => {
   const [editPrestationmar, setEditPrestationmar] = useState(null);
   const [newsociete, setNewsociete] = useState('');
   const [newdesignation, setNewdesignation] = useState('');
-  const [newprixdevente, setNewprixdevente] = useState('');
   const [newunite, setNewunite] = useState('');
+  const [newprixdevente, setNewprixdevente] = useState('');
   const [newGeste, setNewGeste] = useState('');
   
    const [res, set_res] = useState({ id: '', loader: false }); 
@@ -52,9 +52,9 @@ const Prestationmars = () => {
     }
 };
 
-const update_status_validate = async (validationMar, prestations_id) => {
+const update_status_validate = async (validationMar, prestationmars_id) => {
     try {
-        set_res({ id: prestations_id, loader: true });
+        set_res({ id: prestationmars_id, loader: true });
         const { data } = await axios.put(`${base_url}/api/prestationmars/status-update-validate/${prestationmars_id}`, { validationMar }, {
             headers: {
                 'Authorization': `Bearer ${store.token}`,
@@ -77,8 +77,8 @@ const update_status_validate = async (validationMar, prestations_id) => {
       const updateData = {
         societe: newsociete.trim(),
         designation: newdesignation.trim(),
-        prixdevente: newprixdevente.trim(),
         unite: newunite.trim(),
+        prixdevente: newprixdevente.trim(),
         Geste: newGeste.trim(),
       };
 
@@ -95,7 +95,7 @@ const update_status_validate = async (validationMar, prestations_id) => {
       setPrestationmars((prev) =>
         prev.map((op) =>
           op._id === id
-            ? { ...op, societe: newsociete, designation: newdesignation, prixdevente: newprixdevente,  unite: newunite, Geste: newGeste }
+            ? { ...op, societe: newsociete, designation: newdesignation, unite: newunite, prixdevente: newprixdevente,  Geste: newGeste }
             : op
         )
       );
@@ -103,8 +103,8 @@ const update_status_validate = async (validationMar, prestations_id) => {
       setEditPrestationmar(null);
       setNewsociete('');
       setNewdesignation('');
-      setNewprixdevente('');
       setNewunite('');
+      setNewprixdevente('');
       setNewGeste('');
       alert(data.message);
     } catch (error) {
@@ -199,7 +199,14 @@ const update_status_validate = async (validationMar, prestations_id) => {
                         className='border px-2 py-1 w-full'
                       />
                     </td>
-
+                    <td className='px-6 py-4'>
+                      <input
+                        type='text'
+                        value={newunite}
+                        onChange={(e) => setNewunite(e.target.value)}
+                        className='border px-2 py-1 w-full'
+                      />
+                    </td>
                     <td className='px-6 py-4'>
                       <input
                         type='text'
@@ -209,14 +216,7 @@ const update_status_validate = async (validationMar, prestations_id) => {
                       />
                     </td>
 
-                    <td className='px-6 py-4'>
-                      <input
-                        type='text'
-                        value={newunite}
-                        onChange={(e) => setNewunite(e.target.value)}
-                        className='border px-2 py-1 w-full'
-                      />
-                    </td>
+                    
                     <td className='px-6 py-4'>
                       <input
                         type='text'
@@ -234,8 +234,8 @@ const update_status_validate = async (validationMar, prestations_id) => {
                     
                     <td className='px-6 py-4'>{r.societe}</td>
                     <td className='px-6 py-4'>{r.designation}</td>
-                    <td className='px-6 py-4'>{r.prixdevente}</td>
                     <td className='px-6 py-4'>{r.unite}</td>
+                    <td className='px-6 py-4'>{r.prixdevente}</td>
                     <td className='px-6 py-4'>{r.Geste}</td>
                   </>
                 )}

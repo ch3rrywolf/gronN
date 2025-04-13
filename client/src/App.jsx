@@ -58,7 +58,7 @@ import Prestation from './dashboard/pages/Prestations'
 import AddPrestation from './dashboard/pages/AddPrestation'
 
 import Prestationmar from './dashboard/pages/Prestationmars'
-// import AddPrestation from './dashboard/pages/AddPrestation'
+import AddPrestationmar from './dashboard/pages/AddPrestationmar'
 
 function App() {
   const { store } = useContext(storeContext)
@@ -135,7 +135,7 @@ function App() {
               <Route path="prestation/add" element={<AddPrestation />} />
 
               <Route path="prestationmars" element={<Prestationmar />} />
-              {/* <Route path="prestation/add" element={<AddPrestation />} /> */}
+              <Route path="prestationmar/add" element={<AddPrestationmar />} />
              
             </Route>
 

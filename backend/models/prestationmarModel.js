@@ -18,6 +18,10 @@ const prestationmarSchema = new Schema({
         type: String,
         required: true
     },
+    unite: {
+        type: String,
+        required: true
+    },
     prixdevente: {
         type: String,
         required: true
