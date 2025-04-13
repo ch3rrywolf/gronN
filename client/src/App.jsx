@@ -57,6 +57,9 @@ import AddMarque from './dashboard/pages/AddMarque'
 import Prestation from './dashboard/pages/Prestations'
 import AddPrestation from './dashboard/pages/AddPrestation'
 
+import Prestationmar from './dashboard/pages/Prestationmars'
+// import AddPrestation from './dashboard/pages/AddPrestation'
+
 function App() {
   const { store } = useContext(storeContext)
 
@@ -130,6 +133,9 @@ function App() {
               
               <Route path="prestations" element={<Prestation />} />
               <Route path="prestation/add" element={<AddPrestation />} />
+
+              <Route path="prestationmars" element={<Prestationmar />} />
+              {/* <Route path="prestation/add" element={<AddPrestation />} /> */}
              
             </Route>
 

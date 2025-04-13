@@ -101,10 +101,6 @@ const gesteOptions = ["MENUISERIE FENETRE 2V", "MENUISERIE FENETRE 1V", "VMC sim
   </select>
 </div>
           </div>
-
-
-    
-
             
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='mt-4'>
