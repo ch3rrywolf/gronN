@@ -44,8 +44,8 @@ const AddMarque = () => {
   return (
     <div className='bg-white rounded-md'>
       <div className='flex justify-between p-4'>
-        <h2 className='text-xl  text-[#1960a9] hover:text-[#9fc327] font-bold'>Add Bénificaires</h2>
-        <Link className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]' to='/dashboard/benificaires'>Bénificaires</Link>
+        <h2 className='text-xl  text-[#1960a9] hover:text-[#9fc327] font-bold'>Add Marques</h2>
+        <Link className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]' to='/dashboard/marques'>Marques</Link>
       </div>
       <div className='p-4'>
         <form onSubmit={submit}>

@@ -73,7 +73,7 @@ class PrestationController {
                     }
 
                     if (designation) {
-                        updateFields.intitule = intitule.trim();
+                        updateFields.designation = designation.trim();
                     }
 
                     if (unite) {
