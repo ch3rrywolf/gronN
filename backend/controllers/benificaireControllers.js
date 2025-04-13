@@ -1,12 +1,13 @@
 const benificaireModel = require('../models/benificaireModel');
+const PdfDetails = require('../models/pdfDetails')
 const mongoose = require('mongoose');
 
 class BenificaireController {
     async addi(req, res) {
             const { genre, nomBeni, prenomBeni, datenaiBeni, emailBeni, emailAnah,passwordAnah,villeBeni,numBeni,voieBeni,codepostalBeni,etageBeni,escalierBeni,communeBeni,porteBeni,batimentBeni,numTelBeni,numPortableBeni,RIBBeni,IBANBeni,ZoneClimaBeni,nomprenomPerConf,enQualitPerConf } = req.body;
         
-            if (!mail) {
-                return res.status(400).json({ message: 'Please provide Benificaire mail' });
+            if (!emailBeni) {
+                return res.status(400).json({ message: 'Please provide Benificaire Email' });
             }
         
             try {
@@ -209,6 +210,84 @@ class BenificaireController {
             return res.status(500).json({ message: 'Internal server error' });
         }
     }
+
+     upload_files = async (req, res) => {
+            const { title, benificaires_id } = req.body;
+            const fileName = req.file.filename;
+        
+            if (!benificaires_id || !mongoose.Types.ObjectId.isValid(benificaires_id)) {
+                return res.status(400).json({ message: "Invalid dossier ID" });
+            }
+        
+            try {
+                const pdf = await PdfDetails.create({ title, pdf: fileName });
+        
+                await benificaireModel.findByIdAndUpdate(
+                    benificaires_id,
+                    { $push: { pdfs: pdf._id } },
+                    { new: true }
+                );
+        
+                res.send({ status: "ok", pdf });
+            } catch (error) {
+                res.status(500).json({ status: "error", message: error.message });
+            }
+        };
+    
+        get_files = async (req, res) => {
+            console.log("✅ get-files route executed");
+        
+            const { benificaires_id } = req.params;
+            console.log("Received benificaires_id:", benificaires_id);
+        
+            if (!benificaires_id || !mongoose.Types.ObjectId.isValid(benificaires_id)) {
+                return res.status(400).json({ message: "Invalid benificaire ID" });
+            }
+        
+            try {
+                const benificaire = await benificaireModel.findById(benificaires_id).populate("pdfs");
+        
+                if (!benificaire) {
+                    return res.status(404).json({ message: "benificaire not found" });
+                }
+        
+                res.status(200).json({ status: "ok", files: benificaire.pdfs });
+            } catch (error) {
+                console.error("Get files error:", error);
+                res.status(500).json({ status: "error", message: error.message });
+            }
+        };
+    
+        delete_file = async (req, res) => {
+            const { benificaires_id, pdf_id } = req.params;
+        
+            if (!mongoose.Types.ObjectId.isValid(benificaires_id) || !mongoose.Types.ObjectId.isValid(pdf_id)) {
+                return res.status(400).json({ message: "Invalid benificaire ID or PDF ID" });
+            }
+        
+            try {
+                const benificaire = await benificaireModel.findById(benificaires_id);
+                if (!benificaire) {
+                    return res.status(404).json({ message: "dossier not found" });
+                }
+        
+                if (!benificaire.pdfs.includes(pdf_id)) {
+                    return res.status(404).json({ message: "PDF not found in benificaire" });
+                }
+        
+                await PdfDetails.findByIdAndDelete(pdf_id);
+        
+                await benificaireModel.findByIdAndUpdate(
+                    benificaires_id,
+                    { $pull: { pdfs: pdf_id } },
+                    { new: true }
+                );
+        
+                res.status(200).json({ message: "PDF deleted successfully" });
+            } catch (error) {
+                res.status(500).json({ message: "Internal server error", error: error.message });
+            }
+        };
 }
 
 module.exports = new BenificaireController();

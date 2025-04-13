@@ -48,7 +48,8 @@ import Representants from './dashboard/pages/Representants'
 import AddRepresentant from './dashboard/pages/AddRepresentant'
 
 import Benificaires from './dashboard/pages/Benificaires'
-// import AddRepresentant from './dashboard/pages/AddRepresentant'
+import AddBenificaire from './dashboard/pages/AddBenificaire'
+import BenificaireDetails from './dashboard/pages/BenificaireDetails'
 
 function App() {
   const { store } = useContext(storeContext)
@@ -114,6 +115,8 @@ function App() {
               <Route path="representants" element={<Representants />} />
 
               <Route path="benificaires" element={<Benificaires />} />
+              <Route path="benificaire/add" element={<AddBenificaire />} />
+              <Route path="benificaires/view/:benificaires_id" element={<BenificaireDetails />} />
              
             </Route>
 

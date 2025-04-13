@@ -79,7 +79,13 @@ const benificaireSchema = new Schema({
     },
     enQualitPerConf: {
         type: String
-    }
+    },
+    pdfs: [
+        {
+          type: Schema.Types.ObjectId, 
+          ref: 'PdfDetails',
+        },
+      ],
 }, { timestamps: true });
 
 module.exports = model('Benificaire', benificaireSchema); 
