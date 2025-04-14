@@ -369,16 +369,22 @@ update_backoffice_status = async (req, res) => {
             // Entreprise retenue
             add_entrete = async (req, res) => {
 
-                const {name, email, password,raiSocEntRe,numTelEntRe,formJurEntRe, emailEntRe,adresseEntRe, villeEntRe,codePostalEntRe,siteWebEntRe,montCapEntRe,tauxTVAEntRe,signatureEntRe,nomRepParEntRe,prenomRepParEntRe,genreRepParEntRe,fonctionRepParEntRe,numTelRepParEntRe,emailRepParEntRe,qualifiRGEEntRe,numRGEEntRe,editLeRGEEntRe,valableJusRGEEntRe } = req.body
+                const {name, email, password,raiSocEntRe,numTelEntRe,formJurEntRe, emailEntRe,adresseEntRe, villeEntRe,codePostalEntRe,siteWebEntRe,montCapEntRe,tauxTVAEntRe,signatureEntRe,nomRepParEntRe,prenomRepParEntRe,genreRepParEntRe,fonctionRepParEntRe,numTelRepParEntRe,emailRepParEntRe,qualifiRGEEntRe,numRGEEntRe,editLeRGEEntRe,valableJusRGEEntRe,sirenIdentEntRe,siretIdentEntRe,identTVAIdentEntRe,rcsIdentEntRe,numAPEIdentEntRe,numAgrIdentEntRe,numDecIdentEntRe,raisocAssEntRe,adresseAssEntRe,numPolAssEntRe,dateEmiAssEntRe,dateFinAssEntRe,documentsEntRe,genRevAudEntRe,genDevisEntRe } = req.body
         
-                if (!nomIns) {
-                    return res.status(404).json({ message: 'Veuillez fournir le nom' })
+                if (!raiSocEntRe) {
+                    return res.status(404).json({ message: 'Veuillez fournir le raiSocEntRe' })
                 }
-                if (!prenomIns) {
-                    return res.status(404).json({ message: 'Veuillez fournir le prenom' })
+                if (!adresseEntRe) {
+                    return res.status(404).json({ message: 'Veuillez fournir le adresseEntRe' })
+                }
+                if (!villeEntRe) {
+                    return res.status(404).json({ message: 'Veuillez fournir villeEntRe' })
+                }
+                if (!codePostalEntRe) {
+                    return res.status(404).json({ message: 'Veuillez fournir codePostalEntRe' })
                 }
                 if (!password) {
-                    return res.status(404).json({ message: 'Veuillez fournir votre mot de passe' })
+                    return res.status(404).json({ message: 'Veuillez fournir Password' })
                 }
                 
                 if (emailEntRe && !emailEntRe.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
@@ -394,15 +400,15 @@ update_backoffice_status = async (req, res) => {
                     return res.status(404).json({ message: 'veuillez fournir email form valide' })
                 }
                 try {
-                    const inspecteur = await authModel.findOne({ email: email.trim() })
-                    if (inspecteur) {
+                    const entrete = await authModel.findOne({ email: email.trim() })
+                    if (entrete) {
                         return res.status(404).json({ message: 'utilisateur existe déjà' })
                     } else {
-                        const new_inspecteur = await authModel.create({
+                        const new_entrete = await authModel.create({
                             name: name.trim(),
                             email: email.trim(),
                             password: await bcrypt.hash(password.trim(), 10),
-                            role: 'inspecteur',
+                            role: 'entrete',
 
                             raiSocEntRe: raiSocEntRe.trim(),
                             numTelEntRe: numTelEntRe.trim(),
@@ -449,55 +455,55 @@ update_backoffice_status = async (req, res) => {
                             
                             
                         })
-                        return res.status(201).json({ message: 'inspecteur ajouter du succès', inspecteur: new_inspecteur })
+                        return res.status(201).json({ message: 'EntRe ajouter du succès', entrete: new_entrete })
                     }
                 } catch (error) {
                     return res.status(500).json({ message: 'Erreur interne du serveur' })
                 }
             }
         
-            get_inspecteurs = async (req, res) => {
+            get_entretes = async (req, res) => {
                 try {
-                    const inspecteurs = await authModel.find({ role: "inspecteur" }).sort({ createdAt: -1 })
-                    return res.status(200).json({ inspecteurs })
+                    const entretes = await authModel.find({ role: "entrete" }).sort({ createdAt: -1 })
+                    return res.status(200).json({ entretes })
                 } catch (error) {
                     return res.status(500).json({ message: 'Erreur interne du serveur' })
                 }
             }
         
-            get_inspecteurs_details = async (req, res) => {
-                    const { inspecteurs_id } = req.params;
+            get_entretes_details = async (req, res) => {
+                    const { entretes_id } = req.params;
                    
                     
-                    if (!mongoose.Types.ObjectId.isValid(inspecteurs_id)) {
-                        return res.status(400).json({ message: 'Invalid inspecteurs ID' });
+                    if (!mongoose.Types.ObjectId.isValid(entretes_id)) {
+                        return res.status(400).json({ message: 'Invalid entretes ID' });
                     }
                 
                     try {
-                        const inspecteurs = await authModel.findById(inspecteurs_id);
-                        return res.status(200).json({ inspecteurs });
+                        const entretes = await authModel.findById(entretes_id);
+                        return res.status(200).json({ entretes });
                     } catch (error) {
                         console.log(error.message);
                         return res.status(500).json({ message: 'Internal server error' });
                     }
                 }
         
-        update_inspecteur_status = async (req, res) => {
+        update_entrete_status = async (req, res) => {
                       const { role } = req.userInfo
-                      const { inspecteurs_id } = req.params
+                      const { entretes_id } = req.params
                       const { accountStatus } = req.body
               
                       if (role === 'admin') {
-                          const inspecteurs = await authModel.findByIdAndUpdate(inspecteurs_id, { accountStatus }, { new: true })
-                          return res.status(200).json({ message: 'inspecteur status update success', inspecteurs })
+                          const entretes = await authModel.findByIdAndUpdate(entretes_id, { accountStatus }, { new: true })
+                          return res.status(200).json({ message: 'entrete status update success', entretes })
                       } else {
                           return res.status(401).json({ message: 'You cannot access this api' })
                       }
                   }
         
-                update_inspecteur = async (req, res) => {
+                update_entrete = async (req, res) => {
                     const { id } = req.params;
-                    const { name, email, password, role,accountStatus,nomIns,prenomIns,roleIns,superviseur,villeIns,adresseIns,codePostalIns,emailIns,numTelIns } = req.body;
+                    const { name, email, password,raiSocEntRe,numTelEntRe,formJurEntRe, emailEntRe,adresseEntRe, villeEntRe,codePostalEntRe,siteWebEntRe,montCapEntRe,tauxTVAEntRe,signatureEntRe,nomRepParEntRe,prenomRepParEntRe,genreRepParEntRe,fonctionRepParEntRe,numTelRepParEntRe,emailRepParEntRe,qualifiRGEEntRe,numRGEEntRe,editLeRGEEntRe,valableJusRGEEntRe,sirenIdentEntRe,siretIdentEntRe,identTVAIdentEntRe,rcsIdentEntRe,numAPEIdentEntRe,numAgrIdentEntRe,numDecIdentEntRe,raisocAssEntRe,adresseAssEntRe,numPolAssEntRe,dateEmiAssEntRe,dateFinAssEntRe,documentsEntRe,genRevAudEntRe,genDevisEntRe } = req.body;
                 
                     if (!name) {
                         return res.status(400).json({ message: 'Please provide a name' });
@@ -507,78 +513,45 @@ update_backoffice_status = async (req, res) => {
                         
                         let updateFields = { name: name.trim() };
                 
-                        if (email) {
-                            if (!email.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
-                                return res.status(400).json({ message: 'Please provide a valid email' });
-                            }
-                            updateFields.email = email.trim();
-                        }
-                
-                        if (password) {
-                            updateFields.password = await bcrypt.hash(password.trim(), 10);
-                        }
-                
-                        if (role) {
-                            updateFields.role = role.trim();
-                        }
+                    
         
                         if (accountStatus) {
                             updateFields.accountStatus = accountStatus.trim();
                         }
     
-                        if (nomIns) {
-                            updateFields.nomIns = nomIns.trim();
+                        if (raiSocEntRe) {
+                            updateFields.raiSocEntRe = raiSocEntRe.trim();
                         }
-                        if (prenomIns) {
-                            updateFields.prenomIns = prenomIns.trim();
+                        if (adresseEntRe) {
+                            updateFields.adresseEntRe = adresseEntRe.trim();
                         }
-                        if (roleIns) {
-                            updateFields.roleIns = roleIns.trim();
-                        }
-                        if (superviseur) {
-                            updateFields.superviseur = superviseur.trim();
-                        }
-                        if (villeIns) {
-                            updateFields.villeIns = villeIns.trim();
-                        }
-                        if (adresseIns) {
-                            updateFields.adresseIns = adresseIns.trim();
-                        }
-                        if (codePostalIns) {
-                            updateFields.codePostalIns = codePostalIns.trim();
-                        }
-                        if (emailIns) {
-                            updateFields.emailIns = emailIns.trim();
-                        }
-                        if (numTelIns) {
-                            updateFields.numTelIns = numTelIns.trim();
-                        }
+                        
                 
-                        const updatedInspecteur = await authModel.findByIdAndUpdate(
+                        const updatedEntrete = await authModel.findByIdAndUpdate(
                             id,
                             { $set: updateFields },
                             { new: true, runValidators: true }
                         );
                 
-                        if (!updatedInspecteur) {
-                            return res.status(404).json({ message: 'Inspecteur not found' });
+                        if (!updatedEntrete) {
+                            return res.status(404).json({ message: 'Entrete not found' });
                         }
                 
-                        return res.status(200).json({ message: 'Inspecteur updated successfully', inspecteur: updatedInspecteur });
+                        return res.status(200).json({ message: 'Entrete updated successfully', rntrete: updatedEntrete });
                     } catch (error) {
                         return res.status(500).json({ message: 'Internal server error', error: error.message });
                     }
                 };
             
-                delete_inspecteur = async (req, res) => {
+                delete_entrete = async (req, res) => {
                     const { id } = req.params;
             
                     try {
-                        const deletedInspecteur = await authModel.findByIdAndDelete(id);
-                        if (!deletedInspecteur) {
-                            return res.status(404).json({ message: 'inspecteur not found' });
+                        const deletedEntrete = await authModel.findByIdAndDelete(id);
+                        if (!deletedEntrete) {
+                            return res.status(404).json({ message: 'Entrete not found' });
                         }
-                        return res.status(200).json({ message: 'inspecteur deleted successfully' });
+                        return res.status(200).json({ message: 'Entrete deleted successfully' });
                     } catch (error) {
                         return res.status(500).json({ message: 'Internal server error' });
                     }

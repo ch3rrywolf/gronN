@@ -276,10 +276,7 @@ const authSchema = new Schema({
     dateFinAssEntRe: {
         type: String,
     },
-    documentsEntRe: {
-        type: String,
-    },
-    // EntRe Parametrage
+        // EntRe Parametrage
     genRevAudEntRe: {
         type: String,
     },

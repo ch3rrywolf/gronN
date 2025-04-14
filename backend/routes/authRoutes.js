@@ -20,5 +20,11 @@ router.put('/api/inspecteurs/update/:id',middleware.auth,middleware.role, authCo
 router.delete('/api/inspecteurs/delete/:id',middleware.auth,middleware.role, authController.delete_inspecteur)
 router.put('/api/inspecteurs/status-update/:inspecteurs_id', middleware.auth, authController.update_inspecteur_status)
 
+router.post('/api/entrete/add',middleware.auth,middleware.role, authController.add_entrete)
+router.get('/api/entretes',middleware.auth,middleware.role, authController.get_entretes)
+router.get('/api/entretes/:entretes_id', middleware.auth, authController.get_entretes_details)
+router.put('/api/entretes/update/:id',middleware.auth,middleware.role, authController.update_entrete)
+router.delete('/api/entretes/delete/:id',middleware.auth,middleware.role, authController.delete_entrete)
+router.put('/api/entretes/status-update/:entretes_id', middleware.auth, authController.update_entrete_status)
 
 module.exports = router
