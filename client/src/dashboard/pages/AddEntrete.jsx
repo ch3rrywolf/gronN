@@ -114,31 +114,22 @@ const AddEntrete = () => {
             </div>
             
             </div>
-          <div className='grid grid-cols-1 gap-x-8 mb-3'>
 
-          <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='name'>name*</label>
-              <input onChange={inputHandler} value={state.name} required type='text' placeholder='name' name='name' id='name' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='email'>email*</label>
-              <input onChange={inputHandler} value={state.email} required type='email' placeholder='email' name='email' id='email' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
+
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='raiSocEntRe'>Raison Social *</label>
               <input onChange={inputHandler} value={state.raiSocEntRe} required type='text' placeholder='raiSocEntRe' name='raiSocEntRe' id='raiSocEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
-           
-          </div>
+          
           
           <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='numTelEntRe'>Numéro de téléphone</label>
-              <input onChange={inputHandler} value={state.numTelEntRe} required type='text' placeholder='numTelEntRe' name='numTelEntRe' id='numTelEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <input onChange={inputHandler} value={state.numTelEntRe} type='text' placeholder='numTelEntRe' name='numTelEntRe' id='numTelEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='formJurEntRe'>Forme juridique</label>
-              <input onChange={inputHandler} value={state.formJurEntRe} required type='password' placeholder='formJurEntRe' name='formJurEntRe' id='formJurEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+              <input onChange={inputHandler} value={state.formJurEntRe} type='text' placeholder='formJurEntRe' name='formJurEntRe' id='formJurEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
             </div>
             </div>
 
@@ -149,7 +140,7 @@ const AddEntrete = () => {
             </div>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='adresseEntRe'>Adresse *</label>
-              <input onChange={inputHandler} value={state.adresseEntRe} required type='text' placeholder='Password' name='adresseEntRe' id='adresseEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+              <input onChange={inputHandler} value={state.adresseEntRe} required type='text' placeholder='Adresse' name='adresseEntRe' id='adresseEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
             </div>
             </div>
 
@@ -158,10 +149,7 @@ const AddEntrete = () => {
               <label className='text-md font-medium text-gray-600' htmlFor='villeEntRe'>Ville *</label>
               <input onChange={inputHandler} value={state.villeEntRe} required type='text' placeholder='villeEntRe' name='villeEntRe' id='villeEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='password'>Mot de Passe</label>
-              <input onChange={inputHandler} value={state.password} required type='password' placeholder='Password' name='password' id='password' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
-            </div>
+            
             </div>
 
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
@@ -171,18 +159,18 @@ const AddEntrete = () => {
             </div>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='siteWebEntRe'>Site Web</label>
-              <input onChange={inputHandler} value={state.siteWebEntRe} required type='text' placeholder='siteWebEntRe' name='siteWebEntRe' id='siteWebEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+              <input onChange={inputHandler} value={state.siteWebEntRe} type='text' placeholder='siteWebEntRe' name='siteWebEntRe' id='siteWebEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
             </div>
             </div>
 
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='montCapEntRe'>Montant du capital</label>
-              <input onChange={inputHandler} value={state.montCapEntRe} required type='text' placeholder='montCapEntRe' name='montCapEntRe' id='montCapEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <input onChange={inputHandler} value={state.montCapEntRe}  type='text' placeholder='montCapEntRe' name='montCapEntRe' id='montCapEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='tauxTVAEntRe'>Taux TVA</label>
-              <input onChange={inputHandler} value={state.tauxTVAEntRe} required type='text' placeholder='tauxTVAEntRe' name='tauxTVAEntRe' id='tauxTVAEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+              <input onChange={inputHandler} value={state.tauxTVAEntRe}  type='text' placeholder='tauxTVAEntRe' name='tauxTVAEntRe' id='tauxTVAEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
             </div>
             </div>
 
@@ -226,11 +214,11 @@ const AddEntrete = () => {
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='numTelRepParEntRe'>Numéro de téléphone</label>
-              <input onChange={inputHandler} value={state.numTelRepParEntRe} required type='text' placeholder='numTelRepParEntRe' name='numTelRepParEntRe' id='numTelRepParEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <input onChange={inputHandler} value={state.numTelRepParEntRe}  type='text' placeholder='numTelRepParEntRe' name='numTelRepParEntRe' id='numTelRepParEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='emailRepParEntRe'>Email</label>
-              <input onChange={inputHandler} value={state.emailRepParEntRe} required type='text' placeholder='emailRepParEntRe' name='emailRepParEntRe' id='emailRepParEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+              <input onChange={inputHandler} value={state.emailRepParEntRe}  type='text' placeholder='emailRepParEntRe' name='emailRepParEntRe' id='emailRepParEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
             </div>
             </div>
 
@@ -307,7 +295,7 @@ const AddEntrete = () => {
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='numDecIdentEntRe'>Numéro décennal</label>
-              <input onChange={inputHandler} value={state.numDecIdentEntRe} required type='text' placeholder='numDecIdentEntRe' name='numDecIdentEntRe' id='numDecIdentEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <input onChange={inputHandler} value={state.numDecIdentEntRe}  type='text' placeholder='numDecIdentEntRe' name='numDecIdentEntRe' id='numDecIdentEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             
             </div>
@@ -424,6 +412,31 @@ const AddEntrete = () => {
             </div>
 
 
+            <div className='grid grid-cols-1 gap-x-8 mb-3'>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>IDENTIFIANT PLATEFORME</label>
+            </div>
+            
+            </div>
+
+
+            <div className='grid grid-cols-1 gap-x-8 mb-3'>
+
+          <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='name'>name*</label>
+              <input onChange={inputHandler} value={state.name} required type='text' placeholder='name' name='name' id='name' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+            </div>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='email'>email*</label>
+              <input onChange={inputHandler} value={state.email} required type='email' placeholder='email' name='email' id='email' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+            </div>
+            
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='password'>Mot de Passe*</label>
+              <input onChange={inputHandler} value={state.password} required type='password' placeholder='Password' name='password' id='password' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+            </div>
+           
+          </div>
 
 
             

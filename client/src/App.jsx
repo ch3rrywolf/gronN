@@ -69,6 +69,7 @@ import AddInspecteur from './dashboard/pages/AddInspecteur'
 import Entretes from './dashboard/pages/entretes'
 import AddEntrete from './dashboard/pages/AddEntrete'
 import EntreteDetails from './dashboard/pages/EntreteDetails'
+import EntreteIndex from './dashboard/pages/EntreteIndex'
 
 function App() {
   const { store } = useContext(storeContext)
@@ -162,6 +163,14 @@ function App() {
             {/* Backoffice Route: Limited access */}
             <Route path="" element={<ProtectRole role="backoffice" />}>
               <Route path="backoffice" element={<BackofficeIndex />} />
+
+              {/* <Route path="dossiers" element={<Dossiers />} /> */}
+             
+            </Route>
+
+            {/* Backoffice Route: Limited access */}
+            <Route path="" element={<ProtectRole role="entrete" />}>
+              <Route path="entrete" element={<EntreteIndex />} />
 
               {/* <Route path="dossiers" element={<Dossiers />} /> */}
              
