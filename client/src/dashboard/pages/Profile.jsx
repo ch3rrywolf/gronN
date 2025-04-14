@@ -1,11 +1,14 @@
 import React from 'react'
 import { FaImage } from "react-icons/fa6"
+import axios from "axios";
+import storeContext from "../../context/storeContext";
+import { base_url } from "../config/config";
 
 const Profile = () => {
   return (
     <div className='w-full grid grid-cols-2 gap-x-6 mt-5'>
       <div className='bg-white gap-x-3 p-6 rounded flex justify-center items-center'>
-        <div>
+        {/* <div>
           <label htmlFor="img" className={`w-[150px] h-[150px] flex rounded text-[#404040] gap-2 justify-center items-center cursor-pointer border-2 border-dashed`}>
             <div className='flex justify-center items-center flex-col gap-y-2'>
               <span className='text-2xl'><FaImage/></span>
@@ -13,7 +16,7 @@ const Profile = () => {
             </div>
           </label>
           <input className='hidden' type="file" id='img' />
-        </div>
+        </div> */}
         <div className='text-[#404040] flex flex-col gap-y-1 justify-center items-start'>
           <span>Nom et Prénom: Zellit Mootez</span>
           <span>Email: zellitmootez96@gmail.com</span>

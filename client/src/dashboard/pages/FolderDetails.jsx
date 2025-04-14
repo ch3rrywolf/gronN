@@ -78,12 +78,9 @@ const FolderDetails = () => {
   return (
     <div className="mt-3">
       {/* Dossier Info */}
-      <div className="grid grid-cols-6 gap-x-4">
+      <div className="grid grid-cols-1 gap-x-4">
         <div className="w-full p-2 flex flex-col items-center bg-white text-slate-700">
           <span className="text-xl font-bold">IDENTITÉ DU DEMANDEUR DE LA SUBVENTION</span>
-          <span className="text-xs font-bold">Nom:</span><span>{demandeurNom}</span>
-          <span className="text-xs font-bold">PreNom:</span><span>{demandeurPreNom}</span>
-          <span className="text-xs font-bold">N° Dossier:</span><span>#{numDossier}</span>
           {dossierStatus === "Validé" && (
             <span className="px-2 py-[2px] bg-green-100 text-green-800 rounded-lg text-xs">{dossierStatus}</span>
           )}

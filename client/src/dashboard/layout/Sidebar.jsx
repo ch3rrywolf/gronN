@@ -67,6 +67,7 @@ const Sidebar = () => {
                         <SidebarItem to="/dashboard/gestes" icon={<AiTwotoneContainer />} label="Geste" pathname={pathname} />
                         <SidebarItem to="/dashboard/folders" icon={<FaFolderOpen />} label="Dossier" pathname={pathname} />
                         <SidebarItem to="/dashboard/backoffices" icon={<FaUsersGear />} label="Gestion des comptes" pathname={pathname} />
+                        <SidebarItem to="/dashboard/sessions" icon={<FaUsersGear />} label="Gestion des comptes" pathname={pathname} />
                         
                     </>
                 )}
@@ -81,6 +82,14 @@ const Sidebar = () => {
 
                 {/* Logout Button */}
                 <li>
+                <Link
+  to="/dashboard/Profile"
+  className={`px-3 py-2 hover:shadow-lg hover:shadow-yellow-500/20 w-full 
+    rounded-sm flex gap-x-2 justify-start items-center hover:bg-yellow-500 hover:text-white cursor-pointer`}
+>
+  <span className="text-xl"><FaRegUser /></span>
+  <span>Profile</span>
+</Link>
                     <div onClick={logout} className={`px-3 py-2 hover:shadow-lg hover:shadow-red-500/20 w-full 
                         rounded-sm flex gap-x-2 justify-start items-center hover:bg-red-500 hover:text-white cursor-pointer`}>
                         <span className='text-xl'><IoLogOutOutline /></span>

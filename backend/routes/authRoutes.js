@@ -4,6 +4,14 @@ const middleware = require('../middlewares/middleware')
 const { default: mongoose } = require('mongoose');
 
 router.post('/api/login', authController.login)
+router.post('/api/profile', authController.getProfile)
+
+router.get('/api/sessions', authController.get_sessions)
+router.post('/api/session/add',middleware.auth,middleware.role, authController.add_session)
+router.get('/api/sessions/:sessions_id', middleware.auth, authController.get_sessions_details)
+router.put('/api/sessions/update/:id',middleware.auth,middleware.role, authController.update_session)
+router.delete('/api/sessions/delete/:id',middleware.auth,middleware.role, authController.delete_session)
+router.put('/api/sessions/status-update/:sessions_id', middleware.auth, authController.update_session_status)
 
 router.post('/api/backoffice/add',middleware.auth,middleware.role, authController.add_backoffice)
 router.get('/api/backoffices',middleware.auth,middleware.role, authController.get_backoffices)

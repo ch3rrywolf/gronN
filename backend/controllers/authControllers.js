@@ -39,6 +39,157 @@ class authController {
         }
 
     }
+
+    getProfile = async (req, res) => {
+        try {
+            const userId = req.userInfo.id;
+    
+            const user = await authModel.findById(userId).select('-password'); // Hide password
+    
+            if (!user) {
+                return res.status(404).json({ message: 'Utilisateur non trouvé' });
+            }
+    
+            return res.status(200).json({ user });
+    
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ message: 'Erreur serveur' });
+        }
+    }
+
+
+
+        // Exmple session session
+        add_session = async (req, res) => {
+
+            const { email, name, role, password } = req.body
+    
+            if (!name) {
+                return res.status(404).json({ message: 'Veuillez fournir le nom' })
+            }
+            if (!password) {
+                return res.status(404).json({ message: 'Veuillez fournir votre mot de passe' })
+            }
+            if (!email) {
+                return res.status(404).json({ message: 'Veuillez fournir votre email' })
+            }
+            if (email && !email.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+                return res.status(404).json({ message: 'veuillez fournir email form valide' })
+            }
+            try {
+                const session = await authModel.findOne({ email: email.trim() })
+                if (session) {
+                    return res.status(404).json({ message: 'utilisateur existe déjà' })
+                } else {
+                    const new_session = await authModel.create({
+                        name: name.trim(),
+                        email: email.trim(),
+                        password: await bcrypt.hash(password.trim(), 10),
+                        role: role.trim(),
+                        
+                    })
+                    return res.status(201).json({ message: 'session ajouter du succès', session: new_session })
+                }
+            } catch (error) {
+                return res.status(500).json({ message: 'Erreur interne du serveur' })
+            }
+        }
+        get_sessions = async (req, res) => {
+            try {
+                const sessions = await authModel.find().sort({ createdAt: -1 })
+                return res.status(200).json({ sessions })
+            } catch (error) {
+                return res.status(500).json({ message: 'Erreur interne du serveur' })
+            }
+        }
+        get_sessions_details = async (req, res) => {
+                const { sessions_id } = req.params;
+               
+                
+                if (!mongoose.Types.ObjectId.isValid(sessions_id)) {
+                    return res.status(400).json({ message: 'Invalid sessions ID' });
+                }
+            
+                try {
+                    const sessions = await authModel.findById(sessions_id);
+                    return res.status(200).json({ sessions });
+                } catch (error) {
+                    console.log(error.message);
+                    return res.status(500).json({ message: 'Internal server error' });
+                }
+            }
+    update_session_status = async (req, res) => {
+                  const { role } = req.userInfo
+                  const { sessions_id } = req.params
+                  const { accountStatus } = req.body
+          
+                  if (role === 'admin') {
+                      const sessions = await authModel.findByIdAndUpdate(sessions_id, { accountStatus }, { new: true })
+                      return res.status(200).json({ message: 'session status update success', sessions })
+                  } else {
+                      return res.status(401).json({ message: 'You cannot access this api' })
+                  }
+              }
+            update_session = async (req, res) => {
+                const { id } = req.params;
+                const { name, email, password, role,accountStatus } = req.body;
+            
+                if (!name) {
+                    return res.status(400).json({ message: 'Please provide a name' });
+                }
+            
+                try {
+                    
+                    let updateFields = { name: name.trim() };
+            
+                    if (email) {
+                        if (!email.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+                            return res.status(400).json({ message: 'Please provide a valid email' });
+                        }
+                        updateFields.email = email.trim();
+                    }
+            
+                    if (password) {
+                        updateFields.password = await bcrypt.hash(password.trim(), 10);
+                    }
+            
+                    if (role) {
+                        updateFields.role = role.trim();
+                    }
+    
+                    if (accountStatus) {
+                        updateFields.accountStatus = accountStatus.trim();
+                    }
+            
+                    const updatedSession = await authModel.findByIdAndUpdate(
+                        id,
+                        { $set: updateFields },
+                        { new: true, runValidators: true }
+                    );
+            
+                    if (!updatedSession) {
+                        return res.status(404).json({ message: 'session not found' });
+                    }
+            
+                    return res.status(200).json({ message: 'session updated successfully', session: updatedSession });
+                } catch (error) {
+                    return res.status(500).json({ message: 'Internal server error', error: error.message });
+                }
+            };
+            delete_session = async (req, res) => {
+                const { id } = req.params;
+        
+                try {
+                    const deletedSession = await authModel.findByIdAndDelete(id);
+                    if (!deletedSession) {
+                        return res.status(404).json({ message: 'session not found' });
+                    }
+                    return res.status(200).json({ message: 'session deleted successfully' });
+                } catch (error) {
+                    return res.status(500).json({ message: 'Internal server error' });
+                }
+            };
     //votre compte n'est pas activé, contactez l'administrateur pour vérifier le compte
 
 

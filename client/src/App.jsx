@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import MainLayout from './dashboard/layout/MainLayout'
 import AdminIndex from './dashboard/pages/AdminIndex'
 import Login from './dashboard/pages/Login'
+import Sessions from './dashboard/pages/Sessions'
+import SessionDetails from './dashboard/pages/SessionDetails'
+import AddSession from './dashboard/pages/AddSession'
 import ProtectDashboard from './middleware/ProtectDashboard'
 import ProtectRole from './middleware/ProtectRole'
 import Unable from './dashboard/pages/Unable'
@@ -107,6 +110,8 @@ function App() {
             {/* Default Redirect Based on Role */}
             <Route path='' element={store.userInfo.role === 'admin' ? <Navigate to='/dashboard/admin' /> : <Navigate to='/dashboard/backoffice' />} />
             <Route path='unable-access' element={<Unable/>} />
+            
+            
             <Route path='profile' element={<Profile/>} />
             <Route path="dossiers" element={<Dossiers />} />
             <Route path="dossiers/add" element={<AddDossier />} />
@@ -147,6 +152,10 @@ function App() {
               <Route path="backoffice/add" element={<AddBackoffice />} />
               <Route path="backoffices" element={<Backoffices />} />
               <Route path="backoffices/view/:backoffices_id" element={<BackofficeDetails />} />
+
+              <Route path='sessions' element={<Sessions/>} />
+              <Route path='session/add' element={<AddSession/>} />
+              <Route path="sessions/view/:sessions_id" element={<SessionDetails />} />
 
               <Route path="representant/add" element={<AddRepresentant />} />
               <Route path="representants" element={<Representants />} />
