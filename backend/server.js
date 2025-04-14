@@ -31,8 +31,9 @@ app.use('/', require('./routes/benificaireRoutes'))
 app.use('/', require('./routes/marqueRoutes'))
 app.use('/', require('./routes/prestationRoute'))
 app.use('/', require('./routes/prestationmarRoutes'))
+app.use('/', require('./routes/gesteRoutes'))
 
-app.get('/', (req, res) => res.send('Hello Glob-G'))
+app.get('/', (req, res) => res.send('Hello Gron-G'))
 
 db_connect()
 

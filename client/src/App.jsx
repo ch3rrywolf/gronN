@@ -60,6 +60,9 @@ import AddPrestation from './dashboard/pages/AddPrestation'
 import Prestationmar from './dashboard/pages/Prestationmars'
 import AddPrestationmar from './dashboard/pages/AddPrestationmar'
 
+import Geste from './dashboard/pages/Gestes'
+import AddGeste from './dashboard/pages/AddGeste'
+
 function App() {
   const { store } = useContext(storeContext)
 
@@ -136,6 +139,9 @@ function App() {
 
               <Route path="prestationmars" element={<Prestationmar />} />
               <Route path="prestationmar/add" element={<AddPrestationmar />} />
+
+              <Route path="gestes" element={<Geste />} />
+              <Route path="geste/add" element={<AddGeste />} />
              
             </Route>
 

@@ -164,8 +164,8 @@ const AddBenificaire = () => {
               <input onChange={inputHandler} value={state.numTelBeni} required type='text' placeholder='Numéro de téléphone' name='numTelBeni' id='numTelBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='batimentBeni'>Portable *</label>
-              <input onChange={inputHandler} value={state.batimentBeni} required type='text' placeholder='Portable' name='numPortableBeni' id='numPortableBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <label className='text-md font-medium text-gray-600' htmlFor='numPortableBeni'>Portable *</label>
+              <input onChange={inputHandler} value={state.numPortableBeni} required type='text' placeholder='Portable' name='numPortableBeni' id='numPortableBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
           </div>
 
@@ -206,7 +206,7 @@ const AddBenificaire = () => {
             
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='mt-4'>
-            <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Add Répresentant'}</button>
+            <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Add Bénificaire'}</button>
             </div>
             </div>
 
