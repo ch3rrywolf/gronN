@@ -51,8 +51,6 @@ const Sidebar = () => {
                         <SidebarItem to="/dashboard/prestations" icon={<FaPlus />} label="Prestations" pathname={pathname} />
                         <SidebarItem to="/dashboard/prestationmars" icon={<FaPlus />} label="Prestations Mar" pathname={pathname} />
                         <SidebarItem to="/dashboard/gestes" icon={<FaPlus />} label="Geste" pathname={pathname} />
-                        <SidebarItem to="/dashboard/dossiers" icon={<FaPlus />} label="Dossiers" pathname={pathname} />
-                        <SidebarItem to="/dashboard/representants" icon={<CgProfile />} label="Répresentants" pathname={pathname} />
                         <SidebarItem to="/dashboard/backoffices" icon={<BiNews />} label="Gestion des comptes" pathname={pathname} />
                         
                     </>
@@ -62,7 +60,7 @@ const Sidebar = () => {
                 {store.userInfo?.role === 'backoffice' && (
                     <>
                         <SidebarItem to="/dashboard/backoffice" icon={<AiFillDashboard />} label="Tableau de bord" pathname={pathname} />
-                        <SidebarItem to="/dashboard/dossiers" icon={<FaPlus />} label="Dossiers" pathname={pathname} />
+                        
                     </>
                 )}
 

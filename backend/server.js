@@ -4,7 +4,6 @@ const dotenv = require('dotenv')
 const body_parser = require('body-parser')
 const cors = require('cors')
 const db_connect = require('./utils/db')
-const pdfRoute = require('./routes/pdfRoutes')
 
 dotenv.config()
 
@@ -23,7 +22,6 @@ if (process.env.mode === 'production') {
 const port = process.env.port
 
 app.use('/', require('./routes/authRoutes'))
-app.use('/', require('./routes/pdfRoutes'))
 app.use('/', require('./routes/dossierRoutes'))
 app.use('/', require('./routes/commentRoutes'))
 app.use('/', require('./routes/representantRoutes'))
