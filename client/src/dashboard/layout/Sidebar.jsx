@@ -48,6 +48,7 @@ const Sidebar = () => {
                         <SidebarItem to="/dashboard/benificaires" icon={<FaPlus />} label="Bénificaires" pathname={pathname} />
                         <SidebarItem to="/dashboard/inspecteurs" icon={<FaPlus />} label="Inspecteurs" pathname={pathname} />
                         <SidebarItem to="/dashboard/entretes" icon={<FaPlus />} label="Entreprise retenue" pathname={pathname} />
+                        <SidebarItem to="/dashboard/mandas" icon={<FaPlus />} label="Mandataires" pathname={pathname} />
                         <SidebarItem to="/dashboard/marques" icon={<FaPlus />} label="Marques" pathname={pathname} />
                         <SidebarItem to="/dashboard/prestations" icon={<FaPlus />} label="Prestations" pathname={pathname} />
                         <SidebarItem to="/dashboard/prestationmars" icon={<FaPlus />} label="Prestations Mar" pathname={pathname} />

@@ -27,4 +27,12 @@ router.put('/api/entretes/update/:id',middleware.auth,middleware.role, authContr
 router.delete('/api/entretes/delete/:id',middleware.auth,middleware.role, authController.delete_entrete)
 router.put('/api/entretes/status-update/:entretes_id', middleware.auth, authController.update_entrete_status)
 
+router.post('/api/manda/add',middleware.auth,middleware.role, authController.add_manda)
+router.get('/api/mandas',middleware.auth,middleware.role, authController.get_mandas)
+router.get('/api/mandas/:mandas_id', middleware.auth, authController.get_mandas_details)
+router.put('/api/mandas/update/:id',middleware.auth,middleware.role, authController.update_manda)
+router.delete('/api/mandas/delete/:id',middleware.auth,middleware.role, authController.delete_manda)
+router.put('/api/mandas/status-update/:mandas_id', middleware.auth, authController.update_manda_status)
+
+
 module.exports = router

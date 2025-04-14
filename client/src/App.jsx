@@ -71,6 +71,8 @@ import AddEntrete from './dashboard/pages/AddEntrete'
 import EntreteDetails from './dashboard/pages/EntreteDetails'
 import EntreteIndex from './dashboard/pages/EntreteIndex'
 
+import Mandas from './dashboard/pages/Mandas'
+
 function App() {
   const { store } = useContext(storeContext)
 
@@ -157,6 +159,8 @@ function App() {
               <Route path="entretes" element={<Entretes />} />
               <Route path="entrete/add" element={<AddEntrete />} />              
               <Route path="entretes/view/:entretes_id" element={<EntreteDetails />} />
+
+              <Route path="mandas" element={<Mandas />} />
              
             </Route>
 

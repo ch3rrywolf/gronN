@@ -555,6 +555,190 @@ update_backoffice_status = async (req, res) => {
                         return res.status(500).json({ message: 'Internal server error' });
                     }
                 };
+
+                //Mandataires
+
+                add_manda = async (req, res) => {
+
+                    const {name, email, password,raiSocMan,numTelMan,formJurMan,emailMan,adresseMan,villeMan,codePostalMan,siteWebMan,montCapMan,tauxTVAMan,signatureMan,nomRepParMan,prenomRepParMan,genreRepParMan,fonctionRepParMan,numTelRepParMan,emailRepParMan,sirenIdentMan,siretIdentMan,identTVAIdentMan,rcsIdentMan,numAPEIdentMan,numAgrIdentMan,numDecIdentMan,raisocAssMan,adresseAssMan,numPolAssMan,dateEmiAssMan,dateFinAssMan } = req.body
+            
+                    if (!raiSocMan) {
+                        return res.status(404).json({ message: 'Veuillez fournir le raiSocMan' })
+                    }
+                    if (!adresseMan) {
+                        return res.status(404).json({ message: 'Veuillez fournir le adresseMan' })
+                    }
+                    if (!villeMan) {
+                        return res.status(404).json({ message: 'Veuillez fournir villeMan' })
+                    }
+                    if (!codePostalMan) {
+                        return res.status(404).json({ message: 'Veuillez fournir codePostalMan' })
+                    }
+                    if (!password) {
+                        return res.status(404).json({ message: 'Veuillez fournir Password' })
+                    }
+                    
+                    if (emailMan && !emailMan.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+                        return res.status(404).json({ message: 'veuillez fournir emailMan form valide' })
+                    }
+                    if (!name) {
+                        return res.status(404).json({ message: 'Veuillez fournir votre name' })
+                    }
+                    if (!email) {
+                        return res.status(404).json({ message: 'Veuillez fournir votre email' })
+                    }
+                    if (email && !email.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+                        return res.status(404).json({ message: 'veuillez fournir email form valide' })
+                    }
+                    try {
+                        const manda = await authModel.findOne({ email: email.trim() })
+                        if (manda) {
+                            return res.status(404).json({ message: 'utilisateur existe déjà' })
+                        } else {
+                            const new_manda = await authModel.create({
+                                name: name.trim(),
+                                email: email.trim(),
+                                password: await bcrypt.hash(password.trim(), 10),
+                                role: 'manda',
+    
+                                raiSocMan: raiSocMan.trim(),
+                                numTelMan: numTelMan.trim(),
+                                formJurMan: formJurMan.trim(),
+                                emailMan: emailMan.trim(),
+                                adresseMan: adresseMan.trim(),
+                                villeMan: villeMan.trim(),
+                                codePostalMan: codePostalMan.trim(),
+                                siteWebMan: siteWebMan.trim(),
+                                montCapMan: montCapMan.trim(),
+                                tauxTVAMan: tauxTVAMan.trim(),
+                                signatureMan: signatureMan.trim(),
+                                // represent par
+                                nomRepParMan: nomRepParMan.trim(),
+                                prenomRepParMan: prenomRepParMan.trim(),
+                                genreRepParMan: genreRepParMan.trim(),
+                                fonctionRepParMan: fonctionRepParMan.trim(),
+                                numTelRepParMan: numTelRepParMan.trim(),
+                                emailRepParMan: emailRepParMan.trim(),
+                                // RGE
+                                
+                                //Identifiants
+                                sirenIdentMan: sirenIdentMan.trim(),
+                                siretIdentMan: siretIdentMan.trim(),
+                                identTVAIdentMan: identTVAIdentMan.trim(),
+                                rcsIdentMan: rcsIdentMan.trim(),
+                                numAPEIdentMan: numAPEIdentMan.trim(),
+                                numAgrIdentMan: numAgrIdentMan.trim(),
+                                numDecIdentMan: numDecIdentMan.trim(),
+                                // Assurance
+                                raisocAssMan: raisocAssMan.trim(),
+                                adresseAssMan: adresseAssMan.trim(),
+                                numPolAssMan: numPolAssMan.trim(),
+                                dateEmiAssMan: dateEmiAssMan.trim(),
+                                dateFinAssMan: dateFinAssMan.trim(),
+                                
+                                
+                            })
+                            return res.status(201).json({ message: 'manda ajouter du succès', manda: new_manda })
+                        }
+                    } catch (error) {
+                        return res.status(500).json({ message: 'Erreur interne du serveur' })
+                    }
+                }
+            
+                get_mandas = async (req, res) => {
+                    try {
+                        const mandas = await authModel.find({ role: "manda" }).sort({ createdAt: -1 })
+                        return res.status(200).json({ mandas })
+                    } catch (error) {
+                        return res.status(500).json({ message: 'Erreur interne du serveur' })
+                    }
+                }
+            
+                get_mandas_details = async (req, res) => {
+                        const { mandas_id } = req.params;
+                       
+                        
+                        if (!mongoose.Types.ObjectId.isValid(mandas_id)) {
+                            return res.status(400).json({ message: 'Invalid mandas ID' });
+                        }
+                    
+                        try {
+                            const mandas = await authModel.findById(mandas_id);
+                            return res.status(200).json({ mandas });
+                        } catch (error) {
+                            console.log(error.message);
+                            return res.status(500).json({ message: 'Internal server error' });
+                        }
+                    }
+            
+            update_manda_status = async (req, res) => {
+                          const { role } = req.userInfo
+                          const { mandas_id } = req.params
+                          const { accountStatus } = req.body
+                  
+                          if (role === 'admin') {
+                              const mandas = await authModel.findByIdAndUpdate(mandas_id, { accountStatus }, { new: true })
+                              return res.status(200).json({ message: 'manda status update success', mandas })
+                          } else {
+                              return res.status(401).json({ message: 'You cannot access this api' })
+                          }
+                      }
+            
+                    update_manda = async (req, res) => {
+                        const { id } = req.params;
+                        const { name, email, password,raiSocMan,numTelMan,formJurMan,emailMan,adresseMan,villeMan,codePostalMan,siteWebMan,montCapMan,tauxTVAMan,signatureMan,nomRepParMan,prenomRepParMan,genreRepParMan,fonctionRepParMan,numTelRepParMan,emailRepParMan,sirenIdentMan,siretIdentMan,identTVAIdentMan,rcsIdentMan,numAPEIdentMan,numAgrIdentMan,numDecIdentMan,raisocAssMan,adresseAssMan,numPolAssMan,dateEmiAssMan,dateFinAssMan,documentsMan } = req.body;
+                    
+                        if (!name) {
+                            return res.status(400).json({ message: 'Please provide a name' });
+                        }
+                    
+                        try {
+                            
+                            let updateFields = { name: name.trim() };
+                    
+                        
+            
+                            if (accountStatus) {
+                                updateFields.accountStatus = accountStatus.trim();
+                            }
+        
+                            if (raiSocEntRe) {
+                                updateFields.raiSocEntRe = raiSocEntRe.trim();
+                            }
+                            if (adresseEntRe) {
+                                updateFields.adresseEntRe = adresseEntRe.trim();
+                            }
+                            
+                    
+                            const updatedManda = await authModel.findByIdAndUpdate(
+                                id,
+                                { $set: updateFields },
+                                { new: true, runValidators: true }
+                            );
+                    
+                            if (!updatedManda) {
+                                return res.status(404).json({ message: 'manda not found' });
+                            }
+                    
+                            return res.status(200).json({ message: 'manda updated successfully', manda: updatedManda });
+                        } catch (error) {
+                            return res.status(500).json({ message: 'Internal server error', error: error.message });
+                        }
+                    };
+                
+                    delete_manda = async (req, res) => {
+                        const { id } = req.params;
+                
+                        try {
+                            const deletedManda = await authModel.findByIdAndDelete(id);
+                            if (!deletedManda) {
+                                return res.status(404).json({ message: 'manda not found' });
+                            }
+                            return res.status(200).json({ message: 'manda deleted successfully' });
+                        } catch (error) {
+                            return res.status(500).json({ message: 'Internal server error' });
+                        }
+                    };
 }
 
 module.exports = new authController()
