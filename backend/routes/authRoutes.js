@@ -34,5 +34,12 @@ router.put('/api/mandas/update/:id',middleware.auth,middleware.role, authControl
 router.delete('/api/mandas/delete/:id',middleware.auth,middleware.role, authController.delete_manda)
 router.put('/api/mandas/status-update/:mandas_id', middleware.auth, authController.update_manda_status)
 
+router.post('/api/auditeur/add',middleware.auth,middleware.role, authController.add_auditeur)
+router.get('/api/auditeurs',middleware.auth,middleware.role, authController.get_auditeurs)
+router.get('/api/auditeurs/:auditeurs_id', middleware.auth, authController.get_auditeurs_details)
+router.put('/api/auditeurs/update/:id',middleware.auth,middleware.role, authController.update_auditeur)
+router.delete('/api/auditeurs/delete/:id',middleware.auth,middleware.role, authController.delete_auditeur)
+router.put('/api/auditeurs/status-update/:auditeurs_id', middleware.auth, authController.update_auditeur_status)
+
 
 module.exports = router

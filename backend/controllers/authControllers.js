@@ -77,7 +77,6 @@ class authController {
             return res.status(500).json({ message: 'Erreur interne du serveur' })
         }
     }
-
     get_backoffices = async (req, res) => {
         try {
             const backoffices = await authModel.find().sort({ createdAt: -1 })
@@ -86,7 +85,6 @@ class authController {
             return res.status(500).json({ message: 'Erreur interne du serveur' })
         }
     }
-
     get_backoffices_details = async (req, res) => {
             const { backoffices_id } = req.params;
            
@@ -103,7 +101,6 @@ class authController {
                 return res.status(500).json({ message: 'Internal server error' });
             }
         }
-
 update_backoffice_status = async (req, res) => {
               const { role } = req.userInfo
               const { backoffices_id } = req.params
@@ -116,7 +113,6 @@ update_backoffice_status = async (req, res) => {
                   return res.status(401).json({ message: 'You cannot access this api' })
               }
           }
-
         update_backoffice = async (req, res) => {
             const { id } = req.params;
             const { name, email, password, role,accountStatus } = req.body;
@@ -163,7 +159,6 @@ update_backoffice_status = async (req, res) => {
                 return res.status(500).json({ message: 'Internal server error', error: error.message });
             }
         };
-    
         delete_backoffice = async (req, res) => {
             const { id } = req.params;
     
@@ -235,8 +230,7 @@ update_backoffice_status = async (req, res) => {
             } catch (error) {
                 return res.status(500).json({ message: 'Erreur interne du serveur' })
             }
-        }
-    
+        } 
         get_inspecteurs = async (req, res) => {
             try {
                 const inspecteurs = await authModel.find({ role: "inspecteur" }).sort({ createdAt: -1 })
@@ -245,7 +239,6 @@ update_backoffice_status = async (req, res) => {
                 return res.status(500).json({ message: 'Erreur interne du serveur' })
             }
         }
-    
         get_inspecteurs_details = async (req, res) => {
                 const { inspecteurs_id } = req.params;
                
@@ -262,7 +255,6 @@ update_backoffice_status = async (req, res) => {
                     return res.status(500).json({ message: 'Internal server error' });
                 }
             }
-    
     update_inspecteur_status = async (req, res) => {
                   const { role } = req.userInfo
                   const { inspecteurs_id } = req.params
@@ -274,8 +266,7 @@ update_backoffice_status = async (req, res) => {
                   } else {
                       return res.status(401).json({ message: 'You cannot access this api' })
                   }
-              }
-    
+              } 
             update_inspecteur = async (req, res) => {
                 const { id } = req.params;
                 const { name, email, password, role,accountStatus,nomIns,prenomIns,roleIns,superviseur,villeIns,adresseIns,codePostalIns,emailIns,numTelIns } = req.body;
@@ -349,8 +340,7 @@ update_backoffice_status = async (req, res) => {
                 } catch (error) {
                     return res.status(500).json({ message: 'Internal server error', error: error.message });
                 }
-            };
-        
+            };     
             delete_inspecteur = async (req, res) => {
                 const { id } = req.params;
         
@@ -364,6 +354,190 @@ update_backoffice_status = async (req, res) => {
                     return res.status(500).json({ message: 'Internal server error' });
                 }
             };
+
+            //Auditeur
+
+            add_auditeur = async (req, res) => {
+
+                const {name, email, password, raiSocAud,numTelAud,formJurAud,emailAud,adresseAud,villeAud,codePostalAud,siteWebAud,montCapAud,tauxTVAAud,signatureAud,nomRepParAud,prenomRepParAud,genreRepParAud,fonctionRepParAud,numTelRepParAud,emailRepParAud,qualifiRGEAud,numRGEAud,editLeRGEAud,valableJusRGEAud,sirenIdentAud,siretIdentAud,identTVAIdentAud,rcsIdentAud,numAPEIdentAud,numAgrIdentAud,numDecIdentAud,raisocAssAud,adresseAssAud,numPolAssAud,dateEmiAssAud,dateFinAssAud,documentsAud} = req.body
+        
+                if (!raiSocAud) {
+                    return res.status(404).json({ message: 'Veuillez fournir le raiSocAud' })
+                }
+                if (!adresseAud) {
+                    return res.status(404).json({ message: 'Veuillez fournir le adresseAud' })
+                }
+                if (!villeAud) {
+                    return res.status(404).json({ message: 'Veuillez fournir villeAud' })
+                }
+                if (!codePostalAud) {
+                    return res.status(404).json({ message: 'Veuillez fournir codePostalAud' })
+                }
+                if (!password) {
+                    return res.status(404).json({ message: 'Veuillez fournir Password' })
+                }
+                
+                if (emailAud && !emailAud.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+                    return res.status(404).json({ message: 'veuillez fournir emailAud form valide' })
+                }
+                if (!name) {
+                    return res.status(404).json({ message: 'Veuillez fournir votre name' })
+                }
+                if (!email) {
+                    return res.status(404).json({ message: 'Veuillez fournir votre email' })
+                }
+                if (email && !email.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+                    return res.status(404).json({ message: 'veuillez fournir email form valide' })
+                }
+                try {
+                    const auditeur = await authModel.findOne({ email: email.trim() })
+                    if (auditeur) {
+                        return res.status(404).json({ message: 'utilisateur existe déjà' })
+                    } else {
+                        const new_auditeur = await authModel.create({
+                            name: name.trim(),
+                            email: email.trim(),
+                            password: await bcrypt.hash(password.trim(), 10),
+                            role: 'auditeur',
+
+                            raiSocAud: raiSocAud.trim(),
+                            numTelAud: numTelAud.trim(),
+                            formJurAud: formJurAud.trim(),
+                            emailAud: emailAud.trim(),
+                            adresseAud: adresseAud.trim(),
+                            villeAud: villeAud.trim(),
+                            codePostalAud: codePostalAud.trim(),
+                            siteWebAud: siteWebAud.trim(),
+                            montCapAud: montCapAud.trim(),
+                            tauxTVAAud: tauxTVAAud.trim(),
+                            signatureAud: signatureAud.trim(),
+                            // represent par
+                            nomRepParAud: nomRepParAud.trim(),
+                            prenomRepParAud: prenomRepParAud.trim(),
+                            genreRepParAud: genreRepParAud.trim(),
+                            fonctionRepParAud: fonctionRepParAud.trim(),
+                            numTelRepParAud: numTelRepParAud.trim(),
+                            emailRepParAud: emailRepParAud.trim(),
+                            // RGE
+                            qualifiRGEAud: qualifiRGEAud.trim(),
+                            numRGEAud: numRGEAud.trim(),
+                            editLeRGEAud: editLeRGEAud.trim(),
+                            valableJusRGEAud: valableJusRGEAud.trim(),
+                            
+                            //Identifiants
+                            sirenIdentAud: sirenIdentAud.trim(),
+                            siretIdentAud: siretIdentAud.trim(),
+                            identTVAIdentAud: identTVAIdentAud.trim(),
+                            rcsIdentAud: rcsIdentAud.trim(),
+                            numAPEIdentAud: numAPEIdentAud.trim(),
+                            numAgrIdentAud: numAgrIdentAud.trim(),
+                            numDecIdentAud: numDecIdentAud.trim(),
+                            // Assurance
+                            raisocAssAud: raisocAssAud.trim(),
+                            adresseAssAud: adresseAssAud.trim(),
+                            numPolAssAud: numPolAssAud.trim(),
+                            dateEmiAssAud: dateEmiAssAud.trim(),
+                            dateFinAssAud: dateFinAssAud.trim(),
+                            documentsAud: documentsAud.trim(),
+                            
+                            
+                        })
+                        return res.status(201).json({ message: 'auditeur ajouter du succès', auditeur: new_auditeur })
+                    }
+                } catch (error) {
+                    return res.status(500).json({ message: 'Erreur interne du serveur' })
+                }
+            }          
+            get_auditeurs = async (req, res) => {
+                try {
+                    const auditeurs = await authModel.find({ role: "auditeur" }).sort({ createdAt: -1 })
+                    return res.status(200).json({ auditeurs })
+                } catch (error) {
+                    return res.status(500).json({ message: 'Erreur interne du serveur' })
+                }
+            }           
+            get_auditeurs_details = async (req, res) => {
+                    const { auditeurs_id } = req.params;
+                   
+                    
+                    if (!mongoose.Types.ObjectId.isValid(auditeurs_id)) {
+                        return res.status(400).json({ message: 'Invalid auditeurs ID' });
+                    }
+                
+                    try {
+                        const auditeurs = await authModel.findById(auditeurs_id);
+                        return res.status(200).json({ auditeurs });
+                    } catch (error) {
+                        console.log(error.message);
+                        return res.status(500).json({ message: 'Internal server error' });
+                    }
+                }           
+        update_auditeur_status = async (req, res) => {
+                      const { role } = req.userInfo
+                      const { auditeurs_id } = req.params
+                      const { accountStatus } = req.body
+              
+                      if (role === 'admin') {
+                          const auditeurs = await authModel.findByIdAndUpdate(auditeurs_id, { accountStatus }, { new: true })
+                          return res.status(200).json({ message: 'auditeur status update success', auditeurs })
+                      } else {
+                          return res.status(401).json({ message: 'You cannot access this api' })
+                      }
+                  }           
+                update_auditeur = async (req, res) => {
+                    const { id } = req.params;
+                    const { name, email, password, raiSocAud,numTelAud,formJurAud,emailAud,adresseAud,villeAud,codePostalAud,siteWebAud,montCapAud,tauxTVAAud,signatureAud,nomRepParAud,prenomRepParAud,genreRepParAud,fonctionRepParAud,numTelRepParAud,emailRepParAud,qualifiRGEAud,numRGEAud,editLeRGEAud,valableJusRGEAud,sirenIdentAud,siretIdentAud,identTVAIdentAud,rcsIdentAud,numAPEIdentAud,numAgrIdentAud,numDecIdentAud,raisocAssAud,adresseAssAud,numPolAssAud,dateEmiAssAud,dateFinAssAud,documentsAud } = req.body;
+                
+                    if (!name) {
+                        return res.status(400).json({ message: 'Please provide a name' });
+                    }
+                
+                    try {
+                        
+                        let updateFields = { name: name.trim() };
+                
+                    
+        
+                        if (accountStatus) {
+                            updateFields.accountStatus = accountStatus.trim();
+                        }
+    
+                        if (raiSocEntRe) {
+                            updateFields.raiSocEntRe = raiSocEntRe.trim();
+                        }
+                        if (adresseEntRe) {
+                            updateFields.adresseEntRe = adresseEntRe.trim();
+                        }
+                        
+                
+                        const updatedAuditeur = await authModel.findByIdAndUpdate(
+                            id,
+                            { $set: updateFields },
+                            { new: true, runValidators: true }
+                        );
+                
+                        if (!updatedAuditeur) {
+                            return res.status(404).json({ message: 'auditeur not found' });
+                        }
+                
+                        return res.status(200).json({ message: 'auditeur updated successfully', auditeur: updatedAuditeur });
+                    } catch (error) {
+                        return res.status(500).json({ message: 'Internal server error', error: error.message });
+                    }
+                };               
+                delete_auditeur = async (req, res) => {
+                    const { id } = req.params;
+            
+                    try {
+                        const deletedAuditeur = await authModel.findByIdAndDelete(id);
+                        if (!deletedAuditeur) {
+                            return res.status(404).json({ message: 'auditeur not found' });
+                        }
+                        return res.status(200).json({ message: 'auditeur deleted successfully' });
+                    } catch (error) {
+                        return res.status(500).json({ message: 'Internal server error' });
+                    }
+                };
 
 
             // Entreprise retenue
@@ -459,8 +633,7 @@ update_backoffice_status = async (req, res) => {
                 } catch (error) {
                     return res.status(500).json({ message: 'Erreur interne du serveur' })
                 }
-            }
-        
+            }       
             get_entretes = async (req, res) => {
                 try {
                     const entretes = await authModel.find({ role: "entrete" }).sort({ createdAt: -1 })
@@ -468,8 +641,7 @@ update_backoffice_status = async (req, res) => {
                 } catch (error) {
                     return res.status(500).json({ message: 'Erreur interne du serveur' })
                 }
-            }
-        
+            }      
             get_entretes_details = async (req, res) => {
                     const { entretes_id } = req.params;
                    
@@ -485,8 +657,7 @@ update_backoffice_status = async (req, res) => {
                         console.log(error.message);
                         return res.status(500).json({ message: 'Internal server error' });
                     }
-                }
-        
+                }        
         update_entrete_status = async (req, res) => {
                       const { role } = req.userInfo
                       const { entretes_id } = req.params
@@ -498,8 +669,7 @@ update_backoffice_status = async (req, res) => {
                       } else {
                           return res.status(401).json({ message: 'You cannot access this api' })
                       }
-                  }
-        
+                  }        
                 update_entrete = async (req, res) => {
                     const { id } = req.params;
                     const { name, email, password,raiSocEntRe,numTelEntRe,formJurEntRe, emailEntRe,adresseEntRe, villeEntRe,codePostalEntRe,siteWebEntRe,montCapEntRe,tauxTVAEntRe,signatureEntRe,nomRepParEntRe,prenomRepParEntRe,genreRepParEntRe,fonctionRepParEntRe,numTelRepParEntRe,emailRepParEntRe,qualifiRGEEntRe,numRGEEntRe,editLeRGEEntRe,valableJusRGEEntRe,sirenIdentEntRe,siretIdentEntRe,identTVAIdentEntRe,rcsIdentEntRe,numAPEIdentEntRe,numAgrIdentEntRe,numDecIdentEntRe,raisocAssEntRe,adresseAssEntRe,numPolAssEntRe,dateEmiAssEntRe,dateFinAssEntRe,documentsEntRe,genRevAudEntRe,genDevisEntRe } = req.body;
@@ -540,8 +710,7 @@ update_backoffice_status = async (req, res) => {
                     } catch (error) {
                         return res.status(500).json({ message: 'Internal server error', error: error.message });
                     }
-                };
-            
+                };           
                 delete_entrete = async (req, res) => {
                     const { id } = req.params;
             
@@ -643,8 +812,7 @@ update_backoffice_status = async (req, res) => {
                     } catch (error) {
                         return res.status(500).json({ message: 'Erreur interne du serveur' })
                     }
-                }
-            
+                }          
                 get_mandas = async (req, res) => {
                     try {
                         const mandas = await authModel.find({ role: "manda" }).sort({ createdAt: -1 })
@@ -652,8 +820,7 @@ update_backoffice_status = async (req, res) => {
                     } catch (error) {
                         return res.status(500).json({ message: 'Erreur interne du serveur' })
                     }
-                }
-            
+                }           
                 get_mandas_details = async (req, res) => {
                         const { mandas_id } = req.params;
                        
@@ -669,8 +836,7 @@ update_backoffice_status = async (req, res) => {
                             console.log(error.message);
                             return res.status(500).json({ message: 'Internal server error' });
                         }
-                    }
-            
+                    }           
             update_manda_status = async (req, res) => {
                           const { role } = req.userInfo
                           const { mandas_id } = req.params
@@ -682,8 +848,7 @@ update_backoffice_status = async (req, res) => {
                           } else {
                               return res.status(401).json({ message: 'You cannot access this api' })
                           }
-                      }
-            
+                      }           
                     update_manda = async (req, res) => {
                         const { id } = req.params;
                         const { name, email, password,raiSocMan,numTelMan,formJurMan,emailMan,adresseMan,villeMan,codePostalMan,siteWebMan,montCapMan,tauxTVAMan,signatureMan,nomRepParMan,prenomRepParMan,genreRepParMan,fonctionRepParMan,numTelRepParMan,emailRepParMan,sirenIdentMan,siretIdentMan,identTVAIdentMan,rcsIdentMan,numAPEIdentMan,numAgrIdentMan,numDecIdentMan,raisocAssMan,adresseAssMan,numPolAssMan,dateEmiAssMan,dateFinAssMan,documentsMan } = req.body;
@@ -724,8 +889,7 @@ update_backoffice_status = async (req, res) => {
                         } catch (error) {
                             return res.status(500).json({ message: 'Internal server error', error: error.message });
                         }
-                    };
-                
+                    };               
                     delete_manda = async (req, res) => {
                         const { id } = req.params;
                 
