@@ -79,6 +79,8 @@ import MandaDetails from './dashboard/pages/MandaDetails'
 import MandaIndex from './dashboard/pages/MandaIndex'
 
 import Auditeurs from './dashboard/pages/Auditeurs'
+import AuditeurDetails from './dashboard/pages/AuditeurDetails'
+import AuditeurIndex from './dashboard/pages/AuditeurIndex'
 
 function App() {
   const { store } = useContext(storeContext)
@@ -172,8 +174,8 @@ function App() {
               <Route path="mandas/view/:mandas_id" element={<MandaDetails />} />
 
               <Route path="auditeurs" element={<Auditeurs />} />
-              {/* <Route path="manda/add" element={<AddManda />} />
-              <Route path="mandas/view/:mandas_id" element={<MandaDetails />} /> */}
+              {/* <Route path="manda/add" element={<AddManda />} /> */}
+              <Route path="auditeurs/view/:auditeurs_id" element={<AuditeurDetails />} />
              
             </Route>
 
@@ -196,6 +198,14 @@ function App() {
             {/* Manda Route: Limited access */}
             <Route path="" element={<ProtectRole role="manda" />}>
               <Route path="manda" element={<MandaIndex />} />
+
+              {/* <Route path="dossiers" element={<Dossiers />} /> */}
+             
+            </Route>
+
+            {/* Manda Route: Limited access */}
+            <Route path="" element={<ProtectRole role="auditeur" />}>
+              <Route path="auditeur" element={<AuditeurIndex />} />
 
               {/* <Route path="dossiers" element={<Dossiers />} /> */}
              
