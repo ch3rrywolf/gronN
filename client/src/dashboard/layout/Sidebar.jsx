@@ -15,6 +15,7 @@ import { BiDonateHeart } from "react-icons/bi";
 import { BiSolidDonateHeart } from "react-icons/bi";
 import { AiTwotoneContainer } from "react-icons/ai";
 import { FaUsersGear } from "react-icons/fa6";
+import { FaFolderOpen } from "react-icons/fa";
 
 import storeContext from '../../context/storeContext';
 
@@ -64,6 +65,7 @@ const Sidebar = () => {
                         <SidebarItem to="/dashboard/prestations" icon={<BiDonateHeart />} label="Prestations" pathname={pathname} />
                         <SidebarItem to="/dashboard/prestationmars" icon={<BiSolidDonateHeart />} label="Prestations Mar" pathname={pathname} />
                         <SidebarItem to="/dashboard/gestes" icon={<AiTwotoneContainer />} label="Geste" pathname={pathname} />
+                        <SidebarItem to="/dashboard/folders" icon={<FaFolderOpen />} label="Dossier" pathname={pathname} />
                         <SidebarItem to="/dashboard/backoffices" icon={<FaUsersGear />} label="Gestion des comptes" pathname={pathname} />
                         
                     </>

@@ -78,10 +78,13 @@ import AddManda from './dashboard/pages/AddManda'
 import MandaDetails from './dashboard/pages/MandaDetails'
 import MandaIndex from './dashboard/pages/MandaIndex'
 
+
 import Auditeurs from './dashboard/pages/Auditeurs'
 import AuditeurDetails from './dashboard/pages/AuditeurDetails'
 import AuditeurIndex from './dashboard/pages/AuditeurIndex'
 import AddAuditeur from './dashboard/pages/AddAuditeur'
+
+import Folders from './dashboard/pages/Folders'
 
 function App() {
   const { store } = useContext(storeContext)
@@ -177,6 +180,9 @@ function App() {
               <Route path="auditeurs" element={<Auditeurs />} />
               <Route path="auditeur/add" element={<AddAuditeur />} />
               <Route path="auditeurs/view/:auditeurs_id" element={<AuditeurDetails />} />
+
+              <Route path="folders" element={<Folders />} />
+
              
             </Route>
 
