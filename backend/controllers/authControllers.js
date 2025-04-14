@@ -41,6 +41,8 @@ class authController {
     }
     //votre compte n'est pas activé, contactez l'administrateur pour vérifier le compte
 
+
+    // Exmple Backoffice session
     add_backoffice = async (req, res) => {
 
         const { email, name, password } = req.body
@@ -175,6 +177,156 @@ update_backoffice_status = async (req, res) => {
                 return res.status(500).json({ message: 'Internal server error' });
             }
         };
+
+        // Inspecteur Session
+
+        add_inspecteur = async (req, res) => {
+
+            const {name, email, nomIns,prenomIns, roleIns, superviseur,villeIns,adresseIns,codePostalIns,emailIns,numTelIns, password } = req.body
+    
+            if (!nomIns) {
+                return res.status(404).json({ message: 'Veuillez fournir le nom' })
+            }
+            if (!prenomIns) {
+                return res.status(404).json({ message: 'Veuillez fournir le prenom' })
+            }
+            if (!roleIns) {
+                return res.status(404).json({ message: 'Veuillez fournir le roleIns' })
+            }
+            if (!password) {
+                return res.status(404).json({ message: 'Veuillez fournir votre mot de passe' })
+            }
+            
+            if (emailIns && !emailIns.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+                return res.status(404).json({ message: 'veuillez fournir emailIns form valide' })
+            }
+            if (!name) {
+                return res.status(404).json({ message: 'Veuillez fournir votre name' })
+            }
+            if (!email) {
+                return res.status(404).json({ message: 'Veuillez fournir votre email' })
+            }
+            if (email && !email.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+                return res.status(404).json({ message: 'veuillez fournir email form valide' })
+            }
+            try {
+                const inspecteur = await authModel.findOne({ email: email.trim() })
+                if (inspecteur) {
+                    return res.status(404).json({ message: 'utilisateur existe déjà' })
+                } else {
+                    const new_inspecteur = await authModel.create({
+                        name: name.trim(),
+                        email: email.trim(),
+                        password: await bcrypt.hash(password.trim(), 10),
+                        role: 'inspecteur',
+                        
+                    })
+                    return res.status(201).json({ message: 'inspecteur ajouter du succès', inspecteur: new_inspecteur })
+                }
+            } catch (error) {
+                return res.status(500).json({ message: 'Erreur interne du serveur' })
+            }
+        }
+    
+        get_inspecteurs = async (req, res) => {
+            try {
+                const inspecteurs = await authModel.find().sort({ createdAt: -1 })
+                return res.status(200).json({ inspecteurs })
+            } catch (error) {
+                return res.status(500).json({ message: 'Erreur interne du serveur' })
+            }
+        }
+    
+        get_inspecteurs_details = async (req, res) => {
+                const { inspecteurs_id } = req.params;
+               
+                
+                if (!mongoose.Types.ObjectId.isValid(inspecteurs_id)) {
+                    return res.status(400).json({ message: 'Invalid inspecteurs ID' });
+                }
+            
+                try {
+                    const inspecteurs = await authModel.findById(inspecteurs_id);
+                    return res.status(200).json({ inspecteurs });
+                } catch (error) {
+                    console.log(error.message);
+                    return res.status(500).json({ message: 'Internal server error' });
+                }
+            }
+    
+    update_inspecteur_status = async (req, res) => {
+                  const { role } = req.userInfo
+                  const { inspecteurs_id } = req.params
+                  const { accountStatus } = req.body
+          
+                  if (role === 'admin') {
+                      const inspecteurs = await authModel.findByIdAndUpdate(inspecteurs_id, { accountStatus }, { new: true })
+                      return res.status(200).json({ message: 'inspecteur status update success', inspecteurs })
+                  } else {
+                      return res.status(401).json({ message: 'You cannot access this api' })
+                  }
+              }
+    
+            update_backoffice = async (req, res) => {
+                const { id } = req.params;
+                const { name, email, password, role,accountStatus } = req.body;
+            
+                if (!name) {
+                    return res.status(400).json({ message: 'Please provide a name' });
+                }
+            
+                try {
+                    
+                    let updateFields = { name: name.trim() };
+            
+                    if (email) {
+                        if (!email.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+                            return res.status(400).json({ message: 'Please provide a valid email' });
+                        }
+                        updateFields.email = email.trim();
+                    }
+            
+                    if (password) {
+                        updateFields.password = await bcrypt.hash(password.trim(), 10);
+                    }
+            
+                    if (role) {
+                        updateFields.role = role.trim();
+                    }
+    
+                    if (accountStatus) {
+                        updateFields.accountStatus = accountStatus.trim();
+                    }
+            
+                    const updatedBackoffice = await authModel.findByIdAndUpdate(
+                        id,
+                        { $set: updateFields },
+                        { new: true, runValidators: true }
+                    );
+            
+                    if (!updatedBackoffice) {
+                        return res.status(404).json({ message: 'Backoffice not found' });
+                    }
+            
+                    return res.status(200).json({ message: 'Backoffice updated successfully', backoffice: updatedBackoffice });
+                } catch (error) {
+                    return res.status(500).json({ message: 'Internal server error', error: error.message });
+                }
+            };
+        
+            delete_backoffice = async (req, res) => {
+                const { id } = req.params;
+        
+                try {
+                    const deletedBackoffice = await authModel.findByIdAndDelete(id);
+                    if (!deletedBackoffice) {
+                        return res.status(404).json({ message: 'backoffice not found' });
+                    }
+                    return res.status(200).json({ message: 'backoffice deleted successfully' });
+                } catch (error) {
+                    return res.status(500).json({ message: 'Internal server error' });
+                }
+            };
 }
 
 module.exports = new authController()
