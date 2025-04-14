@@ -86,6 +86,7 @@ import AddAuditeur from './dashboard/pages/AddAuditeur'
 
 import Folders from './dashboard/pages/Folders'
 import AddFolder from './dashboard/pages/AddFolder'
+import FolderDetails from './dashboard/pages/FolderDetails'
 
 function App() {
   const { store } = useContext(storeContext)
@@ -184,6 +185,7 @@ function App() {
 
               <Route path="folders" element={<Folders />} />
               <Route path="folders/add" element={<AddFolder />} />
+              <Route path="folders/view/:folders_id" element={<FolderDetails />} />
 
              
             </Route>
