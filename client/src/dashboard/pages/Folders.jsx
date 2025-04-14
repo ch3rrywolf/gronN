@@ -150,7 +150,8 @@ const Folders = () => {
                     <td className='px-6 py-4'>{n._id}</td>
                     <td className='px-6 py-4'>{n.numFolderAnah}</td>
                     <td className='px-6 py-4'>{"Entreprise retenue"}</td>
-                    <td className='px-6 py-4'>{n.createdAt}</td>
+                    <td className='px-6 py-4'>{n.source}</td>
+                    <td className='px-6 py-4'>{new Date(n.createdAt).toLocaleDateString('fr-FR')}</td>
                     <td className='px-6 py-4'>{"benificaire name"}</td>
                     <td className='px-6 py-4'>{"société"}</td>
                     <td className='px-6 py-4'>{"Adresse Client"}</td>

@@ -12,7 +12,7 @@ class folderController {
         }
     
         try {
-            const folder = await dossierModel.findOne({ numFolderAnah: numFolderAnah.trim() });
+            const folder = await folderModel.findOne({ numFolderAnah: numFolderAnah.trim() });
             if (folder) {
                 return res.status(409).json({ message: 'folder already exists' });
             }

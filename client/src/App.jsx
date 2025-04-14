@@ -85,6 +85,7 @@ import AuditeurIndex from './dashboard/pages/AuditeurIndex'
 import AddAuditeur from './dashboard/pages/AddAuditeur'
 
 import Folders from './dashboard/pages/Folders'
+import AddFolder from './dashboard/pages/AddFolder'
 
 function App() {
   const { store } = useContext(storeContext)
@@ -182,6 +183,7 @@ function App() {
               <Route path="auditeurs/view/:auditeurs_id" element={<AuditeurDetails />} />
 
               <Route path="folders" element={<Folders />} />
+              <Route path="folders/add" element={<AddFolder />} />
 
              
             </Route>
