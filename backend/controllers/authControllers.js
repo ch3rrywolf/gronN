@@ -451,7 +451,6 @@ update_backoffice_status = async (req, res) => {
                             // Parametrage
                             genRevAudEntRe: genRevAudEntRe.trim(),
                             genDevisEntRe: genDevisEntRe.trim(),
-                            documentsEntRe: documentsEntRe.trim(),
                             
                             
                         })

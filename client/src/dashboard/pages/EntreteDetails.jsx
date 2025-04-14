@@ -28,6 +28,36 @@ const EntreteDetails = () => {
   const [tauxTVAEntRe, settauxTVAEntRe] = useState("");
   const [signatureEntRe, setsignatureEntRe] = useState("");
 
+  const [nomRepParEntRe, setnomRepParEntRe] = useState("");
+  const [prenomRepParEntRe, setprenomRepParEntRe] = useState("");
+  const [genreRepParEntRe, setgenreRepParEntRe] = useState("");
+  const [fonctionRepParEntRe, setfonctionRepParEntRe] = useState("");
+  const [numTelRepParEntRe, setnumTelRepParEntRe] = useState("");
+  const [emailRepParEntRe, setemailRepParEntRe] = useState("");
+
+  const [qualifiRGEEntRe, setqualifiRGEEntRe] = useState("");
+  const [numRGEEntRe, setnumRGEEntRe] = useState("");
+  const [editLeRGEEntRe, seteditLeRGEEntRe] = useState("");
+  const [valableJusRGEEntRe, setvalableJusRGEEntRe] = useState("");
+
+  const [sirenIdentEntRe, setsirenIdentEntRe] = useState("");
+  const [siretIdentEntRe, setsiretIdentEntRe] = useState("");
+  const [identTVAIdentEntRe, setidentTVAIdentEntRe] = useState("");
+  const [rcsIdentEntRe, setrcsIdentEntRe] = useState("");
+  const [numAPEIdentEntRe, setnumAPEIdentEntRe] = useState("");
+  const [numAgrIdentEntRe, setnumAgrIdentEntRe] = useState("");
+  const [numDecIdentEntRe, setnumDecIdentEntRe] = useState("");
+
+  const [raisocAssEntRe, setraisocAssEntRe] = useState("");
+  const [adresseAssEntRe, setadresseAssEntRe] = useState("");
+  const [numPolAssEntRe, setnumPolAssEntRe] = useState("");
+  const [dateEmiAssEntRe, setdateEmiAssEntRe] = useState("");
+  const [dateFinAssEntRe, setdateFinAssEntRe] = useState("");
+  const [documentsEntRe, setdocumentsEntRe] = useState("");
+
+  const [genRevAudEntRe, setgenRevAudEntRe] = useState("");
+  const [genDevisEntRe, setgenDevisEntRe] = useState("");
+
   useEffect(() => {
     getBackoffices();
   }, [entretes_id]);
@@ -55,6 +85,36 @@ const EntreteDetails = () => {
       setmontCapEntRe(data?.entretes?.montCapEntRe);
       settauxTVAEntRe(data?.entretes?.tauxTVAEntRe);
       setsignatureEntRe(data?.entretes?.signatureEntRe);
+
+      setnomRepParEntRe(data?.entretes?.nomRepParEntRe);
+      setprenomRepParEntRe(data?.entretes?.prenomRepParEntRe);
+      setgenreRepParEntRe(data?.entretes?.genreRepParEntRe);
+      setfonctionRepParEntRe(data?.entretes?.fonctionRepParEntRe);
+      setnumTelRepParEntRe(data?.entretes?.numTelRepParEntRe);
+      setemailRepParEntRe(data?.entretes?.emailRepParEntRe);
+
+      setqualifiRGEEntRe(data?.entretes?.qualifiRGEEntRe);
+      setnumRGEEntRe(data?.entretes?.numRGEEntRe);
+      seteditLeRGEEntRe(data?.entretes?.editLeRGEEntRe);
+      setvalableJusRGEEntRe(data?.entretes?.valableJusRGEEntRe);
+
+      setsirenIdentEntRe(data?.entretes?.sirenIdentEntRe);
+      setsiretIdentEntRe(data?.entretes?.siretIdentEntRe);
+      setidentTVAIdentEntRe(data?.entretes?.identTVAIdentEntRe);
+      setrcsIdentEntRe(data?.entretes?.rcsIdentEntRe);
+      setnumAPEIdentEntRe(data?.entretes?.numAPEIdentEntRe);
+      setnumAgrIdentEntRe(data?.entretes?.numAgrIdentEntRe);
+      setnumDecIdentEntRe(data?.entretes?.numDecIdentEntRe);
+
+      setraisocAssEntRe(data?.entretes?.raisocAssEntRe);
+      setadresseAssEntRe(data?.entretes?.adresseAssEntRe);
+      setnumPolAssEntRe(data?.entretes?.numPolAssEntRe);
+      setdateEmiAssEntRe(data?.entretes?.dateEmiAssEntRe);
+      setdateFinAssEntRe(data?.entretes?.dateFinAssEntRe);
+      setdocumentsEntRe(data?.entretes?.documentsEntRe);
+
+      setgenRevAudEntRe(data?.entretes?.genRevAudEntRe);
+      setgenDevisEntRe(data?.entretes?.genDevisEntRe);
     } catch (error) {
       console.error("Error fetching entretes details:", error);
     }
@@ -125,18 +185,18 @@ const EntreteDetails = () => {
           <span className="text-md font-bold">Ville: {villeEntRe}</span>
           
           <span className="text-md font-bold text-red-600">Représentant</span>
-          <span className="text-md font-bold">Nom et Prénom : {"nomRepParEntRe"} {"prenomRepParEntRe"}</span>
+          <span className="text-md font-bold">Nom et Prénom : {nomRepParEntRe} {prenomRepParEntRe}</span>
           <span className="text-md font-bold text-red-600">Identifiant</span>
-          <span className="text-md font-bold">SIREN: {"sirenIdentEntRe"}</span>
-          <span className="text-md font-bold">SIRET: {"siretIdentEntRe"}</span>
-          <span className="text-md font-bold">Identifiant TVA: {"identTVAIdentEntRe"}</span>
-          <span className="text-md font-bold">RCS: {"rcsIdentEntRe"}</span>
-          <span className="text-md font-bold">Numéro APE: {"numAPEIdentEntRe"}</span>
+          <span className="text-md font-bold">SIREN: {sirenIdentEntRe}</span>
+          <span className="text-md font-bold">SIRET: {siretIdentEntRe}</span>
+          <span className="text-md font-bold">Identifiant TVA: {identTVAIdentEntRe}</span>
+          <span className="text-md font-bold">RCS: {rcsIdentEntRe}</span>
+          <span className="text-md font-bold">Numéro APE: {numAPEIdentEntRe}</span>
           <span className="text-md font-bold text-red-600">Assurance</span>
-          <span className="text-md font-bold ">Raison sociale: {"raisocAssEntRe"}</span>
-          <span className="text-md font-bold ">Numéro police:{"numPolAssEntRe"}</span>
-          <span className="text-md font-bold ">Date d'émission: {"dateEmiAssEntRe"}</span>
-          <span className="text-md font-bold ">Date de fin: {"dateFinAssEntRe"}</span>
+          <span className="text-md font-bold ">Raison sociale: {raisocAssEntRe}</span>
+          <span className="text-md font-bold ">Numéro police:{numPolAssEntRe}</span>
+          <span className="text-md font-bold ">Date d'émission: {dateEmiAssEntRe}</span>
+          <span className="text-md font-bold ">Date de fin: {dateFinAssEntRe}</span>
         </div>
         <div className="w-full p-2 flex flex-col items-center bg-white text-slate-700">
           PROJETS
