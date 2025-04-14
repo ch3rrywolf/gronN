@@ -10,7 +10,7 @@ const Inspecteurs = () => {
   const { store } = useContext(storeContext);
   const [inspecteurs, setInspecteurs] = useState([]);
   const [editInspecteur, setEditInspecteur] = useState(null);
-  const [newRole, setNewRole] = useState('');
+  const [newRoleIns, setNewRoleIns] = useState('');
   const [newName, setNewName] = useState('');
   const [newEmail, setNewEmail] = useState('');
 //   const [newPassword, setNewPassword] = useState('');
@@ -56,7 +56,7 @@ const Inspecteurs = () => {
     try {
         const updateData = {
             name: (newName || '').trim(),
-            role: (newRole || '').trim(),
+            roleIns: (newRoleIns || '').trim(),
             email: (newEmail || '').trim(),        
             numTelIns: (newnumTelIns || '').trim(),
             adresseIns: (newadresseIns || '').trim(),
@@ -77,7 +77,7 @@ const Inspecteurs = () => {
       setInspecteurs((prev) =>
         prev.map((op) =>
           op._id === id
-            ? { ...op, name: newName, email: newEmail, role: newRole, numTelIns: newnumTelIns, adresseIns: newadresseIns, }
+            ? { ...op, name: newName, email: newEmail, roleIns: newRoleIns, numTelIns: newnumTelIns, adresseIns: newadresseIns, }
             : op
         )
       );
@@ -86,7 +86,7 @@ const Inspecteurs = () => {
       setNewName('');
       setNewEmail('');
     //   setNewPassword('');
-      setNewRole('');
+      setNewRoleIns('');
       setNewnumTelIns('');
       setNewadresseIns('');
       alert(data.message);
@@ -173,13 +173,13 @@ const Inspecteurs = () => {
                     </td> */}
                     <td className='px-6 py-4'>
                       <select
-                        value={newRole}
-                        onChange={(e) => setNewRole(e.target.value)}
+                        value={newRoleIns}
+                        onChange={(e) => setNewRoleIns(e.target.value)}
                         className='border px-2 py-1 w-full'
                       >
                         <option value=''>-- Sélectionner un rôle --</option>
-                        <option value='admin'>Admin</option>
-                        <option value='backoffice'>backOffice</option>
+                        <option value='inspecteur'>Inspecteur</option>
+                        <option value='superviseur'>Superviseur</option>
                       </select>
                     </td>
 
@@ -211,7 +211,7 @@ const Inspecteurs = () => {
                 ) : (
                   <>
                     <td className='px-6 py-4'>{r.name}</td>
-                    <td className='px-6 py-4'>{r.role}</td>
+                    <td className='px-6 py-4'>{r.roleIns}</td>
                     <td className='px-6 py-4'>{r.email}</td>
                     <td className='px-6 py-4'>{"numtel"}</td>
                     <td className='px-6 py-4'>{"Adresse"}</td>
@@ -246,7 +246,7 @@ const Inspecteurs = () => {
                         onClick={() => {
                           setEditInspecteur(r._id);
                           setNewName(r.name);
-                          setNewRole(r.role);
+                          setNewRoleIns(r.roleIns);
                           setNewEmail(r.email);
                           setNewnumTelIns(r.numTelIns);
                           setNewadresseIns(r.adresseIns);
