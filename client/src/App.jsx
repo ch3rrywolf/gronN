@@ -71,7 +71,12 @@ import AddEntrete from './dashboard/pages/AddEntrete'
 import EntreteDetails from './dashboard/pages/EntreteDetails'
 import EntreteIndex from './dashboard/pages/EntreteIndex'
 
+
+
 import Mandas from './dashboard/pages/Mandas'
+import AddManda from './dashboard/pages/AddManda'
+import MandaDetails from './dashboard/pages/MandaDetails'
+import MandaIndex from './dashboard/pages/MandaIndex'
 
 function App() {
   const { store } = useContext(storeContext)
@@ -161,6 +166,8 @@ function App() {
               <Route path="entretes/view/:entretes_id" element={<EntreteDetails />} />
 
               <Route path="mandas" element={<Mandas />} />
+              <Route path="manda/add" element={<AddManda />} />
+              <Route path="mandas/view/:mandas_id" element={<MandaDetails />} />
              
             </Route>
 
@@ -172,9 +179,17 @@ function App() {
              
             </Route>
 
-            {/* Backoffice Route: Limited access */}
+            {/* Entrete Route: Limited access */}
             <Route path="" element={<ProtectRole role="entrete" />}>
               <Route path="entrete" element={<EntreteIndex />} />
+
+              {/* <Route path="dossiers" element={<Dossiers />} /> */}
+             
+            </Route>
+
+            {/* Manda Route: Limited access */}
+            <Route path="" element={<ProtectRole role="manda" />}>
+              <Route path="manda" element={<MandaIndex />} />
 
               {/* <Route path="dossiers" element={<Dossiers />} /> */}
              

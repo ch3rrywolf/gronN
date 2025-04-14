@@ -382,9 +382,6 @@ const authSchema = new Schema({
     dateFinAssMan: {
         type: String,
     },
-    documentsMan: {
-        type: String,
-    },
 
 }, { timestamps: true })
 
