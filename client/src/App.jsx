@@ -64,6 +64,7 @@ import Geste from './dashboard/pages/Gestes'
 import AddGeste from './dashboard/pages/AddGeste'
 
 import Inspecteurs from './dashboard/pages/Inspecteurs'
+import AddInspecteur from './dashboard/pages/AddInspecteur'
 
 function App() {
   const { store } = useContext(storeContext)
@@ -146,6 +147,7 @@ function App() {
               <Route path="geste/add" element={<AddGeste />} />
 
               <Route path="inspecteurs" element={<Inspecteurs />} />
+              <Route path="inspecteur/add" element={<AddInspecteur />} />
              
             </Route>
 

@@ -117,7 +117,7 @@ const Inspecteurs = () => {
         <h2 className='text-xl  text-[#1960a9] hover:text-[#9fc327] font-bold'>Comptes</h2>
         <Link
           className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]'
-          to='/dashboard/backoffice/add'
+          to='/dashboard/inspecteur/add'
         >
           Ajoute Compte
         </Link>
