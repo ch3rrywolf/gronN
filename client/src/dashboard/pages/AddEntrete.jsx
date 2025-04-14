@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext,  useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import axios from 'axios'
@@ -82,6 +82,22 @@ const AddEntrete = () => {
       // console.log(error)
     }
   }
+
+  const lotDocuments = [
+    {
+      title: "RES 010",
+      section: 1
+    },
+    
+  ];
+
+  
+
+  const [openSection, setOpenSection] = useState(null);
+
+  const toggleSection = (section) => {
+    setOpenSection(openSection === section ? null : section);
+  };
 
   return (
     <div className='bg-white rounded-md'>
@@ -171,16 +187,90 @@ const AddEntrete = () => {
             
             </div>
 
+            <div className='grid grid-cols-1 gap-x-8 mb-3'>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>REPRESENTE PAR</label>
+            </div>
+            
+            </div>
+
+            <div className='grid grid-cols-2 gap-x-8 mb-3'>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='nomRepParEntRe'>Nom</label>
+              <input onChange={inputHandler} value={state.nomRepParEntRe}  type='text' placeholder='nomRepParEntRe' name='nomRepParEntRe' id='nomRepParEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+            </div>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='prenomRepParEntRe'>Prénom</label>
+              <input onChange={inputHandler} value={state.prenomRepParEntRe}  type='text' placeholder='prenomRepParEntRe' name='prenomRepParEntRe' id='prenomRepParEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+            </div>
+            </div>
+
+            <div className='grid grid-cols-2 gap-x-8 mb-3'>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='genreRepParEntRe'>Genre</label>
+              <input onChange={inputHandler} value={state.genreRepParEntRe}  type='text' placeholder='genreRepParEntRe' name='genreRepParEntRe' id='genreRepParEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+            </div>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='fonctionRepParEntRe'>Fonction</label>
+              <input onChange={inputHandler} value={state.fonctionRepParEntRe}  type='text' placeholder='fonctionRepParEntRe' name='fonctionRepParEntRe' id='fonctionRepParEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+            </div>
+            </div>
+
+            <div className='grid grid-cols-2 gap-x-8 mb-3'>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='numTelRepParEntRe'>Numéro de téléphone</label>
+              <input onChange={inputHandler} value={state.numTelRepParEntRe} required type='text' placeholder='numTelRepParEntRe' name='numTelRepParEntRe' id='numTelRepParEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+            </div>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='emailRepParEntRe'>Email</label>
+              <input onChange={inputHandler} value={state.emailRepParEntRe} required type='text' placeholder='emailRepParEntRe' name='emailRepParEntRe' id='emailRepParEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+            </div>
+            </div>
+
+            
+
+
+            <div className='grid grid-cols-1 gap-x-8 mb-3'>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>RGE</label>
+            </div>
+            
+            </div>
+
+            <div className='grid grid-cols-4 gap-x-8 mb-3'>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='qualifiRGEEntRe'>Qualification</label>
+              <input onChange={inputHandler} value={state.qualifiRGEEntRe}  type='text' placeholder='qualifiRGEEntRe' name='qualifiRGEEntRe' id='qualifiRGEEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+            </div>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='numRGEEntRe'>Numéro RGE</label>
+              <input onChange={inputHandler} value={state.numRGEEntRe}  type='text' placeholder='numRGEEntRe' name='numRGEEntRe' id='numRGEEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+            </div>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='editLeRGEEntRe'>Edité le</label>
+              <input onChange={inputHandler} value={state.editLeRGEEntRe}  type='text' placeholder='editLeRGEEntRe' name='editLeRGEEntRe' id='editLeRGEEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+            </div>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='valableJusRGEEntRe'>VALABLE JUSQU'AU</label>
+              <input onChange={inputHandler} value={state.valableJusRGEEntRe}  type='date' placeholder='valableJusRGEEntRe' name='valableJusRGEEntRe' id='valableJusRGEEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+            </div>
+            </div>
+
+
+
+
+
+
             
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='mt-4'>
             <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Add Entreprise retenue'}</button>
             </div>
             </div>
-
-            
         </form>
       </div>
+
+
     </div>
   )
 }
