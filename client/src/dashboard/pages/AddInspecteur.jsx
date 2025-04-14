@@ -133,7 +133,7 @@ const AddInspecteur = () => {
             
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='mt-4'>
-            <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loafing...':'Add Backoffice'}</button>
+            <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Add Inspecteur'}</button>
             </div>
             </div>
 

@@ -81,6 +81,7 @@ import MandaIndex from './dashboard/pages/MandaIndex'
 import Auditeurs from './dashboard/pages/Auditeurs'
 import AuditeurDetails from './dashboard/pages/AuditeurDetails'
 import AuditeurIndex from './dashboard/pages/AuditeurIndex'
+import AddAuditeur from './dashboard/pages/AddAuditeur'
 
 function App() {
   const { store } = useContext(storeContext)
@@ -174,7 +175,7 @@ function App() {
               <Route path="mandas/view/:mandas_id" element={<MandaDetails />} />
 
               <Route path="auditeurs" element={<Auditeurs />} />
-              {/* <Route path="manda/add" element={<AddManda />} /> */}
+              <Route path="auditeur/add" element={<AddAuditeur />} />
               <Route path="auditeurs/view/:auditeurs_id" element={<AuditeurDetails />} />
              
             </Route>
