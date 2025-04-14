@@ -63,6 +63,8 @@ import AddPrestationmar from './dashboard/pages/AddPrestationmar'
 import Geste from './dashboard/pages/Gestes'
 import AddGeste from './dashboard/pages/AddGeste'
 
+import Inspecteurs from './dashboard/pages/Inspecteurs'
+
 function App() {
   const { store } = useContext(storeContext)
 
@@ -142,6 +144,8 @@ function App() {
 
               <Route path="gestes" element={<Geste />} />
               <Route path="geste/add" element={<AddGeste />} />
+
+              <Route path="inspecteurs" element={<Inspecteurs />} />
              
             </Route>
 

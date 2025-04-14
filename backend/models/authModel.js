@@ -28,7 +28,7 @@ const authSchema = new Schema({
     },
 
 
-
+    //
     //inspecteur
     nomIns: {
         type: String,  
@@ -59,7 +59,7 @@ const authSchema = new Schema({
     },
 
 
-
+    //
     //Auditeurs
     raiSocAud: {
         type: String,
@@ -168,8 +168,226 @@ const authSchema = new Schema({
         type: String,
     },
 
-    //
 
+
+    //
+    // Entreprise retenue
+    raiSocEntRe: {
+        type: String,
+    },
+    numTelEntRe: {
+        type: String,
+    },
+    formJurEntRe: {
+        type: String,
+    },
+    emailEntRe: {
+        type: String,
+    },
+    adresseEntRe: {
+        type: String,
+    },
+    villeEntRe: {
+        type: String,
+    },
+    codePostalEntRe: {
+        type: String,
+    },
+    siteWebEntRe: {
+        type: String,
+    },
+    montCapEntRe: {
+        type: String,
+    },
+    tauxTVAEntRe: {
+        type: String,
+    },
+    signatureEntRe: {
+        type: String,
+    },
+    //EntRe Represente par
+
+    nomRepParEntRe: {
+        type: String,
+    },
+    prenomRepParEntRe: {
+        type: String,
+    },
+    genreRepParEntRe: {
+        type: String,
+    },
+    fonctionRepParEntRe: {
+        type: String,
+    },
+    numTelRepParEntRe: {
+        type: String,
+    },
+    emailRepParEntRe: {
+        type: String,
+    },
+    // EntRe RGE
+    qualifiRGEEntRe: {
+        type: String,
+    },
+    numRGEEntRe: {
+        type: String,
+    },
+    editLeRGEEntRe: {
+        type: String,
+    },
+    valableJusRGEEntRe: {
+        type: String,
+    },
+    //EntRe Identifiants
+    sirenIdentEntRe: {
+        type: String,
+    },
+    siretIdentEntRe: {
+        type: String,
+    },
+    identTVAIdentEntRe: {
+        type: String,
+    },
+    rcsIdentEntRe: {
+        type: String,
+    },
+    numAPEIdentEntRe: {
+        type: String,
+    },
+    numAgrIdentEntRe: {
+        type: String,
+    },
+    numDecIdentEntRe: {
+        type: String,
+    },
+    //EntRe Assurance
+    raisocAssEntRe: {
+        type: String,
+    },
+    adresseAssEntRe: {
+        type: String,
+    },
+    numPolAssEntRe: {
+        type: String,
+    },
+    dateEmiAssEntRe: {
+        type: String,
+    },
+    dateFinAssEntRe: {
+        type: String,
+    },
+    documentsEntRe: {
+        type: String,
+    },
+    // EntRe Parametrage
+    genRevAudEntRe: {
+        type: String,
+    },
+    genDevisEntRe: {
+        type: String,
+    },
+    documentsEntRe: {
+        type: String,
+    },
+
+
+
+    // 
+    // Mandataires 
+
+    raiSocMan: {
+        type: String,
+    },
+    numTelMan: {
+        type: String,
+    },
+    formJurMan: {
+        type: String,
+    },
+    emailMan: {
+        type: String,
+    },
+    adresseMan: {
+        type: String,
+    },
+    villeMan: {
+        type: String,
+    },
+    codePostalMan: {
+        type: String,
+    },
+    siteWebMan: {
+        type: String,
+    },
+    montCapMan: {
+        type: String,
+    },
+    tauxTVAMan: {
+        type: String,
+    },
+    signatureMan: {
+        type: String,
+    },
+    // Mandataire Represent par
+    nomRepParMan: {
+        type: String,
+    },
+    prenomRepParMan: {
+        type: String,
+    },
+    genreRepParMan: {
+        type: String,
+    },
+    fonctionRepParMan: {
+        type: String,
+    },
+    numTelRepParMan: {
+        type: String,
+    },
+    emailRepParMan: {
+        type: String,
+    },
+    // Mandataire Identidiants
+    sirenIdentMan: {
+        type: String,
+    },
+    siretIdentMan: {
+        type: String,
+    },
+    identTVAIdentMan: {
+        type: String,
+    },
+    rcsIdentMan: {
+        type: String,
+    },
+    numAPEIdentMan: {
+        type: String,
+    },
+    numAgrIdentMan: {
+        type: String,
+    },
+    numDecIdentMan: {
+        type: String,
+    },
+    // Mandataire Assurance
+    raisocAssMan: {
+        type: String,
+    },
+    adresseAssMan: {
+        type: String,
+    },
+    numPolAssMan: {
+        type: String,
+    },
+    dateEmiAssMan: {
+        type: String,
+    },
+    dateFinAssMan: {
+        type: String,
+    },
+    documentsMan: {
+        type: String,
+    },
 
 }, { timestamps: true })
 

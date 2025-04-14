@@ -219,6 +219,15 @@ update_backoffice_status = async (req, res) => {
                         email: email.trim(),
                         password: await bcrypt.hash(password.trim(), 10),
                         role: 'inspecteur',
+                        nomIns: nomIns.trim(),
+                        prenomIns: prenomIns.trim(),
+                        roleIns: roleIns.trim(),
+                        superviseur: superviseur.trim(),
+                        villeIns: villeIns.trim(),
+                        adresseIns: adresseIns.trim(),
+                        codePostalIns: codePostalIns.trim(),
+                        emailIns: emailIns.trim(),
+                        numTelIns: numTelIns.trim(),
                         
                     })
                     return res.status(201).json({ message: 'inspecteur ajouter du succès', inspecteur: new_inspecteur })
@@ -230,7 +239,7 @@ update_backoffice_status = async (req, res) => {
     
         get_inspecteurs = async (req, res) => {
             try {
-                const inspecteurs = await authModel.find().sort({ createdAt: -1 })
+                const inspecteurs = await authModel.find({ role: "inspecteur" }).sort({ createdAt: -1 })
                 return res.status(200).json({ inspecteurs })
             } catch (error) {
                 return res.status(500).json({ message: 'Erreur interne du serveur' })
@@ -267,9 +276,9 @@ update_backoffice_status = async (req, res) => {
                   }
               }
     
-            update_backoffice = async (req, res) => {
+            update_inspecteur = async (req, res) => {
                 const { id } = req.params;
-                const { name, email, password, role,accountStatus } = req.body;
+                const { name, email, password, role,accountStatus,nomIns,prenomIns,roleIns,superviseur,villeIns,adresseIns,codePostalIns,emailIns,numTelIns } = req.body;
             
                 if (!name) {
                     return res.status(400).json({ message: 'Please provide a name' });
@@ -297,32 +306,60 @@ update_backoffice_status = async (req, res) => {
                     if (accountStatus) {
                         updateFields.accountStatus = accountStatus.trim();
                     }
+
+                    if (nomIns) {
+                        updateFields.nomIns = nomIns.trim();
+                    }
+                    if (prenomIns) {
+                        updateFields.prenomIns = prenomIns.trim();
+                    }
+                    if (roleIns) {
+                        updateFields.roleIns = roleIns.trim();
+                    }
+                    if (superviseur) {
+                        updateFields.superviseur = superviseur.trim();
+                    }
+                    if (villeIns) {
+                        updateFields.villeIns = villeIns.trim();
+                    }
+                    if (adresseIns) {
+                        updateFields.adresseIns = adresseIns.trim();
+                    }
+                    if (codePostalIns) {
+                        updateFields.codePostalIns = codePostalIns.trim();
+                    }
+                    if (emailIns) {
+                        updateFields.emailIns = emailIns.trim();
+                    }
+                    if (numTelIns) {
+                        updateFields.numTelIns = numTelIns.trim();
+                    }
             
-                    const updatedBackoffice = await authModel.findByIdAndUpdate(
+                    const updatedInspecteur = await authModel.findByIdAndUpdate(
                         id,
                         { $set: updateFields },
                         { new: true, runValidators: true }
                     );
             
-                    if (!updatedBackoffice) {
-                        return res.status(404).json({ message: 'Backoffice not found' });
+                    if (!updatedInspecteur) {
+                        return res.status(404).json({ message: 'Inspecteur not found' });
                     }
             
-                    return res.status(200).json({ message: 'Backoffice updated successfully', backoffice: updatedBackoffice });
+                    return res.status(200).json({ message: 'Inspecteur updated successfully', inspecteur: updatedInspecteur });
                 } catch (error) {
                     return res.status(500).json({ message: 'Internal server error', error: error.message });
                 }
             };
         
-            delete_backoffice = async (req, res) => {
+            delete_inspecteur = async (req, res) => {
                 const { id } = req.params;
         
                 try {
-                    const deletedBackoffice = await authModel.findByIdAndDelete(id);
-                    if (!deletedBackoffice) {
-                        return res.status(404).json({ message: 'backoffice not found' });
+                    const deletedInspecteur = await authModel.findByIdAndDelete(id);
+                    if (!deletedInspecteur) {
+                        return res.status(404).json({ message: 'inspecteur not found' });
                     }
-                    return res.status(200).json({ message: 'backoffice deleted successfully' });
+                    return res.status(200).json({ message: 'inspecteur deleted successfully' });
                 } catch (error) {
                     return res.status(500).json({ message: 'Internal server error' });
                 }
