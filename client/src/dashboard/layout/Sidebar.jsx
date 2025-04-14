@@ -5,6 +5,16 @@ import { FaPlus } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import { BiNews } from 'react-icons/bi';
 import { CgProfile } from "react-icons/cg";
+import { FaRegUser } from "react-icons/fa";
+import { LuUserCog } from "react-icons/lu";
+import { FaUserShield } from "react-icons/fa";
+import { MdOutlineAssuredWorkload } from "react-icons/md";
+import { FaUserTag } from "react-icons/fa";
+import { IoPricetagsOutline } from "react-icons/io5";
+import { BiDonateHeart } from "react-icons/bi";
+import { BiSolidDonateHeart } from "react-icons/bi";
+import { AiTwotoneContainer } from "react-icons/ai";
+import { FaUsersGear } from "react-icons/fa6";
 
 import storeContext from '../../context/storeContext';
 
@@ -45,16 +55,16 @@ const Sidebar = () => {
                 {store.userInfo?.role === 'admin' && (
                     <>
                         <SidebarItem to="/dashboard/admin" icon={<AiFillDashboard />} label="Tableau de bord" pathname={pathname} />
-                        <SidebarItem to="/dashboard/benificaires" icon={<FaPlus />} label="Bénificaires" pathname={pathname} />
-                        <SidebarItem to="/dashboard/inspecteurs" icon={<FaPlus />} label="Inspecteurs" pathname={pathname} />
-                        <SidebarItem to="/dashboard/auditeurs" icon={<FaPlus />} label="Auditeurs" pathname={pathname} />
-                        <SidebarItem to="/dashboard/entretes" icon={<FaPlus />} label="Entreprise retenue" pathname={pathname} />
-                        <SidebarItem to="/dashboard/mandas" icon={<FaPlus />} label="Mandataires" pathname={pathname} />
-                        <SidebarItem to="/dashboard/marques" icon={<FaPlus />} label="Marques" pathname={pathname} />
-                        <SidebarItem to="/dashboard/prestations" icon={<FaPlus />} label="Prestations" pathname={pathname} />
-                        <SidebarItem to="/dashboard/prestationmars" icon={<FaPlus />} label="Prestations Mar" pathname={pathname} />
-                        <SidebarItem to="/dashboard/gestes" icon={<FaPlus />} label="Geste" pathname={pathname} />
-                        <SidebarItem to="/dashboard/backoffices" icon={<BiNews />} label="Gestion des comptes" pathname={pathname} />
+                        <SidebarItem to="/dashboard/benificaires" icon={<FaRegUser />} label="Bénificaires" pathname={pathname} />
+                        <SidebarItem to="/dashboard/inspecteurs" icon={<LuUserCog />} label="Inspecteurs" pathname={pathname} />
+                        <SidebarItem to="/dashboard/auditeurs" icon={<FaUserShield />} label="Auditeurs" pathname={pathname} />
+                        <SidebarItem to="/dashboard/entretes" icon={<MdOutlineAssuredWorkload />} label="Entreprise retenue" pathname={pathname} />
+                        <SidebarItem to="/dashboard/mandas" icon={<FaUserTag />} label="Mandataires" pathname={pathname} />
+                        <SidebarItem to="/dashboard/marques" icon={<IoPricetagsOutline />} label="Marques" pathname={pathname} />
+                        <SidebarItem to="/dashboard/prestations" icon={<BiDonateHeart />} label="Prestations" pathname={pathname} />
+                        <SidebarItem to="/dashboard/prestationmars" icon={<BiSolidDonateHeart />} label="Prestations Mar" pathname={pathname} />
+                        <SidebarItem to="/dashboard/gestes" icon={<AiTwotoneContainer />} label="Geste" pathname={pathname} />
+                        <SidebarItem to="/dashboard/backoffices" icon={<FaUsersGear />} label="Gestion des comptes" pathname={pathname} />
                         
                     </>
                 )}
