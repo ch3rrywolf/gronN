@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams,useNavigate } from "react-router-dom";
 import axios from "axios";
 import storeContext from "../../context/storeContext";
 import { base_url } from "../config/config";
@@ -10,246 +10,251 @@ const FolderDetails = () => {
   const { folders_id } = useParams();
   const { store } = useContext(storeContext);
 
-  const [demandeurNom, setDemandeurNom] = useState("");
-  const [demandeurPreNom, setDemandeurPreNom] = useState("");
-  const [numDossier, setNumDossier] = useState("");
-  const [dossierStatus, setDossierStatus] = useState("");
+  const [benificaires, setBenificaires] = useState([]);
+  const navigate = useNavigate()
+ 
+  const [state, setState] = useState({
+    numFolderAnah:"",
+    benificaire:"",
+    source:"",
+    classeEng:"",
+    residance:"",
+    classeRevenue:"",
+    parrinage:"",
 
-  const [selectedStep, setSelectedStep] = useState(1);
-  const [formStep1, setFormStep1] = useState({ fieldA: "", fieldB: "" });
-  const [formStep2, setFormStep2] = useState({ fieldC: "", fieldD: "" });
-  const [formStep3, setFormStep3] = useState({ fieldE: "", fieldF: "" });
-  const [formStep4, setFormStep4] = useState({ fieldG: "", fieldH: "" });
+    numbTotOLA:"",
+    numbEN:"",
+    titreResPriAm:"",
+    RFRtot:"",
+    anneeRFRtot:"",
+    numbPers:"",
+    numbEnfNai:"",
+    RFRtotInclu:"",
+    anneeREFtotInclu:"",
 
-  const handleStep1Submit = (e) => {
-    e.preventDefault();
-    if (formStep1.fieldA && formStep1.fieldB) {
-      toast.success("Étape 1 validée ✅");
-    } else {
-      toast.error("Remplir tous les champs de l'étape 1");
+    numLogAm:"",
+    voieLogAm:"",
+    villeLogAm:"",
+    codePostalLogAm:"",
+
+    communeLogAm:"",
+    batimentLogAm:"",
+    escalierLogAm:"",
+    etageLogAm:"",
+    porteLogAm:"",
+    logAmel:"",
+    const15ans:"",
+    const15ansAnnee:"",
+    PTZ:"",
+    travPartiel:"",
+    avantTravProj:"",
+    apresTrav:"",
+    souhaiTrav:"",
+    
+  })
+
+  const inputHandler = (e) => {
+    setState({
+      ...state,
+      [e.target.name] : e.target.value
+    })
+  }
+
+  const [loader, setLoader] = useState(false)
+
+  const submit = async(e) => {
+    e.preventDefault()
+    try {
+      setLoader(true)
+      const {data} = await axios.post(`${base_url}/api/folders/add`,state, {
+        headers : {
+          'Authorization' : `Bearer ${store.token}`
+        }
+      })
+      setLoader(false)
+      toast.success(data.message)
+      navigate('/dashboard/folders')
+    } catch (error) {
+      setLoader(false)
+      toast.error(error.response.data.message)
+      // console.log(error)
     }
-  };
+  }
 
-  const handleStep2Submit = (e) => {
-    e.preventDefault();
-    if (formStep2.fieldC && formStep2.fieldD) {
-      toast.success("Étape 2 validée ✅");
-    } else {
-      toast.error("Remplir tous les champs de l'étape 2");
+  useEffect(() => {
+    const fetchBenificaires = async () => {
+      try {
+        const { data } = await axios.get(`${base_url}/api/benificaires`, {
+          headers: {
+            'Authorization': `Bearer ${store.token}`
+          }
+        })
+        setBenificaires(data?.benificaires)
+      } catch (error) {
+        console.error('Erreur lors du chargement des bénéficiaires', error)
+      }
     }
-  };
-
-  const handleStep3Submit = (e) => {
-    e.preventDefault();
-    if (formStep3.fieldE && formStep3.fieldF) {
-      toast.success("Étape 1 validée ✅");
-    } else {
-      toast.error("Remplir tous les champs de l'étape 3");
-    }
-  };
-
-  const handleStep4Submit = (e) => {
-    e.preventDefault();
-    if (formStep4.fieldG && formStep4.fieldH) {
-      toast.success("Étape 2 validée ✅");
-    } else {
-      toast.error("Remplir tous les champs de l'étape 4");
-    }
-  };
+  
+    fetchBenificaires()
+  }, [store.token])
 
   const getFolders = async () => {
     try {
       const { data } = await axios.get(`${base_url}/api/folders/${folders_id}`, {
         headers: { Authorization: `Bearer ${store.token}` },
       });
-      setDemandeurNom(data?.dossiers?.demandeurNom);
-      setDemandeurPreNom(data?.dossiers?.demandeurPreNom);
-      setNumDossier(data?.dossiers?.numDossier);
-      setDossierStatus(data?.dossiers?.dossierStatus);
+      
     } catch (error) {
       console.error("Error fetching dossier details:", error);
     }
   };
+
+
+  useEffect(() => {
+    const fetchBenificaires = async () => {
+      try {
+        const { data } = await axios.get(`${base_url}/api/benificaires`, {
+          headers: {
+            'Authorization': `Bearer ${store.token}`
+          }
+        })
+        setBenificaires(data?.benificaires)
+      } catch (error) {
+        console.error('Erreur lors du chargement des bénéficiaires', error)
+      }
+    }
+  
+    fetchBenificaires()
+  }, [store.token])
 
   useEffect(() => {
     getFolders();
   }, [folders_id]);
 
   return (
-    <div className="mt-3">
-      {/* Dossier Info */}
-      <div className="grid grid-cols-1 gap-x-4">
-        <div className="w-full p-2 flex flex-col items-center bg-white text-slate-700">
-          <span className="text-xl font-bold">IDENTITÉ DU DEMANDEUR DE LA SUBVENTION</span>
-          {dossierStatus === "Validé" && (
-            <span className="px-2 py-[2px] bg-green-100 text-green-800 rounded-lg text-xs">{dossierStatus}</span>
-          )}
-          {dossierStatus === "Non Validé" && (
-            <span className="px-2 py-[2px] bg-gray-100 text-gray-800 rounded-lg text-xs">{dossierStatus}</span>
-          )}
-          {dossierStatus === "Annulé" && (
-            <span className="px-2 py-[2px] bg-red-100 text-red-800 rounded-lg text-xs">{dossierStatus}</span>
-          )}
+    <div className='flex justify-center items-start min-h-screen bg-gray-100 py-10'>
+        <div className='bg-white rounded-lg shadow-lg w-full max-w-4xl border border-gray-300'>
+    
+          <div className='flex justify-between items-center p-4 border-b border-gray-200'>
+            <h2 className='text-xl text-[#1960a9] hover:text-[#9fc327] font-bold'>Confirmation Dossier</h2>
+            <Link className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]' to='/dashboard/folders'>Dossiers</Link>
+          </div>
+          
+    
+    
+    
+    
+          <form onSubmit={submit} className='space-y-6'>
+    
+    <details open className='p-4 border rounded-md'>
+    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
+    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
+    1
+  </span>
+  N° DOSSIER ANAH
+</summary>           
+<div className='grid grid-cols-1 gap-x-8 mb-3'>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='numbTotOLA'>N° DOSSIER ANAH</label>
+              <input onChange={inputHandler} value={state.numbTotOLA} type='text' placeholder='N° DOSSIER ANAH' name='numbTotOLA' id='numbTotOLA' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+            </div>
+          </div>
+    
+    </details>
+
+    <details open className='p-4 border rounded-md'>
+    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
+    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
+    2
+  </span>
+  Offres MAR
+</summary>           
+<div className='grid grid-cols-1 gap-x-8 mb-3'>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='numbTotOLA'>N° DOSSIER ANAH</label>
+              <input onChange={inputHandler} value={state.numbTotOLA} type='text' placeholder='N° DOSSIER ANAH' name='numbTotOLA' id='numbTotOLA' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+            </div>
+          </div>
+    
+    </details>
+
+    <details open className='p-4 border rounded-md'>
+    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
+    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
+    3
+  </span>
+  Sélection Des Entreprises 
+</summary>  
+<div className='grid grid-cols-1 gap-x-8 mb-3'>
+<div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='benificaire'>Bénéficiaire *</label>
+              <select onChange={inputHandler} value={state.benificaire} required name='benificaire' id='benificaire' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
+                <option value=''>Sélectionner un bénéficiaire</option>
+                {benificaires.map(b => (
+                  <option key={b._id} value={b._id}>{b.nomBeni} {b.prenomBeni}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+    
+    </details>
+
+    <details open className='p-4 border rounded-md'>
+    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
+    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
+    4
+  </span>
+  Planification de(s) 1ère(s) Visite(s)  
+</summary>  
+<div className='grid grid-cols-1 gap-x-8 mb-3'>
+<div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='benificaire'>Bénéficiaire *</label>
+              <select onChange={inputHandler} value={state.benificaire} required name='benificaire' id='benificaire' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
+                <option value=''>Sélectionner un bénéficiaire</option>
+                {benificaires.map(b => (
+                  <option key={b._id} value={b._id}>{b.nomBeni} {b.prenomBeni}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+    
+    </details>
+    
+    <details className='p-4 border rounded-md'>
+      <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>IDENTITE DU DEMANDEUR DE L'AIDE</summary>
+    
+  
+    
+    </details>
+    
+    <details className='p-4 border rounded-md'>
+      <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>DESCRIPTION DU LOGEMENT A AMELIORER</summary>
+    
+
+    
+    </details>
+    
+    <details className='p-4 border rounded-md'>
+      <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>LISTE DES DOCUMENTS</summary>
+    
+      {/* ... all your fields related to personal info here ... */}
+    
+    </details>
+    
+    
+    <div className='grid grid-cols-1 gap-x-8 mb-3'>
+                <div className='flex flex-col gap-y-2'>
+                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Ajoute Dossier'}</button>
+              </div>
+              </div>
+    </form>
+    
+    
+    
+            
+            
+          </div>
         </div>
-      </div>
-
-      {/* Step Navigation + Forms */}
-      <div className="mt-6 grid grid-cols-4 gap-4">
-        {/* Sidebar */}
-        <div className="col-span-1 bg-white p-4 rounded shadow">
-          <h3 className="text-md font-bold mb-4">Étapes</h3>
-          <ul className="space-y-2">
-            <li>
-              <button
-                className={`w-full text-left px-3 py-2 rounded ${
-                  selectedStep === 1 ? "bg-blue-600 text-white" : "bg-gray-100 hover:bg-gray-200"
-                }`}
-                onClick={() => setSelectedStep(1)}
-              >
-                Étape 1: Création du dossier et simulation
-              </button>
-            </li>
-            <li>
-              <button
-                className={`w-full text-left px-3 py-2 rounded ${
-                  selectedStep === 2 ? "bg-blue-600 text-white" : "bg-gray-100 hover:bg-gray-200"
-                }`}
-                onClick={() => setSelectedStep(2)}
-              >
-                Étape 2: Offres MAR
-              </button>
-            </li>
-            <li>
-              <button
-                className={`w-full text-left px-3 py-2 rounded ${
-                  selectedStep === 3 ? "bg-blue-600 text-white" : "bg-gray-100 hover:bg-gray-200"
-                }`}
-                onClick={() => setSelectedStep(3)}
-              >
-                Étape 3: Selection des Entreprises
-              </button>
-            </li>
-            <li>
-              <button
-                className={`w-full text-left px-3 py-2 rounded ${
-                  selectedStep === 4 ? "bg-blue-600 text-white" : "bg-gray-100 hover:bg-gray-200"
-                }`}
-                onClick={() => setSelectedStep(4)}
-              >
-                Étape 4: Planification de(s) 1ère(s) Visite(s)
-              </button>
-            </li>
-          </ul>
-        </div>
-
-        {/* Form Content */}
-        <div className="col-span-3 bg-white p-5 rounded shadow">
-          {selectedStep === 1 && (
-            <form onSubmit={handleStep1Submit} className="space-y-4">
-              <h2 className="text-lg font-bold">Étape 1: Création du dossier et simulation</h2>
-              <input
-                type="text"
-                placeholder="Champ A"
-                className="border p-2 w-full"
-                value={formStep1.fieldA}
-                onChange={(e) => setFormStep1({ ...formStep1, fieldA: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Champ B"
-                className="border p-2 w-full"
-                value={formStep1.fieldB}
-                onChange={(e) => setFormStep1({ ...formStep1, fieldB: e.target.value })}
-              />
-              <button
-                type="submit"
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800"
-              >
-                Valider Étape 1
-              </button>
-            </form>
-          )}
-
-          {selectedStep === 2 && (
-            <form onSubmit={handleStep2Submit} className="space-y-4">
-              <h2 className="text-lg font-bold">Étape 2: Offres MAR</h2>
-              <input
-                type="text"
-                placeholder="Champ C"
-                className="border p-2 w-full"
-                value={formStep2.fieldC}
-                onChange={(e) => setFormStep2({ ...formStep2, fieldC: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Champ D"
-                className="border p-2 w-full"
-                value={formStep2.fieldD}
-                onChange={(e) => setFormStep2({ ...formStep2, fieldD: e.target.value })}
-              />
-              <button
-                type="submit"
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-800"
-              >
-                Valider Étape 2
-              </button>
-            </form>
-          )}
-
-{selectedStep === 3 && (
-            <form onSubmit={handleStep3Submit} className="space-y-4">
-              <h2 className="text-lg font-bold">Étape 3: Selection des Entreprises</h2>
-              <input
-                type="text"
-                placeholder="Champ E"
-                className="border p-2 w-full"
-                value={formStep3.fieldE}
-                onChange={(e) => setFormStep3({ ...formStep3, fieldE: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Champ F"
-                className="border p-2 w-full"
-                value={formStep3.fieldF}
-                onChange={(e) => setFormStep3({ ...formStep3, fieldF: e.target.value })}
-              />
-              <button
-                type="submit"
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-800"
-              >
-                Valider Étape 3
-              </button>
-            </form>
-          )}
-
-{selectedStep === 4 && (
-            <form onSubmit={handleStep4Submit} className="space-y-4">
-              <h2 className="text-lg font-bold">Étape 4: Planification de(s) 1ère(s) Visite(s)</h2>
-              <input
-                type="text"
-                placeholder="Champ G"
-                className="border p-2 w-full"
-                value={formStep4.fieldG}
-                onChange={(e) => setFormStep4({ ...formStep4, fieldG: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Champ H"
-                className="border p-2 w-full"
-                value={formStep4.fieldH}
-                onChange={(e) => setFormStep4({ ...formStep4, fieldH: e.target.value })}
-              />
-              <button
-                type="submit"
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-800"
-              >
-                Valider Étape 4
-              </button>
-            </form>
-          )}
-        </div>
-      </div>
-    </div>
   );
 };
 
