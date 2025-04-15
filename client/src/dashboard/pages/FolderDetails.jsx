@@ -15,46 +15,12 @@ const FolderDetails = () => {
   const [inspecteurs, setInspecteurs] = useState([]);
   const [gestes, setGestes] = useState([]);
   const navigate = useNavigate()
+
+   const [title, setTitle] = useState("");
+    const [file, setFile] = useState(null);
+    const [filesList, setFilesList] = useState([]);
  
-//   const [state, setState] = useState({
-//     numFolderAnah:"",
-//     benificaire:"",
-//     source:"",
-//     classeEng:"",
-//     residance:"",
-//     classeRevenue:"",
-//     parrinage:"",
 
-//     numbTotOLA:"",
-//     numbEN:"",
-//     titreResPriAm:"",
-//     RFRtot:"",
-//     anneeRFRtot:"",
-//     numbPers:"",
-//     numbEnfNai:"",
-//     RFRtotInclu:"",
-//     anneeREFtotInclu:"",
-
-//     numLogAm:"",
-//     voieLogAm:"",
-//     villeLogAm:"",
-//     codePostalLogAm:"",
-
-//     communeLogAm:"",
-//     batimentLogAm:"",
-//     escalierLogAm:"",
-//     etageLogAm:"",
-//     porteLogAm:"",
-//     logAmel:"",
-//     const15ans:"",
-//     const15ansAnnee:"",
-//     PTZ:"",
-//     travPartiel:"",
-//     avantTravProj:"",
-//     apresTrav:"",
-//     souhaiTrav:"",
-    
-//   })
 
   const [state, setState] = useState({
     gestesep4: []  // make sure it's an array
@@ -187,7 +153,55 @@ const FolderDetails = () => {
   };
 
 
+  const getFiles = async () => {
+    try {
+      const { data } = await axios.get(`${base_url}/api/folders/get-files/${folders_id}`);
+      setFilesList(data.files);
+    } catch (error) {
+      console.error("Error fetching files:", error);
+    }
+  };
+
+  const submitFile = async (e) => {
+    e.preventDefault();
+    if (!file || !title) {
+      toast.error("Veuillez remplir tous les champs.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("file", file);
+    formData.append("folders_id", folders_id);
+
+    try {
+      await axios.post(`${base_url}/api/folders/upload-files`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      toast.success("Fichier importé avec succès !");
+      setTitle("");
+      setFile(null);
+      getFiles();
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      toast.error("Échec de l'importation du fichier.");
+    }
+  };
+
+  const deleteFile = async (folders_id, pdf_id) => {
+    try {
+      await axios.delete(`${base_url}/api/folders/${folders_id}/pdf/${pdf_id}`);
+      toast.success("Fichier supprimé avec succès !");
+      getFiles();
+    } catch (error) {
+      console.error("Error deleting file:", error);
+      toast.error("Échec de la suppression du fichier.");
+    }
+};
+
+
   useEffect(() => {
+    getFiles();
     getFolders();
   }, [folders_id]);
 
@@ -460,15 +474,35 @@ const FolderDetails = () => {
           <tr key={geste._id}>
             <td className="border px-2 py-1">{geste.reference}</td>
             <td className="border px-2 py-1">1</td> {/* Default QTE */}
-            <td className="border px-2 py-1">0.00</td> {/* PRIX */}
+            <td className="border px-2 py-1">{geste.montantEtimatif}</td> {/* PRIX */}
             <td className="border px-2 py-1">U</td> {/* UNITE */}
-            <td className="border px-2 py-1">{geste?.montantEtimatif}</td> {/* MONTANT */}
-            <td className="border px-2 py-1">19%</td> {/* TVA */}
+            <td className="border px-2 py-1">{geste.montantEtimatif}</td> {/* MONTANT */}
+            <td className="border px-2 py-1">5.50%</td> {/* TVA */}
             <td className="border px-2 py-1">0.00</td> {/* TTC */}
           </tr>
         ))}
     </tbody>
   </table>
+</div>
+
+<div className="flex justify-between items-center mt-8 px-4">
+  {/* Left: Logo */}
+  <div className="w-40">
+    <img src="/src/assets/globgLogo.png" alt="Logo" className="w-full h-auto object-contain" />
+  </div>
+
+  {/* Right: Total */}
+  <div className="text-right text-sm text-gray-800">
+    <div className="font-semibold">Montant Total TTC :</div>
+    <div className="text-lg font-bold text-green-600">
+      {
+        gestes
+          .filter(g => state.gestesep4.includes(g._id))
+          .reduce((total, g) => total + Number(g.montantEtimatif || 0), 0)
+          .toFixed(2)
+      } €
+    </div>
+  </div>
 </div>
 </details>
     
@@ -490,7 +524,66 @@ const FolderDetails = () => {
     <details className='p-4 border rounded-md'>
       <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>LISTE DES DOCUMENTS</summary>
     
-      {/* ... all your fields related to personal info here ... */}
+     
+           <div className="bg-white p-4 mt-5">
+             <form onSubmit={submitFile}>
+               <div className="grid grid-cols-2 gap-x-8 mb-3">
+                 <div className="flex flex-col gap-y-2">
+                   <label className="text-md font-medium text-gray-600">Titre*</label>
+                   <input
+                     onChange={(e) => setTitle(e.target.value)}
+                     value={title}
+                     required
+                     type="text"
+                     placeholder="Titre du Document"
+                     className="px-3 py-2 rounded-md border border-gray-300 focus:border-green-500"
+                   />
+                 </div>
+                 <div className="flex flex-col gap-y-2">
+                   <label className="text-md font-medium text-gray-600">Importer Document*</label>
+                   <input
+                     onChange={(e) => setFile(e.target.files[0])}
+                     required
+                     type="file"
+                     accept="application/pdf"
+                     className="px-3 py-2 rounded-md border border-gray-300 focus:border-green-500"
+                   />
+                 </div>
+               </div>
+               <button type="submit" className="px-3 py-2 bg-[#1960a9] rounded text-white hover:bg-[#9fc327]">
+                 Importer Document
+               </button>
+             </form>
+           </div>
+     
+           <div className="bg-white p-4 mt-5">
+       <h3 className="text-lg font-bold">Liste  des Documents</h3>
+       {filesList.length > 0 ? (
+         <div className="mt-3 flex gap-4 overflow-x-auto">
+           {filesList.map((file, index) => (
+             <div key={index} className="py-2 border p-2 rounded shadow-md min-w-[150px] flex flex-col items-center">
+               <a 
+                 href={`${base_url}/files/${file.pdf}`} 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 className="text-blue-500 block text-center mb-2"
+               >
+                 {file.title}
+               </a>
+               <button
+                 onClick={() => deleteFile(folders_id, file._id)}
+                 className="mt-2 text-red-500 hover:text-red-700"
+               >
+                 <Trash2 className="w-5 h-5" />
+                 
+               </button>
+             </div>
+           ))}
+         </div>
+       ) : (
+         <p>Aucun Document ...</p>
+       )}
+     </div>
     
     </details>
     
