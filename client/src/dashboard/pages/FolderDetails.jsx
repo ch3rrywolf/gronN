@@ -99,13 +99,21 @@ const FolderDetails = () => {
   }, [store.token])
 
   const getFolders = async () => {
-    try {
-      const { data } = await axios.get(`${base_url}/api/folders/${folders_id}`, {
-        headers: { Authorization: `Bearer ${store.token}` },
-      });
-      
-    } catch (error) {
-      console.error("Error fetching dossier details:", error);
+    if (folders_id) {
+      try {
+        const { data } = await axios.get(`${base_url}/api/folders/${folders_id}`, {
+          headers: { Authorization: `Bearer ${store.token}` },
+        });
+        // Populate the state with fetched folder data
+        setState((prevState) => ({
+          ...prevState,
+          numFolderAnah: data.folders?.numFolderAnah || "", // Ensure numFolderAnah is set
+          benificaire: data.benificaire?._id || "", // Ensure benificaire is set
+          // Add other fields as needed
+        }));
+      } catch (error) {
+        console.error("Error fetching dossier details:", error);
+      }
     }
   };
 
@@ -155,8 +163,8 @@ const FolderDetails = () => {
 </summary>           
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='numbTotOLA'>N° DOSSIER ANAH</label>
-              <input onChange={inputHandler} value={state.numbTotOLA} type='text' placeholder='N° DOSSIER ANAH' name='numbTotOLA' id='numbTotOLA' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <label className='text-xs font-medium text-gray-600' htmlFor='numFolderAnah'>N° DOSSIER ANAH</label>
+              <input onChange={inputHandler} value={state.numFolderAnah} type='text' placeholder='N° DOSSIER ANAH' name='numFolderAnah' id='numFolderAnah' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
           </div>
     

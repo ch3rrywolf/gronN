@@ -434,6 +434,40 @@ class folderController {
             //         res.status(500).json({ message: "Internal server error", error: error.message });
             //     }
             // };
+
+            step1 = async (req, res) => {
+                const { id } = req.params;
+                const {  numFolderAnah} = req.body;
+            
+                if (!numFolderAnah) {
+                    return res.status(400).json({ message: 'Please provide a numFolderAnah' });
+                }
+        
+                try {
+        
+                    let updateFields = { numFolderAnah: numFolderAnah.trim() };
+        
+            
+                    if (numFolderAnah) {
+                        updateFields.numFolderAnah = numFolderAnah.trim();
+                    }
+
+            
+                    const updatedFolder = await folderModel.findByIdAndUpdate(
+                        id,
+                        { $set: updateFields },
+                        { new: true, runValidators: true }
+                    );
+            
+                    if (!updatedFolder) {
+                        return res.status(404).json({ message: 'Folder not found' });
+                    }
+            
+                    return res.status(200).json({ message: 'Folder updated successfully', folder: updatedFolder });
+                } catch (error) {
+                    return res.status(500).json({ message: 'Internal server error', error: error.message });
+                }
+            };
     
 }
 
