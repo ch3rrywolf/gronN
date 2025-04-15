@@ -173,11 +173,8 @@ const FolderDetails = () => {
     
           <form onSubmit={submit} className='space-y-6'>
     
-    <details open className='p-4 border rounded-md'>
-    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
-    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
-    1
-  </span>
+    <details className='p-4 border rounded-md'>
+    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>
   N° DOSSIER ANAH
 </summary>           
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
@@ -192,7 +189,7 @@ const FolderDetails = () => {
     <details  className='p-4 border rounded-md'>
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
-    2
+    1
   </span>
   Offres MAR
 </summary>           
@@ -208,7 +205,7 @@ const FolderDetails = () => {
     <details  className='p-4 border rounded-md'>
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
-    3
+    2
   </span>
   Sélection Des Entreprises 
 </summary>  
@@ -229,7 +226,7 @@ const FolderDetails = () => {
     <details  className='p-4 border rounded-md'>
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
-    4
+    3
   </span>
   Planification de(s) 1ère(s) Visite(s)  
 </summary>  
@@ -258,7 +255,121 @@ const FolderDetails = () => {
     </details>
     
     <details className='p-4 border rounded-md'>
-      <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>IDENTITE DU DEMANDEUR DE L'AIDE</summary>
+        
+    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
+    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
+    4
+  </span>
+  SIMULATION
+</summary> 
+
+      <details className='p-4 border rounded-md'>
+      <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>INFORMATIONS GENERALES</summary>
+    
+      <div className='grid grid-cols-2 gap-x-8 mb-3'>
+<div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='SHAB'>SHAB</label>
+              <input onChange={inputHandler} value={state.SHAB} type='text'   name='SHAB' id='SHAB' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+            </div>
+
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='nombeta'>Nombre d'étage</label>
+              <input onChange={inputHandler} value={state.nombeta} type='text'   name='nombeta' id='v' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+            </div>
+          </div>
+
+          <div className='grid grid-cols-2 gap-x-8 mb-3'>
+          <div className='flex flex-col gap-y-2'>
+  <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Est-ce que vous avez les mesures des surfaces à isoler ?*</label>
+  <select
+    onChange={inputHandler}
+    value={state.titreResPriAm}
+    name='titreResPriAm'
+    id='titreResPriAm'
+    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
+  >
+    <option value=''></option>
+    <option value='Oui'>OUI</option>
+    <option value='Non'>NON</option>
+  </select>
+</div>
+
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='surfIsol'>Surface à isoler:*</label>
+              <input onChange={inputHandler} value={state.surfIsol} type='text'   name='surfIsol' id='surfIsol' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+            </div>
+          </div>
+
+          <div className='grid grid-cols-2 gap-x-8 mb-3'>
+          <div className='flex flex-col gap-y-2'>
+  <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Classe énergétique initial *</label>
+  <select
+    onChange={inputHandler}
+    value={state.titreResPriAm}
+    name='titreResPriAm'
+    id='titreResPriAm'
+    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
+  >
+    <option value=''></option>
+    <option value='Aucun'>Aucun</option>
+    <option value='G'>G</option>
+    <option value='F'>F</option>
+    <option value='E'>E</option>
+    <option value='D'>D</option>
+    <option value='C'>C</option>
+    <option value='B'>B</option>
+    <option value='A'>A</option>
+  </select>
+</div>
+
+<div className='flex flex-col gap-y-2'>
+  <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Sauts de classe prévu *</label>
+  <select
+    onChange={inputHandler}
+    value={state.titreResPriAm}
+    name='titreResPriAm'
+    id='titreResPriAm'
+    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
+  >
+    <option value=''></option>
+    <option value='4 ou plus'>4 ou plus</option>
+    <option value='4'>4</option>
+    <option value='3'>3</option>
+    <option value='2'>2</option>
+    <option value='1'>1</option>
+  </select>
+</div>
+          </div>
+
+          <div className='grid grid-cols-2 gap-x-8 mb-3'>
+          <div className='flex flex-col gap-y-2'>
+  <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Catégorie *</label>
+  <select
+    onChange={inputHandler}
+    value={state.titreResPriAm}
+    name='titreResPriAm'
+    id='titreResPriAm'
+    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
+  >
+    <option value=''></option>
+    <option value='Aucun'>Aucun</option>
+    <option value='Classique'>Classique</option>
+    <option value='Intérmédiaires'>Intérmédiaires</option>
+    <option value='Modestes'>Modestes</option>
+    <option value='Trés Modeste'>Trés Modeste</option>
+  </select>
+</div>
+
+          </div>
+    
+    </details>
+
+    <details className='p-4 border rounded-md'>
+      <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>GESTE</summary>
+    
+  
+    
+    </details>
     
   
     
