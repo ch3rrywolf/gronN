@@ -11,6 +11,8 @@ const FolderDetails = () => {
   const { store } = useContext(storeContext);
 
   const [benificaires, setBenificaires] = useState([]);
+  const [entretes, setEntretes] = useState([]);
+  const [inspecteurs, setInspecteurs] = useState([]);
   const navigate = useNavigate()
  
   const [state, setState] = useState({
@@ -98,6 +100,40 @@ const FolderDetails = () => {
     fetchBenificaires()
   }, [store.token])
 
+  useEffect(() => {
+    const fetchEntretes = async () => {
+      try {
+        const { data } = await axios.get(`${base_url}/api/entretes`, {
+          headers: {
+            'Authorization': `Bearer ${store.token}`
+          }
+        })
+        setEntretes(data?.entretes)
+      } catch (error) {
+        console.error('Erreur lors du chargement des Entretes', error)
+      }
+    }
+  
+    fetchEntretes()
+  }, [store.token])
+
+  useEffect(() => {
+    const fetchInspecteurs = async () => {
+      try {
+        const { data } = await axios.get(`${base_url}/api/inspecteurs`, {
+          headers: {
+            'Authorization': `Bearer ${store.token}`
+          }
+        })
+        setInspecteurs(data?.inspecteurs)
+      } catch (error) {
+        console.error('Erreur lors du chargement des inspecteurs', error)
+      }
+    }
+  
+    fetchInspecteurs()
+  }, [store.token])
+
   const getFolders = async () => {
     if (folders_id) {
       try {
@@ -117,23 +153,6 @@ const FolderDetails = () => {
     }
   };
 
-
-  useEffect(() => {
-    const fetchBenificaires = async () => {
-      try {
-        const { data } = await axios.get(`${base_url}/api/benificaires`, {
-          headers: {
-            'Authorization': `Bearer ${store.token}`
-          }
-        })
-        setBenificaires(data?.benificaires)
-      } catch (error) {
-        console.error('Erreur lors du chargement des bénéficiaires', error)
-      }
-    }
-  
-    fetchBenificaires()
-  }, [store.token])
 
   useEffect(() => {
     getFolders();
@@ -170,7 +189,7 @@ const FolderDetails = () => {
     
     </details>
 
-    <details open className='p-4 border rounded-md'>
+    <details  className='p-4 border rounded-md'>
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
     2
@@ -179,14 +198,14 @@ const FolderDetails = () => {
 </summary>           
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='numbTotOLA'>N° DOSSIER ANAH</label>
-              <input onChange={inputHandler} value={state.numbTotOLA} type='text' placeholder='N° DOSSIER ANAH' name='numbTotOLA' id='numbTotOLA' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <label className='text-xs font-medium text-gray-600' htmlFor='numbTotOLA'>Offre MAR</label>
+              <input onChange={inputHandler} value="Offre MAR" type='text' readOnly placeholder='Offre MAR' name='Offre MAR' id='Offre MAR' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
           </div>
     
     </details>
 
-    <details open className='p-4 border rounded-md'>
+    <details  className='p-4 border rounded-md'>
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
     3
@@ -195,11 +214,11 @@ const FolderDetails = () => {
 </summary>  
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
 <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='benificaire'>Bénéficiaire *</label>
-              <select onChange={inputHandler} value={state.benificaire} required name='benificaire' id='benificaire' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
-                <option value=''>Sélectionner un bénéficiaire</option>
-                {benificaires.map(b => (
-                  <option key={b._id} value={b._id}>{b.nomBeni} {b.prenomBeni}</option>
+              <label className='text-xs font-medium text-gray-600' htmlFor='entrete'>Entreprises retenue *</label>
+              <select onChange={inputHandler} value={state.entrete} required name='entrete' id='entrete' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
+                <option value=''>Sélectionner un Entreprises retenue</option>
+                {entretes.map(b => (
+                  <option key={b._id} value={b._id}>{b.raiSocEntRe}</option>
                 ))}
               </select>
             </div>
@@ -207,22 +226,32 @@ const FolderDetails = () => {
     
     </details>
 
-    <details open className='p-4 border rounded-md'>
+    <details  className='p-4 border rounded-md'>
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
     4
   </span>
   Planification de(s) 1ère(s) Visite(s)  
 </summary>  
-<div className='grid grid-cols-1 gap-x-8 mb-3'>
+<div className='grid grid-cols-3 gap-x-8 mb-3'>
 <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='benificaire'>Bénéficiaire *</label>
-              <select onChange={inputHandler} value={state.benificaire} required name='benificaire' id='benificaire' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
-                <option value=''>Sélectionner un bénéficiaire</option>
-                {benificaires.map(b => (
-                  <option key={b._id} value={b._id}>{b.nomBeni} {b.prenomBeni}</option>
+              <label className='text-xs font-medium text-gray-600' htmlFor='numbTotOLA'>l’entreprise retenue sélectionnée</label>
+              <input onChange={inputHandler} value={state.folders?.raiSocEntRe} type='text' readOnly  name='Offre MAR' id='Offre MAR' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+            </div>
+
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='inspectep4'>sélectionner le technicien</label>
+              <select onChange={inputHandler} value={state.inspectep4} required name='inspectep4' id='inspectep4' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
+                <option value=''>Sélectionner un Entreprises retenue</option>
+                {inspecteurs.map(b => (
+                  <option key={b._id} value={b._id}>{b.nomIns} {b.prenomIns}</option>
                 ))}
               </select>
+            </div>
+
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='dateVisit'>date et l’heure de la visite</label>
+              <input onChange={inputHandler} value={state.dateVisit} type='datetime-local'  name='dateVisit' id='dateVisit' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
           </div>
     
