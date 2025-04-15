@@ -440,6 +440,36 @@ const FolderDetails = () => {
       .join(' + ')}
   </div>
 )}
+
+
+<div className="overflow-x-auto mt-8">
+  <table className="w-full border-collapse text-center text-sm">
+    <thead>
+      <tr className="bg-[#f1f5f9] text-gray-700">
+        {['Libelle', 'QTE', 'PRIX', 'UNITE', 'MONTANT', 'TVA', 'TTC'].map((title, i) => (
+          <th key={i} className="border px-4 py-2 font-semibold">
+            {title}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {gestes
+        .filter(g => state.gestesep4.includes(g._id))
+        .map((geste, idx) => (
+          <tr key={geste._id}>
+            <td className="border px-2 py-1">{geste.reference}</td>
+            <td className="border px-2 py-1">1</td> {/* Default QTE */}
+            <td className="border px-2 py-1">0.00</td> {/* PRIX */}
+            <td className="border px-2 py-1">U</td> {/* UNITE */}
+            <td className="border px-2 py-1">{geste?.montantEtimatif}</td> {/* MONTANT */}
+            <td className="border px-2 py-1">19%</td> {/* TVA */}
+            <td className="border px-2 py-1">0.00</td> {/* TTC */}
+          </tr>
+        ))}
+    </tbody>
+  </table>
+</div>
 </details>
     
     <div className='grid grid-cols-1 gap-x-8 mb-3'>
