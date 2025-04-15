@@ -13,47 +13,52 @@ const FolderDetails = () => {
   const [benificaires, setBenificaires] = useState([]);
   const [entretes, setEntretes] = useState([]);
   const [inspecteurs, setInspecteurs] = useState([]);
+  const [gestes, setGestes] = useState([]);
   const navigate = useNavigate()
  
-  const [state, setState] = useState({
-    numFolderAnah:"",
-    benificaire:"",
-    source:"",
-    classeEng:"",
-    residance:"",
-    classeRevenue:"",
-    parrinage:"",
+//   const [state, setState] = useState({
+//     numFolderAnah:"",
+//     benificaire:"",
+//     source:"",
+//     classeEng:"",
+//     residance:"",
+//     classeRevenue:"",
+//     parrinage:"",
 
-    numbTotOLA:"",
-    numbEN:"",
-    titreResPriAm:"",
-    RFRtot:"",
-    anneeRFRtot:"",
-    numbPers:"",
-    numbEnfNai:"",
-    RFRtotInclu:"",
-    anneeREFtotInclu:"",
+//     numbTotOLA:"",
+//     numbEN:"",
+//     titreResPriAm:"",
+//     RFRtot:"",
+//     anneeRFRtot:"",
+//     numbPers:"",
+//     numbEnfNai:"",
+//     RFRtotInclu:"",
+//     anneeREFtotInclu:"",
 
-    numLogAm:"",
-    voieLogAm:"",
-    villeLogAm:"",
-    codePostalLogAm:"",
+//     numLogAm:"",
+//     voieLogAm:"",
+//     villeLogAm:"",
+//     codePostalLogAm:"",
 
-    communeLogAm:"",
-    batimentLogAm:"",
-    escalierLogAm:"",
-    etageLogAm:"",
-    porteLogAm:"",
-    logAmel:"",
-    const15ans:"",
-    const15ansAnnee:"",
-    PTZ:"",
-    travPartiel:"",
-    avantTravProj:"",
-    apresTrav:"",
-    souhaiTrav:"",
+//     communeLogAm:"",
+//     batimentLogAm:"",
+//     escalierLogAm:"",
+//     etageLogAm:"",
+//     porteLogAm:"",
+//     logAmel:"",
+//     const15ans:"",
+//     const15ansAnnee:"",
+//     PTZ:"",
+//     travPartiel:"",
+//     avantTravProj:"",
+//     apresTrav:"",
+//     souhaiTrav:"",
     
-  })
+//   })
+
+  const [state, setState] = useState({
+    gestesep4: []  // make sure it's an array
+  });
 
   const inputHandler = (e) => {
     setState({
@@ -134,6 +139,23 @@ const FolderDetails = () => {
     fetchInspecteurs()
   }, [store.token])
 
+  useEffect(() => {
+    const fetchsetGestes = async () => {
+      try {
+        const { data } = await axios.get(`${base_url}/api/gestes`, {
+          headers: {
+            'Authorization': `Bearer ${store.token}`
+          }
+        })
+        setGestes(data?.gestes)
+      } catch (error) {
+        console.error('Erreur lors du chargement des gestes', error)
+      }
+    }
+  
+    fetchsetGestes()
+  }, [store.token])
+
   const getFolders = async () => {
     if (folders_id) {
       try {
@@ -151,6 +173,17 @@ const FolderDetails = () => {
         console.error("Error fetching dossier details:", error);
       }
     }
+  };
+
+  const handleToggleGeste = (id) => {
+    setState(prev => {
+      const alreadySelected = prev.gestesep4.includes(id);
+      const updated = alreadySelected
+        ? prev.gestesep4.filter(g => g !== id)
+        : [...prev.gestesep4, id];
+  
+      return { ...prev, gestesep4: updated };
+    });
   };
 
 
@@ -220,6 +253,12 @@ const FolderDetails = () => {
               </select>
             </div>
           </div>
+
+          <div className='grid grid-cols-1 gap-x-8 mb-3'>
+                <div className='flex flex-col gap-y-2'>
+                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'ENREGISTRER'}</button>
+              </div>
+              </div>
     
     </details>
 
@@ -251,6 +290,12 @@ const FolderDetails = () => {
               <input onChange={inputHandler} value={state.dateVisit} type='datetime-local'  name='dateVisit' id='dateVisit' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
           </div>
+
+          <div className='grid grid-cols-1 gap-x-8 mb-3'>
+                <div className='flex flex-col gap-y-2'>
+                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'ENREGISTRER'}</button>
+              </div>
+              </div>
     
     </details>
     
@@ -364,14 +409,44 @@ const FolderDetails = () => {
     
     </details>
 
-    <details className='p-4 border rounded-md'>
-      <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>GESTE</summary>
+    <details className="p-4 border rounded-md">
+  <summary className="text-lg font-bold text-[#1960a9] cursor-pointer mb-4 select-none">GESTES</summary>
+
+  <div className="flex flex-wrap gap-4 mt-4">
+    {gestes.map(b => {
+      const isSelected = state.gestesep4.includes(b._id);
+
+      return (
+        <div
+          key={b._id}
+          onClick={() => handleToggleGeste(b._id)}
+          className={`w-40 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition duration-200
+            border shadow-sm cursor-pointer hover:shadow-md
+            ${isSelected ? 'bg-green-400 text-white border-green-300' : 'bg-gray-50 text-gray-700 border-gray-300'}
+          `}
+        >
+          {b.reference}
+        </div>
+      );
+    })}
+  </div>
+
+  {state.gestesep4.length > 0 && (
+  <div className="w-full mt-6 text-center text-sm text-gray-700">
+    <span className="font-medium text-gray-500"></span>
+    {gestes
+      .filter(g => state.gestesep4.includes(g._id))
+      .map(g => g.reference)
+      .join(' + ')}
+  </div>
+)}
+</details>
     
-  
-    
-    </details>
-    
-  
+    <div className='grid grid-cols-1 gap-x-8 mb-3'>
+                <div className='flex flex-col gap-y-2'>
+                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'ENREGISTRER'}</button>
+              </div>
+              </div>
     
     </details>
     
