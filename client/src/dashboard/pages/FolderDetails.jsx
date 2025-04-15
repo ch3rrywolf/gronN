@@ -23,7 +23,8 @@ const FolderDetails = () => {
 
 
   const [state, setState] = useState({
-    gestesep4: []  // make sure it's an array
+    gestesep4: [],
+    offreMar: "Offre MAR"
   });
 
   const inputHandler = (e) => {
@@ -131,6 +132,8 @@ const FolderDetails = () => {
         // Populate the state with fetched folder data
         setState((prevState) => ({
           ...prevState,
+          entrete: data.folders?.entrete?._id || "",
+          offreMar: data.folders?.offreMar || "Offre MAR",
           numFolderAnah: data.folders?.numFolderAnah || "", // Ensure numFolderAnah is set
           benificaire: data.benificaire?._id || "", // Ensure benificaire is set
           // Add other fields as needed
@@ -201,8 +204,8 @@ const FolderDetails = () => {
 
 
   useEffect(() => {
-    getFiles();
     getFolders();
+    getFiles();
   }, [folders_id]);
 
   return (
@@ -227,7 +230,7 @@ const FolderDetails = () => {
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='numFolderAnah'>N° DOSSIER ANAH</label>
-              <input onChange={inputHandler} value={state.numFolderAnah} type='text' placeholder='N° DOSSIER ANAH' name='numFolderAnah' id='numFolderAnah' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <input onChange={inputHandler} value={state.numFolderAnah || ""} type='text' placeholder='N° DOSSIER ANAH' name='numFolderAnah' id='numFolderAnah' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
           </div>
     
@@ -242,8 +245,8 @@ const FolderDetails = () => {
 </summary>           
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='numbTotOLA'>Offre MAR</label>
-              <input onChange={inputHandler} value="Offre MAR" type='text' readOnly placeholder='Offre MAR' name='Offre MAR' id='Offre MAR' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <label className='text-xs font-medium text-gray-600' htmlFor='offreMar'>Offre MAR</label>
+              <input onChange={inputHandler} value={state.offreMar || "Offre MAR"} type='text' readOnly placeholder='Offre MAR' name='offreMar' id='offreMar' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
           </div>
     
@@ -259,7 +262,7 @@ const FolderDetails = () => {
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
 <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='entrete'>Entreprises retenue *</label>
-              <select onChange={inputHandler} value={state.entrete} required name='entrete' id='entrete' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
+              <select onChange={inputHandler} value={state.entrete || ""} required name='entrete' id='entrete' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
                 <option value=''>Sélectionner un Entreprises retenue</option>
                 {entretes.map(b => (
                   <option key={b._id} value={b._id}>{b.raiSocEntRe}</option>
@@ -286,12 +289,12 @@ const FolderDetails = () => {
 <div className='grid grid-cols-3 gap-x-8 mb-3'>
 <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='numbTotOLA'>l’entreprise retenue sélectionnée</label>
-              <input onChange={inputHandler} value={state.folders?.raiSocEntRe} type='text' readOnly  name='Offre MAR' id='Offre MAR' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <input onChange={inputHandler} value={state.folders?.raiSocEntRe || ""} type='text' readOnly  name='Offre MAR' id='Offre MAR' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
 
             <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='inspectep4'>sélectionner le technicien</label>
-              <select onChange={inputHandler} value={state.inspectep4} required name='inspectep4' id='inspectep4' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
+              <select onChange={inputHandler} value={state.inspectep4 || ""} required name='inspectep4' id='inspectep4' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
                 <option value=''>Sélectionner un Entreprises retenue</option>
                 {inspecteurs.map(b => (
                   <option key={b._id} value={b._id}>{b.nomIns} {b.prenomIns}</option>
@@ -301,7 +304,7 @@ const FolderDetails = () => {
 
             <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='dateVisit'>date et l’heure de la visite</label>
-              <input onChange={inputHandler} value={state.dateVisit} type='datetime-local'  name='dateVisit' id='dateVisit' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <input onChange={inputHandler} value={state.dateVisit || ""} type='datetime-local'  name='dateVisit' id='dateVisit' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
           </div>
 
@@ -328,12 +331,12 @@ const FolderDetails = () => {
       <div className='grid grid-cols-2 gap-x-8 mb-3'>
 <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='SHAB'>SHAB</label>
-              <input onChange={inputHandler} value={state.SHAB} type='text'   name='SHAB' id='SHAB' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <input onChange={inputHandler} value={state.SHAB || ""} type='text'   name='SHAB' id='SHAB' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
 
             <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='nombeta'>Nombre d'étage</label>
-              <input onChange={inputHandler} value={state.nombeta} type='text'   name='nombeta' id='v' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <input onChange={inputHandler} value={state.nombeta || ""} type='text'   name='nombeta' id='v' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
           </div>
 
@@ -342,7 +345,7 @@ const FolderDetails = () => {
   <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Est-ce que vous avez les mesures des surfaces à isoler ?*</label>
   <select
     onChange={inputHandler}
-    value={state.titreResPriAm}
+    value={state.titreResPriAm || ""}
     name='titreResPriAm'
     id='titreResPriAm'
     className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
@@ -355,7 +358,7 @@ const FolderDetails = () => {
 
             <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='surfIsol'>Surface à isoler:*</label>
-              <input onChange={inputHandler} value={state.surfIsol} type='text'   name='surfIsol' id='surfIsol' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <input onChange={inputHandler} value={state.surfIsol || ""} type='text'   name='surfIsol' id='surfIsol' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
           </div>
 
@@ -364,7 +367,7 @@ const FolderDetails = () => {
   <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Classe énergétique initial *</label>
   <select
     onChange={inputHandler}
-    value={state.titreResPriAm}
+    value={state.titreResPriAm || ""}
     name='titreResPriAm'
     id='titreResPriAm'
     className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
@@ -385,7 +388,7 @@ const FolderDetails = () => {
   <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Sauts de classe prévu *</label>
   <select
     onChange={inputHandler}
-    value={state.titreResPriAm}
+    value={state.titreResPriAm || ""}
     name='titreResPriAm'
     id='titreResPriAm'
     className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
@@ -405,7 +408,7 @@ const FolderDetails = () => {
   <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Catégorie *</label>
   <select
     onChange={inputHandler}
-    value={state.titreResPriAm}
+    value={state.titreResPriAm || ""}
     name='titreResPriAm'
     id='titreResPriAm'
     className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
@@ -427,19 +430,19 @@ const FolderDetails = () => {
   <summary className="text-lg font-bold text-[#1960a9] cursor-pointer mb-4 select-none">GESTES</summary>
 
   <div className="flex flex-wrap gap-4 mt-4">
-    {gestes.map(b => {
-      const isSelected = state.gestesep4.includes(b._id);
+    {gestes.map(g => {
+      const isSelected = state.gestesep4.includes(g._id);
 
       return (
         <div
-          key={b._id}
-          onClick={() => handleToggleGeste(b._id)}
+          key={g._id}
+          onClick={() => handleToggleGeste(g._id)}
           className={`w-40 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition duration-200
             border shadow-sm cursor-pointer hover:shadow-md
             ${isSelected ? 'bg-green-400 text-white border-green-300' : 'bg-gray-50 text-gray-700 border-gray-300'}
           `}
         >
-          {b.reference}
+          {g.reference}
         </div>
       );
     })}
@@ -521,79 +524,45 @@ const FolderDetails = () => {
     
     </details>
     
-    <details className='p-4 border rounded-md'>
-      <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>LISTE DES DOCUMENTS</summary>
     
-     
-           <div className="bg-white p-4 mt-5">
-             <form onSubmit={submitFile}>
-               <div className="grid grid-cols-2 gap-x-8 mb-3">
-                 <div className="flex flex-col gap-y-2">
-                   <label className="text-md font-medium text-gray-600">Titre*</label>
-                   <input
-                     onChange={(e) => setTitle(e.target.value)}
-                     value={title}
-                     required
-                     type="text"
-                     placeholder="Titre du Document"
-                     className="px-3 py-2 rounded-md border border-gray-300 focus:border-green-500"
-                   />
-                 </div>
-                 <div className="flex flex-col gap-y-2">
-                   <label className="text-md font-medium text-gray-600">Importer Document*</label>
-                   <input
-                     onChange={(e) => setFile(e.target.files[0])}
-                     required
-                     type="file"
-                     accept="application/pdf"
-                     className="px-3 py-2 rounded-md border border-gray-300 focus:border-green-500"
-                   />
-                 </div>
-               </div>
-               <button type="submit" className="px-3 py-2 bg-[#1960a9] rounded text-white hover:bg-[#9fc327]">
-                 Importer Document
-               </button>
-             </form>
-           </div>
-     
-           <div className="bg-white p-4 mt-5">
-       <h3 className="text-lg font-bold">Liste  des Documents</h3>
-       {filesList.length > 0 ? (
-         <div className="mt-3 flex gap-4 overflow-x-auto">
-           {filesList.map((file, index) => (
-             <div key={index} className="py-2 border p-2 rounded shadow-md min-w-[150px] flex flex-col items-center">
-               <a 
-                 href={`${base_url}/files/${file.pdf}`} 
-                 target="_blank" 
-                 rel="noopener noreferrer" 
-                 className="text-blue-500 block text-center mb-2"
-               >
-                 {file.title}
-               </a>
-               <button
-                 onClick={() => deleteFile(folders_id, file._id)}
-                 className="mt-2 text-red-500 hover:text-red-700"
-               >
-                 <Trash2 className="w-5 h-5" />
-                 
-               </button>
-             </div>
-           ))}
-         </div>
-       ) : (
-         <p>Aucun Document ...</p>
-       )}
-     </div>
-    
-    </details>
     
     
     <div className='grid grid-cols-1 gap-x-8 mb-3'>
                 <div className='flex flex-col gap-y-2'>
-                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Ajoute Dossier'}</button>
+                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Confirmer Dossier'}</button>
               </div>
               </div>
     </form>
+
+
+
+    <details className='p-4 border rounded-md'>
+  <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>Fichiers liés</summary>
+
+ <div>
+ <form onSubmit={submitFile} className='space-y-4'>
+    <div className='flex flex-col gap-2'>
+      <label>Titre du fichier</label>
+      <input type="text" value={title} onChange={e => setTitle(e.target.value)} className="border px-2 py-1" />
+      <input type="file" onChange={e => setFile(e.target.files[0])} />
+      <button type="submit" className='px-3 py-2 bg-[#1960a9] text-white rounded'>Uploader</button>
+    </div>
+  </form>
+ </div>
+
+  <ul className='mt-4 space-y-2'>
+    {filesList.map(file => (
+      <li key={file._id} className='flex justify-between items-center border p-2 rounded'>
+        <a  href={`${base_url}/files/${file.pdf}`}  target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
+          {file.title}
+        </a>
+        <button onClick={() => deleteFile(folders_id, file._id)} className='text-red-600 hover:text-red-800'>
+          <Trash2 size={18} />
+        </button>
+      </li>
+    ))}
+  </ul>
+</details>
     
     
     
