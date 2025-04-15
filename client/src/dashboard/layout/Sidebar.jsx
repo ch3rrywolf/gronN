@@ -66,7 +66,7 @@ const Sidebar = () => {
                         <SidebarItem to="/dashboard/prestationmars" icon={<BiSolidDonateHeart />} label="Prestations Mar" pathname={pathname} />
                         <SidebarItem to="/dashboard/gestes" icon={<AiTwotoneContainer />} label="Geste" pathname={pathname} />
                         <SidebarItem to="/dashboard/folders" icon={<FaFolderOpen />} label="Dossier" pathname={pathname} />
-                        <SidebarItem to="/dashboard/backoffices" icon={<FaUsersGear />} label="Gestion des comptes" pathname={pathname} />
+                        {/* <SidebarItem to="/dashboard/backoffices" icon={<FaUsersGear />} label="Gestion des comptes" pathname={pathname} /> */}
                         <SidebarItem to="/dashboard/sessions" icon={<FaUsersGear />} label="Gestion des comptes" pathname={pathname} />
                         
                     </>

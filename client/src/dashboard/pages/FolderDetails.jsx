@@ -124,7 +124,7 @@ const FolderDetails = () => {
                 className={`w-full text-left px-3 py-2 rounded ${
                   selectedStep === 3 ? "bg-blue-600 text-white" : "bg-gray-100 hover:bg-gray-200"
                 }`}
-                onClick={() => setSelectedStep(1)}
+                onClick={() => setSelectedStep(3)}
               >
                 Étape 3: Selection des Entreprises
               </button>
@@ -134,7 +134,7 @@ const FolderDetails = () => {
                 className={`w-full text-left px-3 py-2 rounded ${
                   selectedStep === 4 ? "bg-blue-600 text-white" : "bg-gray-100 hover:bg-gray-200"
                 }`}
-                onClick={() => setSelectedStep(2)}
+                onClick={() => setSelectedStep(4)}
               >
                 Étape 4: Planification de(s) 1ère(s) Visite(s)
               </button>

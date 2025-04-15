@@ -42,10 +42,19 @@ const folderSchema = new Schema({
     anneeRFRtot: {
         type: String,
     },
-    escalier: {
-        type: String
-        
+    numbPers: {
+        type: String,
     },
+    numbEnfNai: {
+        type: String,
+    },
+    RFRtotInclu: {
+        type: String,
+    },
+    anneeREFtotInclu: {
+        type: String,
+    },
+
     numLogAm: {
         type: String,
     },

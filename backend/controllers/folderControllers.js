@@ -5,7 +5,7 @@ const { default: mongoose } = require('mongoose');
 class folderController {
 
     add_folders = async (req, res) => {
-        const {numFolderAnah,benificaire,source,classeEng,residance,classeRevenue,parrinage,numbTotOLA,numbEN,titreResPriAm,RFRtot,anneeRFRtot,escalier,numLogAm,voieLogAm,villeLogAm,codePostalLogAm,communeLogAm,batimentLogAm,escalierLogAm,etageLogAm,porteLogAm,logAmel,const15ans,const15ansAnnee,PTZ,travPartiel,avantTravProj,apresTrav,souhaiTrav,folderStatus,pdfs } = req.body;
+        const {numFolderAnah,benificaire,source,classeEng,residance,classeRevenue,parrinage,numbTotOLA,numbEN,titreResPriAm,RFRtot,anneeRFRtot,numbPers,numbEnfNai,RFRtotInclu,anneeREFtotInclu,numLogAm,voieLogAm,villeLogAm,codePostalLogAm,communeLogAm,batimentLogAm,escalierLogAm,etageLogAm,porteLogAm,logAmel,const15ans,const15ansAnnee,PTZ,travPartiel,avantTravProj,apresTrav,souhaiTrav,folderStatus,pdfs } = req.body;
     
         if (!numFolderAnah) {
             return res.status(400).json({ message: 'Please provide num Dossier Anah' });
@@ -30,7 +30,10 @@ class folderController {
                 titreResPriAm: titreResPriAm?.trim() || "",
                 RFRtot: RFRtot?.trim() || "",
                 anneeRFRtot: anneeRFRtot?.trim() || "",
-                escalier: escalier?.trim() || "",
+                numbPers: numbPers?.trim() || "",
+                numbEnfNai: numbEnfNai?.trim() || "",
+                RFRtotInclu: RFRtotInclu?.trim() || "",
+                anneeREFtotInclu: anneeREFtotInclu?.trim() || "",
                 numLogAm: numLogAm?.trim() || "",
                 voieLogAm: voieLogAm?.trim() || "",
                 villeLogAm: villeLogAm?.trim() || "",
@@ -42,6 +45,7 @@ class folderController {
                 porteLogAm: porteLogAm?.trim() || "",
                 logAmel: logAmel?.trim() || "",
                 const15ans: const15ans?.trim() || "",
+                const15ansAnnee: const15ansAnnee?.trim() || "",
                 PTZ: PTZ?.trim() || "",
                 travPartiel: travPartiel?.trim() || "",
                 avantTravProj: avantTravProj?.trim() || "",
