@@ -1,6 +1,6 @@
 const { model, Schema } = require('mongoose');
 
-const S2peDetailsSchema = new Schema({
+const S2epeDetailsSchema = new Schema({
     EntrepriseRetenue: {
         type: String,
         required: true
@@ -11,4 +11,4 @@ const S2peDetailsSchema = new Schema({
     }
 }, { timestamps: true });
 
-module.exports = model('S2pes', S2peDetailsSchema); 
+module.exports = model('S2eps', S2epeDetailsSchema); 

@@ -34,8 +34,6 @@ const DossierDetails = () => {
 
   const [representants, setRepresentants] = useState([]); 
   const [drepresentants, setDRepresentants] = useState([]); 
-  // const [idSelected, setIdSelected] = useState("");
-  // const selectedRep = representants.find((rep) => rep._id === idSelected);
   const [selectedRepresentant, setSelectedRepresentant] = useState('');
 
   const lotDocuments = [

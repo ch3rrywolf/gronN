@@ -27,7 +27,7 @@ router.get('/api/folders/:folders_id/comments', middleware.auth, folderControlle
 router.post('/api/folders/upload-files', upload.single('file'), folderController.upload_files)
 router.get('/api/folders/get-files/:folders_id', folderController.get_files);
 // router.get('/api/folders/get-comments/:folders_id', folderController.get_comments);
-// router.get('/api/folders/get-representants/:folders_id', folderController.get_representants);
+router.get('/api/folders/get-s2eps/:folders_id', folderController.get_s2eps);
 router.delete('/api/folders/:folders_id/pdf/:pdf_id', folderController.delete_file);
 router.put('/api/folders/status-update/:folders_id', middleware.auth, folderController.update_folders_status)
 // router.put('/api/folders/update-ass-rep/:folders_id',  folderController.upload_representants)

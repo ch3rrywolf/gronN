@@ -25,6 +25,9 @@ const FolderDetails = () => {
 
      const [news2epi, setNews2epi] = useState("");
      const [newEntrepriseRetenue, setNewEntrepriseRetenue] = useState("");
+
+    //  const [s2eps, setS2eps] = useState([]); 
+     const [s2epsR, setS2epsR] = useState([]); 
  
 
 
@@ -202,6 +205,16 @@ const FolderDetails = () => {
     }
   };
 
+
+  const getS2epsR = async () => {
+    try {
+      const { data } = await axios.get(`${base_url}/api/folders/get-s2eps/${folders_id}`);
+      setS2epsR(data.s2eps);
+    } catch (error) {
+      console.error("Error fetching representants:", error);
+    }
+  };
+
   const handleToggleGeste = (id) => {
     setState(prev => {
       const alreadySelected = prev.gestesep4.includes(id);
@@ -265,6 +278,8 @@ const FolderDetails = () => {
   useEffect(() => {
     getFolders();
     getFiles();
+    
+    getS2epsR();
   }, [folders_id]);
 
   return (
@@ -399,7 +414,22 @@ const FolderDetails = () => {
 <div className='grid grid-cols-3 gap-x-8 mb-3'>
 <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='numbTotOLA'>l’entreprise retenue sélectionnée</label>
-              <input onChange={inputHandler} value={state.folders?.raiSocEntRe || ""} type='text' readOnly  name='Offre MAR' id='Offre MAR' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+             {s2epsR && s2epsR.length > 0 ? (
+               s2epsR.map((rep, index) => (
+                 <div key={index}>
+                   <span className="text-xs font-bold">entreprise retenue: </span><span>{rep.EntrepriseRetenue}</span>
+                   <button
+                         onClick={"() => deleteRepre(folders_id, rep._id)"}
+                         className="mt-2 text-red-500 hover:text-red-700"
+                       >
+                         <Trash2 className="w-5 h-5" />
+                         
+                       </button>
+                 </div>
+               ))
+             ) : (
+               <p>Aucun représentant trouvé.</p>
+             )}
             </div>
 
             <div className='flex flex-col gap-y-2'>

@@ -1,6 +1,7 @@
 // const dossierModel = require('../models/dossierModel')
 const folderModel = require('../models/folderModel')
 const PdfDetails =  require("../models/pdfDetails")
+// const s2epDetails = require("../models/s2epDetails")
 const { default: mongoose } = require('mongoose');
 class folderController {
 
@@ -413,6 +414,29 @@ class folderController {
                 }
             };
     
+            get_s2eps = async (req, res) => {
+                            console.log("✅ get-comments route executed");
+                        
+                            const { folders_id } = req.params;
+                            console.log("Received folders_id:", folders_id);
+                        
+                            if (!folders_id || !mongoose.Types.ObjectId.isValid(folders_id)) {
+                                return res.status(400).json({ message: "Invalid dossier ID" });
+                            }
+                        
+                            try {
+                                const folder = await folderModel.findById(folders_id).populate("s2eps");
+                        
+                                if (!folder) {
+                                    return res.status(404).json({ message: "folder not found" });
+                                }
+                        
+                                res.status(200).json({ status: "ok", s2eps: folder.s2eps });
+                            } catch (error) {
+                                console.error("Get s2eps error:", error);
+                                res.status(500).json({ status: "error", message: error.message });
+                            }
+                        };
 }
 
 module.exports = new folderController()
