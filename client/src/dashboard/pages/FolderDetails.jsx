@@ -230,6 +230,8 @@ const FolderDetails = () => {
   
         const isValid = Array.isArray(s2eps) && s2eps.length > 0;
         const isValid3 = Array.isArray(s3eps) && s3eps.length > 0;
+        // const isValid3 = Array.isArray(s3eps) && s3eps.length > 0 && s3eps.some(item => item !== '');
+        // const isValid3 =  Array.isArray(s2epsR) && s2epsR.length > 0 && s2epsR.some(item => item?.EntrepriseRetenue?.trim() !== '')
         console.log("isValidS2ep:", isValid);
         console.log("isValidS3ep:", isValid3);
   
@@ -508,8 +510,8 @@ const FolderDetails = () => {
             </div>
 
             <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='dateVisit'>date et l’heure de la visite</label>
-              <input onChange={(e) => setNewdateVisite(e.target.value)} value={state.dateVisit || ""} type='datetime-local'  name='dateVisit' id='dateVisit' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <label className='text-xs font-medium text-gray-600' htmlFor='newdateVisite'>date et l’heure de la visite</label>
+              <input onChange={(e) => setNewdateVisite(e.target.value)} value={newdateVisite || ""} type='datetime-local'  name='newdateVisite' id='newdateVisite' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
           </div>
 
@@ -724,7 +726,41 @@ const FolderDetails = () => {
     </details>
     
     <details className='p-4 border rounded-md'>
-      <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>DESCRIPTION DU LOGEMENT A AMELIORER</summary>
+    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
+    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
+    5
+  </span>
+  1ère visite   
+</summary> 
+
+
+<details className='p-4 border rounded-md'>
+  <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>Attachez tous les documents nécessaires lors de la première visite. </summary>
+
+ <div>
+ <form onSubmit={submitFile} className='space-y-4'>
+    <div className='flex flex-col gap-2'>
+      <label>Titre du fichier</label>
+      <input type="text" value={title} onChange={e => setTitle(e.target.value)} className="border px-2 py-1" />
+      <input type="file" onChange={e => setFile(e.target.files[0])} />
+      <button type="submit" className='px-3 py-2 bg-[#1960a9] text-white rounded'>Uploader</button>
+    </div>
+  </form>
+ </div>
+
+  <ul className='mt-4 space-y-2'>
+    {filesList.map(file => (
+      <li key={file._id} className='flex justify-between items-center border p-2 rounded'>
+        <a  href={`${base_url}/files/${file.pdf}`}  target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
+          {file.title}
+        </a>
+        <button onClick={() => deleteFile(folders_id, file._id)} className='text-red-600 hover:text-red-800'>
+          <Trash2 size={18} />
+        </button>
+      </li>
+    ))}
+  </ul>
+</details>
     
 
     
