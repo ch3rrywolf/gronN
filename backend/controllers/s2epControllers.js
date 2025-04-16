@@ -12,13 +12,13 @@ class S2epController {
                 return res.status(400).json({ success: false, message: 'Invalid folder ID' });
             }
 
-            const newEntrepriseRetenue = new s2epDetails({ ...req.body });
-            const savedEntrepriseRetenue = await newEntrepriseRetenue.save();
+            const news2epi = new s2epDetails({ ...req.body });
+            const saveds2epi = await news2epi.save();
 
             // Check if the folder exists before updating
             const folder = await folderModel.findByIdAndUpdate(
                 folders_id,
-                { $push: { s2eps: savedEntrepriseRetenue._id } },
+                { $push: { s2eps: saveds2epi._id } },
                 { new: true }
             );
 
@@ -29,7 +29,7 @@ class S2epController {
             res.status(200).json({
                 success: true,
                 message: 'S2ep submitted',
-                data: savedEntrepriseRetenue,
+                data: saveds2epi,
             });
         } catch (err) {
             console.error(err);

@@ -11,6 +11,8 @@ const FolderDetails = () => {
   const { folders_id } = useParams();
   const { store } = useContext(storeContext);
 
+  // const isValid = data.folders.s2eps && data.folders.s2eps.length > 0;
+
   const [benificaires, setBenificaires] = useState([]);
   const [entretes, setEntretes] = useState([]);
   const [inspecteurs, setInspecteurs] = useState([]);
@@ -21,6 +23,7 @@ const FolderDetails = () => {
     const [file, setFile] = useState(null);
     const [filesList, setFilesList] = useState([]);
 
+     const [news2epi, setNews2epi] = useState("");
      const [newEntrepriseRetenue, setNewEntrepriseRetenue] = useState("");
  
 
@@ -28,7 +31,9 @@ const FolderDetails = () => {
   const [state, setState] = useState({
     gestesep4: [],
     offreMar: "Offre MAR",
-    numFolderAnah: ''
+    numFolderAnah: '',
+    isValidS2ep: false,
+    data: null,
   });
 
   const inputHandler = (e) => {
@@ -81,19 +86,19 @@ const FolderDetails = () => {
   const submitS2ep = async (e) => {
     e.preventDefault();
     if (!newEntrepriseRetenue.trim()) {
-      toast.error("Le commentaire ne peut pas être vide !");
+      toast.error("Le Entreprise Retenue ne peut pas être vide !");
       return;
     }
   
   
     try {
-      const response = await axios.post(
+      const s2epi = await axios.post(
         `${base_url}/api/folders/s2ep/${folders_id}`,
         { EntrepriseRetenue: newEntrepriseRetenue },
         { headers: { Authorization: `Bearer ${store.token}` } }
       );
       toast.success("S2ep ajouté !");
-      setNewEntrepriseRetenue(""); 
+      setNews2epi(""); 
       // setS2eps([...s2eps, response.data.data]);
     } catch (error) {
       console.error("Error submitting S2ep:", error);
@@ -101,25 +106,6 @@ const FolderDetails = () => {
     }
   };
   
-
-  // const submit = async(e) => {
-  //   e.preventDefault()
-  //   try {
-  //     setLoader(true)
-  //     const {data} = await axios.post(`${base_url}/api/folders/add`,state, {
-  //       headers : {
-  //         'Authorization' : `Bearer ${store.token}`
-  //       }
-  //     })
-  //     setLoader(false)
-  //     toast.success(data.message)
-  //     navigate('/dashboard/folders')
-  //   } catch (error) {
-  //     setLoader(false)
-  //     toast.error(error.response.data.message)
-  //     // console.log(error)
-  //   }
-  // }
 
   useEffect(() => {
     const fetchBenificaires = async () => {
@@ -195,14 +181,20 @@ const FolderDetails = () => {
         const { data } = await axios.get(`${base_url}/api/folders/${folders_id}`, {
           headers: { Authorization: `Bearer ${store.token}` },
         });
-        // Populate the state with fetched folder data
+        const s2eps = data?.folders?.s2eps || [];
+        console.log("s2eps:", s2eps); 
+  
+        const isValid = Array.isArray(s2eps) && s2eps.length > 0;
+        console.log("isValidS2ep:", isValid);
+  
         setState((prevState) => ({
           ...prevState,
+          data: data,
           entrete: data.folders?.entrete?._id || "",
           offreMar: data.folders?.offreMar || "Offre MAR",
-          numFolderAnah: data.folders?.numFolderAnah || "", // Ensure numFolderAnah is set
-          benificaire: data.benificaire?._id || "", // Ensure benificaire is set
-          // Add other fields as needed
+          numFolderAnah: data.folders?.numFolderAnah || "",
+          benificaire: data.benificaire?._id || "",
+          isValidS2ep: isValid, 
         }));
       } catch (error) {
         console.error("Error fetching dossier details:", error);
@@ -269,6 +261,7 @@ const FolderDetails = () => {
 };
 
 
+
   useEffect(() => {
     getFolders();
     getFiles();
@@ -319,8 +312,13 @@ const FolderDetails = () => {
          
     
     
-
+<div className="relative">
+  <div className="absolute top-2 right-2 z-50">
+      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
+  </div>
+</div>
     <details  className='p-4 border rounded-md'>
+      
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
     1
@@ -337,15 +335,29 @@ const FolderDetails = () => {
     </details>
 
 
-    <form onSubmit={submitS2ep} className='space-y-6'>
+    <form onSubmit={submitS2ep} className='space-y-1'>
+
+    <div className="relative">
+  <div className="absolute top-2 right-2 z-50">
+    {state.isValidS2ep ? (
+      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
+    ) : (
+      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
+    )}
+  </div>
+</div>
 
     <details  className='p-4 border rounded-md'>
+    
+    
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
     2
   </span>
   Sélection Des Entreprises 
+
 </summary>  
+
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
 <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='newEntrepriseRetenue'>Entreprises retenue *</label>
