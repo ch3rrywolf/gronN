@@ -41,6 +41,7 @@ const FolderDetails = () => {
     offreMar: "Offre MAR",
     numFolderAnah: '',
     isValidS2ep: false,
+    isValidS3ep: false,
     data: null,
   });
 
@@ -223,10 +224,14 @@ const FolderDetails = () => {
           headers: { Authorization: `Bearer ${store.token}` },
         });
         const s2eps = data?.folders?.s2eps || [];
+        const s3eps = data?.folders?.s3eps || [];
         console.log("s2eps:", s2eps); 
+        console.log("s3eps:", s3eps); 
   
         const isValid = Array.isArray(s2eps) && s2eps.length > 0;
+        const isValid3 = Array.isArray(s3eps) && s3eps.length > 0;
         console.log("isValidS2ep:", isValid);
+        console.log("isValidS3ep:", isValid3);
   
         setState((prevState) => ({
           ...prevState,
@@ -236,6 +241,7 @@ const FolderDetails = () => {
           numFolderAnah: data.folders?.numFolderAnah || "",
           benificaire: data.benificaire?._id || "",
           isValidS2ep: isValid, 
+          isValidS3ep: isValid3,
         }));
       } catch (error) {
         console.error("Error fetching dossier details:", error);
@@ -453,6 +459,16 @@ const FolderDetails = () => {
 
     </form>
 <form onSubmit={submitS3ep} className='space-y-1'>
+
+<div className="relative">
+  <div className="absolute top-2 right-2 z-50">
+    {state.isValidS3ep ? (
+      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
+    ) : (
+      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
+    )}
+  </div>
+</div>
     <details  className='p-4 border rounded-md'>
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
