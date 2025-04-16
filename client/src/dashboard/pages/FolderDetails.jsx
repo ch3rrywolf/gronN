@@ -215,6 +215,17 @@ const FolderDetails = () => {
     }
   };
 
+  const deleteS2epsEntreprise = async (folders_id, s2eps_id) => {
+    try {
+      await axios.delete(`${base_url}/api/folders/${folders_id}/s2eps-entreprise/${s2eps_id}`);
+      toast.success("steps entreprise supprimé avec succès !");
+      getS2epsR();
+    } catch (error) {
+      console.error("Error deleting s2eps entreprise:", error);
+      toast.error("Échec de la suppression du fichier.");
+    }
+  };
+
   const handleToggleGeste = (id) => {
     setState(prev => {
       const alreadySelected = prev.gestesep4.includes(id);
@@ -419,7 +430,7 @@ const FolderDetails = () => {
                  <div key={index}>
                    <span className="text-xs font-bold">entreprise retenue: </span><span>{rep.EntrepriseRetenue}</span>
                    <button
-                         onClick={"() => deleteRepre(folders_id, rep._id)"}
+                         onClick={() => deleteS2epsEntreprise(folders_id, rep._id)}
                          className="mt-2 text-red-500 hover:text-red-700"
                        >
                          <Trash2 className="w-5 h-5" />
@@ -428,7 +439,7 @@ const FolderDetails = () => {
                  </div>
                ))
              ) : (
-               <p>Aucun représentant trouvé.</p>
+               <p>Aucun Entreprise Retenue trouvé.</p>
              )}
             </div>
 

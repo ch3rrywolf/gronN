@@ -32,6 +32,7 @@ router.delete('/api/folders/:folders_id/pdf/:pdf_id', folderController.delete_fi
 router.put('/api/folders/status-update/:folders_id', middleware.auth, folderController.update_folders_status)
 // router.put('/api/folders/update-ass-rep/:folders_id',  folderController.upload_representants)
 // router.delete('/api/folders/:folders_id/rep/:representant_id',  folderController.delete_representants)
+router.delete('/api/folders/:folders_id/s2eps-entreprise/:s2eps_id',  folderController.delete_s2eps_entreprise)
 
 
 router.put('/api/folders/update/step1/:id',middleware.auth, folderController.step1)

@@ -437,6 +437,37 @@ class folderController {
                                 res.status(500).json({ status: "error", message: error.message });
                             }
                         };
+
+                        delete_s2eps_entreprise = async (req, res) => {
+                                        const { folders_id, s2eps_id } = req.params;
+                                    
+                                        if (!mongoose.Types.ObjectId.isValid(folders_id) || !mongoose.Types.ObjectId.isValid(s2eps_id)) {
+                                            return res.status(400).json({ message: "Invalid folders ID or s2eps ID" });
+                                        }
+                                    
+                                        try {
+                                            const folders = await folderModel.findById(folders_id);
+                                            if (!folders) {
+                                                return res.status(404).json({ message: "folder not found" });
+                                            }
+                                    
+                                            if (!folders.s2eps.includes(s2eps_id)) {
+                                                return res.status(404).json({ message: "s2eps_entreprise not found in dossier" });
+                                            }
+                                    
+                                
+                                    
+                                            await folderModel.findByIdAndUpdate(
+                                                folders_id,
+                                                { $pull: { s2eps: s2eps_id } },
+                                                { new: true }
+                                            );
+                                    
+                                            res.status(200).json({ message: "s2eps_entreprise deleted successfully" });
+                                        } catch (error) {
+                                            res.status(500).json({ message: "Internal server error", error: error.message });
+                                        }
+                                    };
 }
 
 module.exports = new folderController()
