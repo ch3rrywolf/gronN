@@ -5,6 +5,7 @@ import storeContext from "../../context/storeContext";
 import { base_url } from "../config/config";
 import toast from "react-hot-toast";
 import { Trash2 } from "lucide-react";
+import { FiSave } from 'react-icons/fi';
 
 const FolderDetails = () => {
   const { folders_id } = useParams();
@@ -19,12 +20,15 @@ const FolderDetails = () => {
    const [title, setTitle] = useState("");
     const [file, setFile] = useState(null);
     const [filesList, setFilesList] = useState([]);
+
+     const [newEntrepriseRetenue, setNewEntrepriseRetenue] = useState("");
  
 
 
   const [state, setState] = useState({
     gestesep4: [],
-    offreMar: "Offre MAR"
+    offreMar: "Offre MAR",
+    numFolderAnah: ''
   });
 
   const inputHandler = (e) => {
@@ -34,26 +38,88 @@ const FolderDetails = () => {
     })
   }
 
+  // const inputHandlerS2ep = (e) => {
+  //   setNewEntrepriseRetenue(e.target.value);
+  // };
+
   const [loader, setLoader] = useState(false)
 
-  const submit = async(e) => {
-    e.preventDefault()
+
+
+  //update anah dossier number
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+  
     try {
-      setLoader(true)
-      const {data} = await axios.post(`${base_url}/api/folders/add`,state, {
-        headers : {
-          'Authorization' : `Bearer ${store.token}`
-        }
-      })
-      setLoader(false)
-      toast.success(data.message)
-      navigate('/dashboard/folders')
-    } catch (error) {
-      setLoader(false)
-      toast.error(error.response.data.message)
-      // console.log(error)
+      const response = await fetch(`${base_url}/api/folders/update/${folders_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${store.token}`, // replace with your token logic
+        },
+        body: JSON.stringify({
+          numFolderAnah: state.numFolderAnah,
+        }),
+      });
+  
+      const data = await response.json();
+      if (response.ok) {
+        alert("N° DOSSIER ANAH updated successfully");
+        // optionally refresh data or update local state
+      } else {
+        alert(data.message);
+      }
+    } catch (err) {
+      console.error("Error updating N° DOSSIER ANAH:", err);
+      alert("Something went wrong");
     }
-  }
+  };
+
+  // submit entreprise step 2
+
+  const submitS2ep = async (e) => {
+    e.preventDefault();
+    if (!newEntrepriseRetenue.trim()) {
+      toast.error("Le commentaire ne peut pas être vide !");
+      return;
+    }
+  
+  
+    try {
+      const response = await axios.post(
+        `${base_url}/api/folders/s2ep/${folders_id}`,
+        { EntrepriseRetenue: newEntrepriseRetenue },
+        { headers: { Authorization: `Bearer ${store.token}` } }
+      );
+      toast.success("S2ep ajouté !");
+      setNewEntrepriseRetenue(""); 
+      // setS2eps([...s2eps, response.data.data]);
+    } catch (error) {
+      console.error("Error submitting S2ep:", error);
+      toast.error("Erreur lors de l'ajout du S2ep.");
+    }
+  };
+  
+
+  // const submit = async(e) => {
+  //   e.preventDefault()
+  //   try {
+  //     setLoader(true)
+  //     const {data} = await axios.post(`${base_url}/api/folders/add`,state, {
+  //       headers : {
+  //         'Authorization' : `Bearer ${store.token}`
+  //       }
+  //     })
+  //     setLoader(false)
+  //     toast.success(data.message)
+  //     navigate('/dashboard/folders')
+  //   } catch (error) {
+  //     setLoader(false)
+  //     toast.error(error.response.data.message)
+  //     // console.log(error)
+  //   }
+  // }
 
   useEffect(() => {
     const fetchBenificaires = async () => {
@@ -219,22 +285,40 @@ const FolderDetails = () => {
           
     
     
+          <details className='p-4 border rounded-md'>
+  <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>
+    N° DOSSIER ANAH
+  </summary>
+  
+  <div className='grid grid-cols-1 gap-x-8 mb-3'>
+    <div className='flex flex-col gap-y-2'>
+      <label className='text-xs font-medium text-gray-600' htmlFor='numFolderAnah'>N° DOSSIER ANAH</label>
+      <input
+        onChange={inputHandler}
+        value={state.numFolderAnah || ""}
+        type='text'
+        placeholder='N° DOSSIER ANAH'
+        name='numFolderAnah'
+        id='numFolderAnah'
+        className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8'
+      />
+    </div>
+    <button
+  onClick={handleUpdate}
+  className="mt-2 p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 flex items-center justify-center"
+  title="mettre à jour N° DOSSIER ANAH"
+>
+  <FiSave size={20} />
+</button>
+  </div>
+
+  
+</details>
     
     
-          <form onSubmit={submit} className='space-y-6'>
+         
     
-    <details className='p-4 border rounded-md'>
-    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>
-  N° DOSSIER ANAH
-</summary>           
-<div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='numFolderAnah'>N° DOSSIER ANAH</label>
-              <input onChange={inputHandler} value={state.numFolderAnah || ""} type='text' placeholder='N° DOSSIER ANAH' name='numFolderAnah' id='numFolderAnah' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
-            </div>
-          </div>
     
-    </details>
 
     <details  className='p-4 border rounded-md'>
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
@@ -252,6 +336,9 @@ const FolderDetails = () => {
     
     </details>
 
+
+    <form onSubmit={submitS2ep} className='space-y-6'>
+
     <details  className='p-4 border rounded-md'>
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
@@ -261,13 +348,22 @@ const FolderDetails = () => {
 </summary>  
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
 <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='entrete'>Entreprises retenue *</label>
-              <select onChange={inputHandler} value={state.entrete || ""} required name='entrete' id='entrete' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
-                <option value=''>Sélectionner un Entreprises retenue</option>
-                {entretes.map(b => (
-                  <option key={b._id} value={b._id}>{b.raiSocEntRe}</option>
-                ))}
-              </select>
+              <label className='text-xs font-medium text-gray-600' htmlFor='newEntrepriseRetenue'>Entreprises retenue *</label>
+              <select
+  onChange={(e) => setNewEntrepriseRetenue(e.target.value)}
+  value={newEntrepriseRetenue || ""}
+  required
+  name='newEntrepriseRetenue'
+  id='newEntrepriseRetenue'
+  className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
+>
+  <option value=''>Sélectionner un Entreprises retenue</option>
+  {entretes.map((b) => (
+    <option key={b._id} value={b.raiSocEntRe}>
+      {b.raiSocEntRe}
+    </option>
+  ))}
+</select>
             </div>
           </div>
 
@@ -278,6 +374,8 @@ const FolderDetails = () => {
               </div>
     
     </details>
+
+    </form>
 
     <details  className='p-4 border rounded-md'>
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
@@ -532,7 +630,7 @@ const FolderDetails = () => {
                   <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Confirmer Dossier'}</button>
               </div>
               </div>
-    </form>
+   
 
 
 

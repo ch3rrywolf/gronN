@@ -226,85 +226,29 @@ class folderController {
     };
 
     update_folder = async (req, res) => {
-        const { id } = req.params;
-        const { demandeurNom, demandeurPreNom, demandeurAdresse, numero, ville, voie, demandeurCommune, demandeurCodePostal, batiment, etage, porte, escalier, tel, mel, numDossier } = req.body;
+        const { folders_id } = req.params;
+        const { numFolderAnah } = req.body;
     
-        if (!demandeurNom) {
+        if (!numFolderAnah ) {
             return res.status(400).json({ message: 'Please provide a name' });
         }
 
         try {
 
-            let updateFields = { demandeurNom: demandeurNom.trim() };
-
+            let updateFields = { numFolderAnah : numFolderAnah .trim() };
+            
     
-            if (demandeurPreNom) {
-                updateFields.demandeurPreNom = demandeurPreNom.trim();
-            }
-    
-            if (demandeurAdresse) {
-                updateFields.demandeurAdresse = demandeurAdresse.trim();
-            }
-
-            if (numero) {
-                updateFields.numero = numero.trim();
-            }
-
-            if (ville) {
-                updateFields.ville = ville.trim();
-            }
-
-            if (voie) {
-                updateFields.voie = voie.trim();
-            }
-    
-            if (demandeurCommune) {
-                updateFields.demandeurCommune = demandeurCommune.trim();
-            }
-    
-            if (demandeurCodePostal) {
-                updateFields.demandeurCodePostal = demandeurCodePostal.trim();
-            }
-    
-            if (batiment) {
-                updateFields.batiment = batiment.trim();
-            }
-    
-            if (etage) {
-                updateFields.etage = etage.trim();
-            }
-    
-            if (porte) {
-                updateFields.porte = porte.trim();
-            }
-    
-            if (escalier) {
-                updateFields.escalier = escalier.trim();
-            }
-    
-            if (tel) {
-                updateFields.tel = tel.trim();
-            }
-    
-            if (mel) {
-                updateFields.mel = mel.trim();
-            }
-    
-            if (numDossier) {
-                updateFields.numDossier = numDossier.trim();
-            }
-    
-            const updatedDossier = await dossierModel.findByIdAndUpdate(
-                id,
+            const updatedFolder = await folderModel.findByIdAndUpdate(
+                folders_id,
                 { $set: updateFields },
                 { new: true, runValidators: true }
             );
     
-            if (!updatedDossier) {
-                return res.status(404).json({ message: 'Dossier not found' });
+            if (!updatedFolder) {
+                return res.status(404).json({ message: 'Folder not found' });
             }
     
-            return res.status(200).json({ message: 'Dossier updated successfully', dossier: updatedDossier });
+            return res.status(200).json({ message: 'Folder updated successfully', folder: updatedFolder });
         } catch (error) {
             return res.status(500).json({ message: 'Internal server error', error: error.message });
         }

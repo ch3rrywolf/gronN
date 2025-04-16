@@ -24,6 +24,7 @@ const port = process.env.port
 app.use('/', require('./routes/authRoutes'))
 app.use('/', require('./routes/dossierRoutes'))
 app.use('/', require('./routes/commentRoutes'))
+app.use('/', require('./routes/s2epRoutes'))
 app.use('/', require('./routes/representantRoutes'))
 app.use('/', require('./routes/benificaireRoutes'))
 app.use('/', require('./routes/marqueRoutes'))

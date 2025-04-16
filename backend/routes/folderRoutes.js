@@ -35,7 +35,7 @@ router.put('/api/folders/status-update/:folders_id', middleware.auth, folderCont
 
 
 router.put('/api/folders/update/step1/:id',middleware.auth, folderController.step1)
-router.put('/api/folders/update/:id',middleware.auth, folderController.update_folder)
+router.put('/api/folders/update/:folders_id',middleware.auth, folderController.update_folder)
 router.delete('/api/folders/delete/:id',middleware.auth, folderController.delete_folder)
 
 

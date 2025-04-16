@@ -116,6 +116,12 @@ const folderSchema = new Schema({
         ref: 'PdfDetails',
       },
     ],
+    s2eps: [
+        {
+          type: Schema.Types.ObjectId, 
+          ref: 'S2eps',
+        },
+      ],
 }, { timestamps: true })
 
 module.exports = model('folders', folderSchema)
