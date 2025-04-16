@@ -6,42 +6,56 @@ import { base_url } from "../config/config";
 
 const Profile = () => {
   return (
-    <div className='w-full grid grid-cols-2 gap-x-6 mt-5'>
-      <div className='bg-white gap-x-3 p-6 rounded flex justify-center items-center'>
-        {/* <div>
-          <label htmlFor="img" className={`w-[150px] h-[150px] flex rounded text-[#404040] gap-2 justify-center items-center cursor-pointer border-2 border-dashed`}>
-            <div className='flex justify-center items-center flex-col gap-y-2'>
-              <span className='text-2xl'><FaImage/></span>
-              <span>Select Image</span>
-            </div>
-          </label>
-          <input className='hidden' type="file" id='img' />
-        </div> */}
-        <div className='text-[#404040] flex flex-col gap-y-1 justify-center items-start'>
-          <span>Nom et Prénom: Zellit Mootez</span>
-          <span>Email: zellitmootez96@gmail.com</span>
-          <span>Opération : IT</span>
-        </div>
-      </div>
-      <div className='bg-white px-6 py-4 text-[#404040]'>
-        <h2 className='pb-3 text-center'>Change mot de passe</h2>
-        <form>
-        <div className='grid grid-cols-1 gap-y-5 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='old_password'>old mot de passe*</label>
-              <input type='password' placeholder='Old mot de passe' name='old_password' id='old_password' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='new_password'>New mot de Passe*</label>
-              <input type='password' placeholder='New mot de passe' name='new_password' id='new_password' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
-            </div>
-            <div className='mt-4'>
-            <button className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>Change mot de passe</button>
-            </div>
-            </div>
-        </form>
+    <div className='w-full grid grid-cols-2 gap-x-6 mt-5 px-4'>
+    {/* 👤 Info Block */}
+    <div className='bg-white p-6 rounded shadow flex justify-center items-center'>
+      <div className='text-[#404040] flex flex-col gap-y-2 items-start'>
+        <span className='font-bold'>Nom et Prénom: <span className='font-normal'>Zellit Mootez</span></span>
+        <span className='font-bold'>Email: <span className='font-normal'>zellitmootez96@gmail.com</span></span>
+        <span className='font-bold'>Opération: <span className='font-normal'>IT</span></span>
       </div>
     </div>
+  
+    {/* 🔐 Password Change Block */}
+    <div className='bg-white p-6 rounded shadow text-[#404040] flex flex-col items-center'>
+      <h2 className='text-lg font-bold text-[#1960a9] hover:text-[#9fc327] pb-4'>Changer le mot de passe</h2>
+  
+      <form className='w-full max-w-md'>
+        <div className='grid grid-cols-1 gap-y-5'>
+          <div className='flex flex-col gap-y-1'>
+            <label htmlFor='old_password' className='text-sm font-semibold text-gray-600'>Ancien mot de passe*</label>
+            <input 
+              type='password' 
+              id='old_password' 
+              name='old_password' 
+              placeholder='Ancien mot de passe' 
+              className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-[#1960a9] h-10'
+            />
+          </div>
+  
+          <div className='flex flex-col gap-y-1'>
+            <label htmlFor='new_password' className='text-sm font-semibold text-gray-600'>Nouveau mot de passe*</label>
+            <input 
+              type='password' 
+              id='new_password' 
+              name='new_password' 
+              placeholder='Nouveau mot de passe' 
+              className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-[#1960a9] h-10'
+            />
+          </div>
+  
+          <div className='mt-4'>
+            <button 
+              type='submit' 
+              className='w-full px-3 py-2 bg-[#1960a9] rounded-md text-white font-semibold hover:bg-[#9fc327] transition-colors'
+            >
+              Changer le mot de passe
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
   )
 }
 

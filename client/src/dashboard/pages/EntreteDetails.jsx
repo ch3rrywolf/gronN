@@ -125,94 +125,61 @@ const EntreteDetails = () => {
 
 
   return (
-    <div className="mt-3">
-{/* 
-<div className='w-full grid grid-cols-3 gap-x-6 mt-5'>
-            <div className='bg-white gap-x-3 p-6 rounded flex justify-center items-center'>
-              <div>
-                <label htmlFor="img" className={`w-[150px] h-[150px] flex rounded text-[#404040] gap-2 justify-center items-center cursor-pointer border-2 border-dashed`}>
-                  <div className='flex justify-center items-center flex-col gap-y-2'>
-                    <span className='text-2xl'><FaImage/></span>
-                    <span>Select Image</span>
-                  </div>
-                </label>
-                <input className='hidden' type="file" id='img' />
-              </div>
-              <div className='text-[#404040] flex flex-col gap-y-1 justify-center items-start'>
-                <span>Nom et Prénom: {name}</span>
-                <span>Email: {email}</span>
-                <span>Rôle : {role}</span>
-              </div>
-            </div>
+<div className='flex justify-center items-start min-h-screen bg-gray-100 py-10'>
+  <div className='bg-white rounded-lg shadow-lg w-full max-w-6xl border border-gray-300'>
 
-            </div> */}
-            {/* <div className='bg-white px-6 py-4 text-[#404040]'>
-              <h2 className='pb-3 text-center'>Change mot de passe {password}</h2>
-              <form>
-              <div className='grid grid-cols-1 gap-y-5 mb-3'>
-                  <div className='flex flex-col gap-y-2'>
-                    <label className='text-md font-medium text-gray-600' htmlFor='old_password'>old mot de passe*</label>
-                    <input type='password' placeholder='Old mot de passe' name='old_password' id='old_password' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-                  </div>
-                  <div className='flex flex-col gap-y-2'>
-                    <label className='text-md font-medium text-gray-600' htmlFor='new_password'>New mot de Passe*</label>
-                    <input type='password' placeholder='New mot de passe' name='new_password' id='new_password' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
-                  </div>
-                  <div className='mt-4'>
-                  <button className='px-3 py-[6px] bg-purple-500 rounded-sm text-white hover:bg-purple-600'>Change mot de passe</button>
-                  </div>
-                  </div>
-              </form>
-            </div> */}
-            
-          
+    <div className='flex justify-between items-center p-4 border-b border-gray-200'>
+      <h2 className='text-xl text-[#1960a9] hover:text-[#9fc327] font-bold'>Détails de Entreprise retenue</h2>
+    </div>
 
-      <div className="grid grid-cols-3 gap-x-4">
-        <div className="w-full p-2 flex flex-col items-center bg-white text-slate-700">
-        <span className="text-md font-bold">Status: {accountStatus}</span>
-        <span className="text-md font-bold"> {image}</span>
-        <label htmlFor="img" className={`w-[150px] h-[150px] flex rounded text-[#404040] gap-2 justify-center items-center cursor-pointer border-2 border-dashed`}>
-                  <div className='flex justify-center items-center flex-col gap-y-2'>
-                    <span className='text-2xl'><FaImage/></span>
-                    <span>Select Image</span>
-                  </div>
-                </label>
-          <span className="text-md font-bold">Forme juridique: {formJurEntRe}</span>
-          <span className="text-md font-bold">Numéro de téléphone: {numTelEntRe}</span>
-          <span className="text-md font-bold">Email : {emailEntRe}</span>
-          <span className="text-md font-bold">Adresse: {adresseEntRe}</span>
-          <span className="text-md font-bold">Code postal: {codePostalEntRe}</span>
-          <span className="text-md font-bold">Ville: {villeEntRe}</span>
-          
-          <span className="text-md font-bold text-red-600">Représentant</span>
-          <span className="text-md font-bold">Nom et Prénom : {nomRepParEntRe} {prenomRepParEntRe}</span>
-          <span className="text-md font-bold text-red-600">Identifiant</span>
-          <span className="text-md font-bold">SIREN: {sirenIdentEntRe}</span>
-          <span className="text-md font-bold">SIRET: {siretIdentEntRe}</span>
-          <span className="text-md font-bold">Identifiant TVA: {identTVAIdentEntRe}</span>
-          <span className="text-md font-bold">RCS: {rcsIdentEntRe}</span>
-          <span className="text-md font-bold">Numéro APE: {numAPEIdentEntRe}</span>
-          <span className="text-md font-bold text-red-600">Assurance</span>
-          <span className="text-md font-bold ">Raison sociale: {raisocAssEntRe}</span>
-          <span className="text-md font-bold ">Numéro police:{numPolAssEntRe}</span>
-          <span className="text-md font-bold ">Date d'émission: {dateEmiAssEntRe}</span>
-          <span className="text-md font-bold ">Date de fin: {dateFinAssEntRe}</span>
-        </div>
-        <div className="w-full p-2 flex flex-col items-center bg-white text-slate-700">
-          PROJETS
-        </div>
+    <div className="grid grid-cols-3 gap-4 p-4 text-slate-700">
+      <div className="col-span-1 flex flex-col gap-2">
+        <span className="text-md font-bold">Status: <span className="font-extrabold">{accountStatus}</span></span>
+        <span className="text-md font-bold">{image}</span>
+        <label htmlFor="img" className="w-[150px] h-[150px] flex rounded text-[#404040] gap-2 justify-center items-center cursor-pointer border-2 border-dashed">
+          <div className='flex justify-center items-center flex-col gap-y-2'>
+            <span className='text-2xl'><FaImage/></span>
+            <span>Select Image</span>
+          </div>
+        </label>
+        <span className="text-md font-bold">Forme juridique: <span className="font-extrabold">{formJurEntRe}</span></span>
+        <span className="text-md font-bold">Numéro de téléphone: <span className="font-extrabold">{numTelEntRe}</span></span>
+        <span className="text-md font-bold">Email : <span className="font-extrabold">{emailEntRe}</span></span>
+        <span className="text-md font-bold">Adresse: <span className="font-extrabold">{adresseEntRe}</span></span>
+        <span className="text-md font-bold">Code postal: <span className="font-extrabold">{codePostalEntRe}</span></span>
+        <span className="text-md font-bold">Ville: <span className="font-extrabold">{villeEntRe}</span></span>
 
-        <div className="w-full p-2 flex flex-col items-center bg-white text-slate-700">
-        Liste des fichiers
-        </div>
+        <span className="text-md font-bold text-red-600">Représentant</span>
+        <span className="text-md font-bold">Nom et Prénom : <span className="font-extrabold">{nomRepParEntRe} {prenomRepParEntRe}</span></span>
+
+        <span className="text-md font-bold text-red-600">Identifiant</span>
+        <span className="text-md font-bold">SIREN: <span className="font-extrabold">{sirenIdentEntRe}</span></span>
+        <span className="text-md font-bold">SIRET: <span className="font-extrabold">{siretIdentEntRe}</span></span>
+        <span className="text-md font-bold">Identifiant TVA: <span className="font-extrabold">{identTVAIdentEntRe}</span></span>
+        <span className="text-md font-bold">RCS: <span className="font-extrabold">{rcsIdentEntRe}</span></span>
+        <span className="text-md font-bold">Numéro APE: <span className="font-extrabold">{numAPEIdentEntRe}</span></span>
+
+        <span className="text-md font-bold text-red-600">Assurance</span>
+        <span className="text-md font-bold">Raison sociale: <span className="font-extrabold">{raisocAssEntRe}</span></span>
+        <span className="text-md font-bold">Numéro police: <span className="font-extrabold">{numPolAssEntRe}</span></span>
+        <span className="text-md font-bold">Date d'émission: <span className="font-extrabold">{dateEmiAssEntRe}</span></span>
+        <span className="text-md font-bold">Date de fin: <span className="font-extrabold">{dateFinAssEntRe}</span></span>
       </div>
 
-      
+      <div className="col-span-1 p-2 flex flex-col items-center bg-white border-l border-gray-200">
+        <span className="text-md font-bold">PROJETS</span>
+        {/* Add your project data here */}
+      </div>
 
-      
-
-
+      <div className="col-span-1 p-2 flex flex-col items-center bg-white border-l border-gray-200">
+        <span className="text-md font-bold">Liste des fichiers</span>
+        {/* Add your file list here */}
+      </div>
     </div>
+
+  </div>
+</div>
+
   );
 };
 
