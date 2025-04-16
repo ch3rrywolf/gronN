@@ -24,7 +24,12 @@ const FolderDetails = () => {
     const [filesList, setFilesList] = useState([]);
 
      const [news2epi, setNews2epi] = useState("");
+     const [news3epi, setNews3epi] = useState("");
+
      const [newEntrepriseRetenue, setNewEntrepriseRetenue] = useState("");
+
+     const [newinspecteur3, setNewinspecteur3] = useState("");
+     const [newdateVisite, setNewdateVisite] = useState("");
 
     //  const [s2eps, setS2eps] = useState([]); 
      const [s2epsR, setS2epsR] = useState([]); 
@@ -106,6 +111,39 @@ const FolderDetails = () => {
     } catch (error) {
       console.error("Error submitting S2ep:", error);
       toast.error("Erreur lors de l'ajout du S2ep.");
+    }
+  };
+
+  const submitS3ep = async (e) => {
+    e.preventDefault();
+    // if (!newEntrepriseRetenue.trim()) {
+    //   toast.error("Le Entreprise Retenue ne peut pas être vide !");
+    //   return;
+    // }
+
+    if (!newinspecteur3.trim()) {
+      toast.error("Technicien ne peut pas être vide !");
+      return;
+    }
+
+    if (!newdateVisite.trim()) {
+      toast.error("Date Visite ne peut pas être vide !");
+      return;
+    }
+  
+  
+    try {
+      const s3epi = await axios.post(
+        `${base_url}/api/folders/s3ep/${folders_id}`,
+        { inspecteur3: newinspecteur3, dateVisite: newdateVisite },
+        { headers: { Authorization: `Bearer ${store.token}` } }
+      );
+      toast.success("S3ep ajouté !");
+      setNews3epi(""); 
+      // setS2eps([...s2eps, response.data.data]);
+    } catch (error) {
+      console.error("Error submitting S3ep:", error);
+      toast.error("Erreur lors de l'ajout du S3ep.");
     }
   };
   
@@ -414,7 +452,7 @@ const FolderDetails = () => {
     </details>
 
     </form>
-
+<form onSubmit={submitS3ep} className='space-y-1'>
     <details  className='p-4 border rounded-md'>
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
@@ -444,18 +482,18 @@ const FolderDetails = () => {
             </div>
 
             <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='inspectep4'>sélectionner le technicien</label>
-              <select onChange={inputHandler} value={state.inspectep4 || ""} required name='inspectep4' id='inspectep4' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
-                <option value=''>Sélectionner un Entreprises retenue</option>
+              <label className='text-xs font-medium text-gray-600' htmlFor='newinspecteur3'>sélectionner le technicien</label>
+              <select onChange={(e) => setNewinspecteur3(e.target.value)} value={newinspecteur3 || ""} required name='newinspecteur3' id='newinspecteur3' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
+                <option value=''>Sélectionner technicien</option>
                 {inspecteurs.map(b => (
-                  <option key={b._id} value={b._id}>{b.nomIns} {b.prenomIns}</option>
+                  <option key={b._id} value={b.prenomIns}>{b.nomIns} {b.prenomIns}</option>
                 ))}
               </select>
             </div>
 
             <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='dateVisit'>date et l’heure de la visite</label>
-              <input onChange={inputHandler} value={state.dateVisit || ""} type='datetime-local'  name='dateVisit' id='dateVisit' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <input onChange={(e) => setNewdateVisite(e.target.value)} value={state.dateVisit || ""} type='datetime-local'  name='dateVisit' id='dateVisit' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
           </div>
 
@@ -466,6 +504,7 @@ const FolderDetails = () => {
               </div>
     
     </details>
+    </form>
     
     <details className='p-4 border rounded-md'>
         

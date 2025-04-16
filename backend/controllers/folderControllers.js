@@ -415,7 +415,7 @@ class folderController {
             };
     
             get_s2eps = async (req, res) => {
-                            console.log("✅ get-comments route executed");
+                            console.log("✅ get-s2eps route executed");
                         
                             const { folders_id } = req.params;
                             console.log("Received folders_id:", folders_id);
