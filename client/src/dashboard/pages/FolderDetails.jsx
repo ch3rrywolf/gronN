@@ -27,6 +27,7 @@ const FolderDetails = () => {
      const [news3epi, setNews3epi] = useState("");
      const [news4epi, setNews4epi] = useState("");
      const [news5epi, setNews5epi] = useState("");
+     const [news6epi, setNews6epi] = useState("");
 
      const [newEntrepriseRetenue, setNewEntrepriseRetenue] = useState("");
 
@@ -43,6 +44,8 @@ const FolderDetails = () => {
 
      const [newrepensConfirm, setNewrepensConfirm] = useState("");
 
+     const [newrepenVerif, setNewrepenVerif] = useState("");
+
     //  const [s2eps, setS2eps] = useState([]); 
      const [s2epsR, setS2epsR] = useState([]); 
  
@@ -57,6 +60,7 @@ const FolderDetails = () => {
     isValidS4ep: false,
     isValidS5ep: false,
     isValidpdfs: false,
+    isValidS6ep: false,
     data: null,
   });
 
@@ -219,15 +223,10 @@ const FolderDetails = () => {
       return;
     }
 
-
-    
-
-
     if (!store.userInfo || !store.userInfo.name) {
       toast.error("Utilisateur non authentifié !");
       return;
     }
-  
   
     try {
       const s5epi = await axios.post(
@@ -241,6 +240,34 @@ const FolderDetails = () => {
     } catch (error) {
       console.error("Error submitting S5ep:", error);
       toast.error("Erreur lors de l'ajout du S5ep.");
+    }
+  };
+
+  const submitS6ep = async (e) => {
+    e.preventDefault();
+
+    if (!newrepenVerif.trim()) {
+      toast.error("Reponse ne peut pas être vide !");
+      return;
+    }
+
+    if (!store.userInfo || !store.userInfo.name) {
+      toast.error("Utilisateur non authentifié !");
+      return;
+    }
+  
+    try {
+      const s6epi = await axios.post(
+        `${base_url}/api/folders/s6ep/${folders_id}`,
+        { name: store.userInfo.name, repenVerif: newrepenVerif },
+        { headers: { Authorization: `Bearer ${store.token}` } }
+      );
+      toast.success("S6ep ajouté !");
+      setNews6epi(""); 
+      // setS2eps([...s2eps, response.data.data]);
+    } catch (error) {
+      console.error("Error submitting S6ep:", error);
+      toast.error("Erreur lors de l'ajout du S6ep.");
     }
   };
   
@@ -324,17 +351,20 @@ const FolderDetails = () => {
         const s4eps = data?.folders?.s4eps || [];
         const s5eps = data?.folders?.s5eps || [];
         const pdfs = data?.folders?.pdfs || [];
+        const s6eps = data?.folders?.s6eps || [];
         console.log("s2eps:", s2eps); 
         console.log("s3eps:", s3eps); 
         console.log("s4eps:", s4eps); 
         console.log("s5eps:", s5eps); 
         console.log("pdfs:", pdfs); 
+        console.log("s6eps:", s6eps); 
   
         const isValid = Array.isArray(s2eps) && s2eps.length > 0;
         const isValid3 = Array.isArray(s3eps) && s3eps.length > 0;
         const isValid4 = Array.isArray(s4eps) && s4eps.length > 0;
         const isValid5 = Array.isArray(s5eps) && s5eps.length > 0;
         const isValidpdfs = Array.isArray(pdfs) && pdfs.length > 0;
+        const isValid6 = Array.isArray(s6eps) && s6eps.length > 0;
         // const isValid3 = Array.isArray(s3eps) && s3eps.length > 0 && s3eps.some(item => item !== '');
         // const isValid3 =  Array.isArray(s2epsR) && s2epsR.length > 0 && s2epsR.some(item => item?.EntrepriseRetenue?.trim() !== '')
         console.log("isValidS2ep:", isValid);
@@ -342,6 +372,7 @@ const FolderDetails = () => {
         console.log("isValidS4ep:", isValid4);
         console.log("isValidS5ep:", isValid5);
         console.log("isValidpdfs:", isValidpdfs);
+        console.log("isValidS6ep:", isValid6);
   
         setState((prevState) => ({
           ...prevState,
@@ -355,6 +386,7 @@ const FolderDetails = () => {
           isValidS4ep: isValid4,
           isValidS5ep: isValid5,
           isValid55pdfs: isValidpdfs,
+          isValidS6ep: isValid6,
         }));
       } catch (error) {
         console.error("Error fetching dossier details:", error);
@@ -634,6 +666,7 @@ const FolderDetails = () => {
     
     </details>
     </form>
+
     <div className="relative">
   <div className="absolute top-2 right-2 z-50">
     {state.isValidS4ep ? (
@@ -849,7 +882,8 @@ const FolderDetails = () => {
     
     </details>
     </form>
-    <form onSubmit={submitS5ep} className='space-y-1'>
+
+    
 
     <div className="relative">
   <div className="absolute top-2 right-2 z-50">
@@ -860,6 +894,7 @@ const FolderDetails = () => {
     )}
   </div>
 </div>
+
     <details className='p-4 border rounded-md'>
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
@@ -897,6 +932,7 @@ const FolderDetails = () => {
   </ul>
 </details>
 
+<form onSubmit={submitS5ep} className='space-y-1'>
 <details className='p-4 border rounded-md'>
   <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>Confirmation visite. </summary>
 
@@ -919,6 +955,54 @@ const FolderDetails = () => {
 
   
 </details>
+</form>
+
+<div className='grid grid-cols-1 gap-x-8 mb-3'>
+                <div className='flex flex-col gap-y-2'>
+                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Confirmer visite Et ENREGISTRER'}</button>
+              </div>
+              </div>
+    
+    </details>
+   
+
+
+
+    <form onSubmit={submitS6ep} className='space-y-1'>
+
+    <div className="relative">
+  <div className="absolute top-2 right-2 z-50">
+    {state.isValidS6ep ? (
+      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
+    ) : (
+      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
+    )}
+  </div>
+</div>
+    <details className='p-4 border rounded-md'>
+    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
+    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
+    6
+  </span>
+  Vérification Des Documents 
+</summary> 
+
+  <div className='grid grid-cols-1 gap-x-8 mb-3'>
+          <div className='flex flex-col gap-y-2'>
+  <label className='text-xs font-medium text-gray-600' htmlFor='newrepenVerif'> Vérifier tous les documents en relation avec le dossier*</label>
+  <select
+    onChange={(e) => setNewrepenVerif(e.target.value)}
+    value={newrepenVerif || ""}
+    name='newrepenVerif'
+    id='newrepenVerif'
+    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
+  >
+    <option value=''></option>
+    <option value='Vérifié'>Vérifié</option>
+    <option value='Non Vérifié'>NON Vérifié</option>
+  </select>
+</div>      
+          </div>
 
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
                 <div className='flex flex-col gap-y-2'>
@@ -931,11 +1015,6 @@ const FolderDetails = () => {
     
     
     
-    <div className='grid grid-cols-1 gap-x-8 mb-3'>
-                <div className='flex flex-col gap-y-2'>
-                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Confirmer Dossier'}</button>
-              </div>
-              </div>
    
 
 
@@ -970,6 +1049,11 @@ const FolderDetails = () => {
     
     
     
+<div className='grid grid-cols-1 gap-x-8 mb-3'>
+                <div className='flex flex-col gap-y-2'>
+                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Confirmer Dossier'}</button>
+              </div>
+              </div>
             
             
           </div>
