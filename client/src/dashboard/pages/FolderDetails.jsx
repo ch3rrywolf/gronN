@@ -25,11 +25,20 @@ const FolderDetails = () => {
 
      const [news2epi, setNews2epi] = useState("");
      const [news3epi, setNews3epi] = useState("");
+     const [news4epi, setNews4epi] = useState("");
 
      const [newEntrepriseRetenue, setNewEntrepriseRetenue] = useState("");
 
      const [newinspecteur3, setNewinspecteur3] = useState("");
      const [newdateVisite, setNewdateVisite] = useState("");
+
+     const [newshab, setNewshab] = useState("");
+     const [newnbrEtage, setNewnbrEtage] = useState("");
+     const [newqusMSI, setNewqusMSI] = useState("");
+     const [newsurfaceIso, setNewsurfaceIso] = useState("");
+     const [newclassEnerInit, setNewclassEnerInit] = useState("");
+     const [newsautsClassPre, setNewsautsClassPre] = useState("");
+     const [newcategori, setNewcategori] = useState("");
 
     //  const [s2eps, setS2eps] = useState([]); 
      const [s2epsR, setS2epsR] = useState([]); 
@@ -42,6 +51,7 @@ const FolderDetails = () => {
     numFolderAnah: '',
     isValidS2ep: false,
     isValidS3ep: false,
+    isValidS4ep: false,
     data: null,
   });
 
@@ -147,6 +157,54 @@ const FolderDetails = () => {
       toast.error("Erreur lors de l'ajout du S3ep.");
     }
   };
+
+
+  const submitS4ep = async (e) => {
+    e.preventDefault();
+
+    if (!newshab.trim()) {
+      toast.error("Technicien ne peut pas être vide !");
+      return;
+    }
+
+    if (!newnbrEtage.trim()) {
+      toast.error("Date Visite ne peut pas être vide !");
+      return;
+    }
+
+    if (!newqusMSI.trim()) {
+      toast.error("qusMSI ne peut pas être vide !");
+      return;
+    }
+
+    if (!newsurfaceIso.trim()) {
+      toast.error("surfaceIso ne peut pas être vide !");
+      return;
+    }
+
+    if (!newclassEnerInit.trim()) {
+      toast.error("surfaceIso ne peut pas être vide !");
+      return;
+    }
+
+    
+
+  
+  
+    try {
+      const s4epi = await axios.post(
+        `${base_url}/api/folders/s4ep/${folders_id}`,
+        { shab: newshab, nbrEtage: newnbrEtage, qusMSI: newqusMSI, surfaceIso: newsurfaceIso, classEnerInit: newclassEnerInit, sautsClassPre: newsautsClassPre, categori: newcategori },
+        { headers: { Authorization: `Bearer ${store.token}` } }
+      );
+      toast.success("S4ep ajouté !");
+      setNews3epi(""); 
+      // setS2eps([...s2eps, response.data.data]);
+    } catch (error) {
+      console.error("Error submitting S4ep:", error);
+      toast.error("Erreur lors de l'ajout du S4ep.");
+    }
+  };
   
 
   useEffect(() => {
@@ -225,14 +283,18 @@ const FolderDetails = () => {
         });
         const s2eps = data?.folders?.s2eps || [];
         const s3eps = data?.folders?.s3eps || [];
+        const s4eps = data?.folders?.s4eps || [];
         console.log("s2eps:", s2eps); 
+        console.log("s3eps:", s3eps); 
         console.log("s3eps:", s3eps); 
   
         const isValid = Array.isArray(s2eps) && s2eps.length > 0;
         const isValid3 = Array.isArray(s3eps) && s3eps.length > 0;
+        const isValid4 = Array.isArray(s4eps) && s4eps.length > 0;
         // const isValid3 = Array.isArray(s3eps) && s3eps.length > 0 && s3eps.some(item => item !== '');
         // const isValid3 =  Array.isArray(s2epsR) && s2epsR.length > 0 && s2epsR.some(item => item?.EntrepriseRetenue?.trim() !== '')
         console.log("isValidS2ep:", isValid);
+        console.log("isValidS3ep:", isValid3);
         console.log("isValidS3ep:", isValid3);
   
         setState((prevState) => ({
@@ -244,6 +306,7 @@ const FolderDetails = () => {
           benificaire: data.benificaire?._id || "",
           isValidS2ep: isValid, 
           isValidS3ep: isValid3,
+          isValidS4ep: isValid4,
         }));
       } catch (error) {
         console.error("Error fetching dossier details:", error);
@@ -257,7 +320,7 @@ const FolderDetails = () => {
       const { data } = await axios.get(`${base_url}/api/folders/get-s2eps/${folders_id}`);
       setS2epsR(data.s2eps);
     } catch (error) {
-      console.error("Error fetching representants:", error);
+      console.error("Error fetching S2epsR:", error);
     }
   };
 
@@ -523,8 +586,21 @@ const FolderDetails = () => {
     
     </details>
     </form>
-    
+    <div className="relative">
+  <div className="absolute top-2 right-2 z-50">
+    {state.isValidS4ep ? (
+      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
+    ) : (
+      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
+    )}
+  </div>
+</div>
+
+<form onSubmit={submitS4ep} className='space-y-1'>
     <details className='p-4 border rounded-md'>
+
+
+    
         
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
@@ -538,13 +614,13 @@ const FolderDetails = () => {
     
       <div className='grid grid-cols-2 gap-x-8 mb-3'>
 <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='SHAB'>SHAB</label>
-              <input onChange={inputHandler} value={state.SHAB || ""} type='text'   name='SHAB' id='SHAB' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <label className='text-xs font-medium text-gray-600' htmlFor='newshab'>SHAB</label>
+              <input onChange={(e) => setNewshab(e.target.value)} value={newshab || ""} type='text'   name='newshab' id='newshab' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
 
             <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='nombeta'>Nombre d'étage</label>
-              <input onChange={inputHandler} value={state.nombeta || ""} type='text'   name='nombeta' id='v' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <label className='text-xs font-medium text-gray-600' htmlFor='newnbrEtage'>Nombre d'étage</label>
+              <input onChange={(e) => setNewnbrEtage(e.target.value)} value={newnbrEtage || ""} type='text'   name='newnbrEtage' id='newnbrEtage' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
           </div>
 
@@ -552,10 +628,10 @@ const FolderDetails = () => {
           <div className='flex flex-col gap-y-2'>
   <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Est-ce que vous avez les mesures des surfaces à isoler ?*</label>
   <select
-    onChange={inputHandler}
-    value={state.titreResPriAm || ""}
-    name='titreResPriAm'
-    id='titreResPriAm'
+    onChange={(e) => setNewqusMSI(e.target.value)}
+    value={newqusMSI || ""}
+    name='newqusMSI'
+    id='newqusMSI'
     className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
   >
     <option value=''></option>
@@ -565,19 +641,19 @@ const FolderDetails = () => {
 </div>
 
             <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='surfIsol'>Surface à isoler:*</label>
-              <input onChange={inputHandler} value={state.surfIsol || ""} type='text'   name='surfIsol' id='surfIsol' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <label className='text-xs font-medium text-gray-600' htmlFor='newsurfaceIso'>Surface à isoler:*</label>
+              <input onChange={(e) => setNewsurfaceIso(e.target.value)} value={newsurfaceIso || ""} type='text'   name='newsurfaceIso' id='newsurfaceIso' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
             </div>
           </div>
 
           <div className='grid grid-cols-2 gap-x-8 mb-3'>
           <div className='flex flex-col gap-y-2'>
-  <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Classe énergétique initial *</label>
+  <label className='text-xs font-medium text-gray-600' htmlFor='newclassEnerInit'>Classe énergétique initial *</label>
   <select
-    onChange={inputHandler}
-    value={state.titreResPriAm || ""}
-    name='titreResPriAm'
-    id='titreResPriAm'
+    onChange={(e) => setNewclassEnerInit(e.target.value)}
+    value={newclassEnerInit || ""}
+    name='newclassEnerInit'
+    id='newclassEnerInit'
     className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
   >
     <option value=''></option>
@@ -593,12 +669,12 @@ const FolderDetails = () => {
 </div>
 
 <div className='flex flex-col gap-y-2'>
-  <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Sauts de classe prévu *</label>
+  <label className='text-xs font-medium text-gray-600' htmlFor='newsautsClassPre'>Sauts de classe prévu *</label>
   <select
-    onChange={inputHandler}
-    value={state.titreResPriAm || ""}
-    name='titreResPriAm'
-    id='titreResPriAm'
+    onChange={(e) => setNewsautsClassPre(e.target.value)}
+    value={newsautsClassPre || ""}
+    name='newsautsClassPre'
+    id='newsautsClassPre'
     className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
   >
     <option value=''></option>
@@ -613,12 +689,12 @@ const FolderDetails = () => {
 
           <div className='grid grid-cols-2 gap-x-8 mb-3'>
           <div className='flex flex-col gap-y-2'>
-  <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Catégorie *</label>
+  <label className='text-xs font-medium text-gray-600' htmlFor='newcategori'>Catégorie *</label>
   <select
-    onChange={inputHandler}
-    value={state.titreResPriAm || ""}
-    name='titreResPriAm'
-    id='titreResPriAm'
+    onChange={(e) => setNewcategori(e.target.value)}
+    value={newcategori || ""}
+    name='newcategori'
+    id='newcategori'
     className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
   >
     <option value=''></option>
@@ -724,7 +800,7 @@ const FolderDetails = () => {
               </div>
     
     </details>
-    
+    </form>
     <details className='p-4 border rounded-md'>
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
