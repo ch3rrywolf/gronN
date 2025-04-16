@@ -134,6 +134,12 @@ const folderSchema = new Schema({
           ref: 'S4eps',
         },
       ],
+      s5eps: [
+        {
+          type: Schema.Types.ObjectId, 
+          ref: 'S5eps',
+        },
+      ],
 }, { timestamps: true })
 
 module.exports = model('folders', folderSchema)
