@@ -491,7 +491,7 @@ update_backoffice_status = async (req, res) => {
 
             add_auditeur = async (req, res) => {
 
-                const {name, email, password, raiSocAud,numTelAud,formJurAud,emailAud,adresseAud,villeAud,codePostalAud,siteWebAud,montCapAud,tauxTVAAud,signatureAud,nomRepParAud,prenomRepParAud,genreRepParAud,fonctionRepParAud,numTelRepParAud,emailRepParAud,qualifiRGEAud,numRGEAud,editLeRGEAud,valableJusRGEAud,sirenIdentAud,siretIdentAud,identTVAIdentAud,rcsIdentAud,numAPEIdentAud,numAgrIdentAud,numDecIdentAud,raisocAssAud,adresseAssAud,numPolAssAud,dateEmiAssAud,dateFinAssAud,documentsAud} = req.body
+                const {name, email, password, raiSocAud,numTelAud,formJurAud,adresseAud,villeAud,codePostalAud,siteWebAud,montCapAud,nomRepParAud,prenomRepParAud,genreRepParAud,fonctionRepParAud,numTelRepParAud,emailRepParAud,sirenIdentAud,siretIdentAud,identTVAIdentAud,rcsIdentAud,numAPEIdentAud,numAgrIdentAud,numDecIdentAud,raisocAssAud,adresseAssAud,numPolAssAud,dateEmiAssAud,dateFinAssAud} = req.body
         
                 if (!raiSocAud) {
                     return res.status(404).json({ message: 'Veuillez fournir le raiSocAud' })
@@ -509,9 +509,6 @@ update_backoffice_status = async (req, res) => {
                     return res.status(404).json({ message: 'Veuillez fournir Password' })
                 }
                 
-                if (emailAud && !emailAud.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
-                    return res.status(404).json({ message: 'veuillez fournir emailAud form valide' })
-                }
                 if (!name) {
                     return res.status(404).json({ message: 'Veuillez fournir votre name' })
                 }
@@ -527,50 +524,41 @@ update_backoffice_status = async (req, res) => {
                         return res.status(404).json({ message: 'utilisateur existe déjà' })
                     } else {
                         const new_auditeur = await authModel.create({
-                            name: name.trim(),
-                            email: email.trim(),
-                            password: await bcrypt.hash(password.trim(), 10),
-                            role: 'auditeur',
+                            name: name.trim() || "",
+                            email: email.trim()|| "",
+                            password: await bcrypt.hash(password.trim(), 10)|| "",
+                            role: 'auditeur'|| "",
 
-                            raiSocAud: raiSocAud.trim(),
-                            numTelAud: numTelAud.trim(),
-                            formJurAud: formJurAud.trim(),
-                            emailAud: emailAud.trim(),
-                            adresseAud: adresseAud.trim(),
-                            villeAud: villeAud.trim(),
-                            codePostalAud: codePostalAud.trim(),
-                            siteWebAud: siteWebAud.trim(),
-                            montCapAud: montCapAud.trim(),
-                            tauxTVAAud: tauxTVAAud.trim(),
-                            signatureAud: signatureAud.trim(),
+                            raiSocAud: raiSocAud.trim()|| "",
+                            numTelAud: numTelAud.trim()|| "",
+                            formJurAud: formJurAud.trim()|| "",
+                            adresseAud: adresseAud.trim()|| "",
+                            villeAud: villeAud.trim()|| "",
+                            codePostalAud: codePostalAud.trim()|| "",
+                            siteWebAud: siteWebAud.trim()|| "",
+                            montCapAud: montCapAud.trim()|| "",
                             // represent par
-                            nomRepParAud: nomRepParAud.trim(),
-                            prenomRepParAud: prenomRepParAud.trim(),
-                            genreRepParAud: genreRepParAud.trim(),
-                            fonctionRepParAud: fonctionRepParAud.trim(),
-                            numTelRepParAud: numTelRepParAud.trim(),
-                            emailRepParAud: emailRepParAud.trim(),
-                            // RGE
-                            qualifiRGEAud: qualifiRGEAud.trim(),
-                            numRGEAud: numRGEAud.trim(),
-                            editLeRGEAud: editLeRGEAud.trim(),
-                            valableJusRGEAud: valableJusRGEAud.trim(),
+                            nomRepParAud: nomRepParAud.trim()|| "",
+                            prenomRepParAud: prenomRepParAud.trim()|| "",
+                            genreRepParAud: genreRepParAud.trim()|| "",
+                            fonctionRepParAud: fonctionRepParAud.trim()|| "",
+                            numTelRepParAud: numTelRepParAud.trim()|| "",
+                            emailRepParAud: emailRepParAud.trim()|| "",
                             
                             //Identifiants
-                            sirenIdentAud: sirenIdentAud.trim(),
-                            siretIdentAud: siretIdentAud.trim(),
-                            identTVAIdentAud: identTVAIdentAud.trim(),
-                            rcsIdentAud: rcsIdentAud.trim(),
-                            numAPEIdentAud: numAPEIdentAud.trim(),
-                            numAgrIdentAud: numAgrIdentAud.trim(),
-                            numDecIdentAud: numDecIdentAud.trim(),
+                            sirenIdentAud: sirenIdentAud.trim()|| "",
+                            siretIdentAud: siretIdentAud.trim()|| "",
+                            identTVAIdentAud: identTVAIdentAud.trim()|| "",
+                            rcsIdentAud: rcsIdentAud.trim()|| "",
+                            numAPEIdentAud: numAPEIdentAud.trim()|| "",
+                            numAgrIdentAud: numAgrIdentAud.trim()|| "",
+                            numDecIdentAud: numDecIdentAud.trim()|| "",
                             // Assurance
-                            raisocAssAud: raisocAssAud.trim(),
-                            adresseAssAud: adresseAssAud.trim(),
-                            numPolAssAud: numPolAssAud.trim(),
-                            dateEmiAssAud: dateEmiAssAud.trim(),
-                            dateFinAssAud: dateFinAssAud.trim(),
-                            documentsAud: documentsAud.trim(),
+                            raisocAssAud: raisocAssAud.trim()|| "",
+                            adresseAssAud: adresseAssAud.trim()|| "",
+                            numPolAssAud: numPolAssAud.trim()|| "",
+                            dateEmiAssAud: dateEmiAssAud.trim()|| "",
+                            dateFinAssAud: dateFinAssAud.trim()|| "",
                             
                             
                         })
@@ -618,7 +606,7 @@ update_backoffice_status = async (req, res) => {
                   }           
                 update_auditeur = async (req, res) => {
                     const { id } = req.params;
-                    const { name, email, password, raiSocAud,numTelAud,formJurAud,emailAud,adresseAud,villeAud,codePostalAud,siteWebAud,montCapAud,tauxTVAAud,signatureAud,nomRepParAud,prenomRepParAud,genreRepParAud,fonctionRepParAud,numTelRepParAud,emailRepParAud,qualifiRGEAud,numRGEAud,editLeRGEAud,valableJusRGEAud,sirenIdentAud,siretIdentAud,identTVAIdentAud,rcsIdentAud,numAPEIdentAud,numAgrIdentAud,numDecIdentAud,raisocAssAud,adresseAssAud,numPolAssAud,dateEmiAssAud,dateFinAssAud,documentsAud } = req.body;
+                    const { name, email, password, raiSocAud,numTelAud,formJurAud,adresseAud,villeAud,codePostalAud,siteWebAud,montCapAud,nomRepParAud,prenomRepParAud,genreRepParAud,fonctionRepParAud,numTelRepParAud,emailRepParAud,sirenIdentAud,siretIdentAud,identTVAIdentAud,rcsIdentAud,numAPEIdentAud,numAgrIdentAud,numDecIdentAud,raisocAssAud,adresseAssAud,numPolAssAud,dateEmiAssAud,dateFinAssAud } = req.body;
                 
                     if (!name) {
                         return res.status(400).json({ message: 'Please provide a name' });
@@ -634,13 +622,87 @@ update_backoffice_status = async (req, res) => {
                             updateFields.accountStatus = accountStatus.trim();
                         }
     
-                        if (raiSocEntRe) {
-                            updateFields.raiSocEntRe = raiSocEntRe.trim();
+                        if (raiSocAud) {
+                            updateFields.raiSocAud = raiSocAud.trim();
                         }
-                        if (adresseEntRe) {
-                            updateFields.adresseEntRe = adresseEntRe.trim();
+                        if (numTelAud) {
+                            updateFields.numTelAud = numTelAud.trim();
                         }
-                        
+                        if (formJurAud) {
+                            updateFields.formJurAud = formJurAud.trim();
+                        }
+                        if (adresseAud) {
+                            updateFields.adresseAud = adresseAud.trim();
+                        }
+                        if (villeAud) {
+                            updateFields.villeAud = villeAud.trim();
+                        }
+                        if (codePostalAud) {
+                            updateFields.codePostalAud = codePostalAud.trim();
+                        }
+                        if (siteWebAud) {
+                            updateFields.siteWebAud = siteWebAud.trim();
+                        }
+                        if (montCapAud) {
+                            updateFields.montCapAud = montCapAud.trim();
+                        }
+
+                        if (nomRepParAud) {
+                            updateFields.nomRepParAud = nomRepParAud.trim();
+                        }
+                        if (prenomRepParAud) {
+                            updateFields.prenomRepParAud = prenomRepParAud.trim();
+                        }
+                        if (genreRepParAud) {
+                            updateFields.genreRepParAud = genreRepParAud.trim();
+                        }
+                        if (fonctionRepParAud) {
+                            updateFields.fonctionRepParAud = fonctionRepParAud.trim();
+                        }
+                        if (numTelRepParAud) {
+                            updateFields.numTelRepParAud = numTelRepParAud.trim();
+                        }
+                        if (emailRepParAud) {
+                            updateFields.emailRepParAud = emailRepParAud.trim();
+                        }
+                        if (sirenIdentAud) {
+                            updateFields.sirenIdentAud = sirenIdentAud.trim();
+                        }
+                        if (siretIdentAud) {
+                            updateFields.siretIdentAud = siretIdentAud.trim();
+                        }
+                        if (identTVAIdentAud) {
+                            updateFields.identTVAIdentAud = identTVAIdentAud.trim();
+                        }
+                        if (rcsIdentAud) {
+                            updateFields.rcsIdentAud = rcsIdentAud.trim();
+                        }
+                        if (numAPEIdentAud) {
+                            updateFields.numAPEIdentAud = numAPEIdentAud.trim();
+                        }
+                        if (numAgrIdentAud) {
+                            updateFields.numAgrIdentAud = numAgrIdentAud.trim();
+                        }
+                        if (numDecIdentAud) {
+                            updateFields.numDecIdentAud = numDecIdentAud.trim();
+                        }
+                        if (raisocAssAud) {
+                            updateFields.raisocAssAud = raisocAssAud.trim();
+                        }
+                        if (adresseAssAud) {
+                            updateFields.adresseAssAud = adresseAssAud.trim();
+                        }
+                        if (numPolAssAud) {
+                            updateFields.numPolAssAud = numPolAssAud.trim();
+                        }
+                        if (dateEmiAssAud) {
+                            updateFields.dateEmiAssAud = dateEmiAssAud.trim();
+                        }
+                        if (dateFinAssAud) {
+                            updateFields.dateFinAssAud = dateFinAssAud.trim();
+                        }
+
+                                                
                 
                         const updatedAuditeur = await authModel.findByIdAndUpdate(
                             id,

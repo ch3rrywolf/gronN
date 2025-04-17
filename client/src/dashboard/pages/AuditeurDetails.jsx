@@ -19,14 +19,14 @@ const AuditeurDetails = () => {
   const [raiSocAud, setraiSocAud] = useState("");
   const [numTelAud, setnumTelAud] = useState("");
   const [formJurAud, setformJurAud] = useState("");
-  const [emailAud, setemailAud] = useState("");
+  // const [emailAud, setemailAud] = useState("");
   const [adresseAud, setadresseAud] = useState("");
   const [villeAud, setvilleAud] = useState("");
   const [codePostalAud, setcodePostalAud] = useState("");
   const [siteWebAud, setsiteWebAud] = useState("");
   const [montCapAud, setmontCapAud] = useState("");
-  const [tauxTVAAud, settauxTVAAud] = useState("");
-  const [signatureAud, setsignatureAud] = useState("");
+  // const [tauxTVAAud, settauxTVAAud] = useState("");
+  // const [signatureAud, setsignatureAud] = useState("");
 
   const [nomRepParAud, setnomRepParAud] = useState("");
   const [prenomRepParAud, setprenomRepParAud] = useState("");
@@ -35,10 +35,10 @@ const AuditeurDetails = () => {
   const [numTelRepParAud, setnumTelRepParAud] = useState("");
   const [emailRepParAud, setemailRepParAud] = useState("");
 
-  const [qualifiRGEAud, setqualifiRGEAud] = useState("");
-  const [numRGEAud, setnumRGEAud] = useState("");
-  const [editLeRGEAud, seteditLeRGEAud] = useState("");
-  const [valableJusRGEAud, setvalableJusRGEAud] = useState("");
+  // const [qualifiRGEAud, setqualifiRGEAud] = useState("");
+  // const [numRGEAud, setnumRGEAud] = useState("");
+  // const [editLeRGEAud, seteditLeRGEAud] = useState("");
+  // const [valableJusRGEAud, setvalableJusRGEAud] = useState("");
 
 
   const [sirenIdentAud, setsirenIdentAud] = useState("");
@@ -74,14 +74,14 @@ const AuditeurDetails = () => {
       setraiSocAud(data?.auditeurs?.raiSocAud);
       setnumTelAud(data?.auditeurs?.numTelAud);
       setformJurAud(data?.auditeurs?.formJurAud);
-      setemailAud(data?.auditeurs?.emailAud);
+      // setemailAud(data?.auditeurs?.emailAud);
       setadresseAud(data?.auditeurs?.adresseAud);
       setvilleAud(data?.auditeurs?.villeAud);
       setcodePostalAud(data?.auditeurs?.codePostalAud);
       setsiteWebAud(data?.auditeurs?.siteWebAud);
       setmontCapAud(data?.auditeurs?.montCapAud);
-      settauxTVAAud(data?.auditeurs?.tauxTVAAud);
-      setsignatureAud(data?.auditeurs?.signatureAud);
+      // settauxTVAAud(data?.auditeurs?.tauxTVAAud);
+      // setsignatureAud(data?.auditeurs?.signatureAud);
 
       setnomRepParAud(data?.auditeurs?.nomRepParAud);
       setprenomRepParAud(data?.auditeurs?.prenomRepParAud);
@@ -90,10 +90,10 @@ const AuditeurDetails = () => {
       setnumTelRepParAud(data?.auditeurs?.numTelRepParAud);
       setemailRepParAud(data?.auditeurs?.emailRepParAud);
 
-      setqualifiRGEAud(data?.auditeurs?.qualifiRGEAud);
-      setnumRGEAud(data?.auditeurs?.numRGEAud);
-      seteditLeRGEAud(data?.auditeurs?.editLeRGEAud);
-      setvalableJusRGEAud(data?.auditeurs?.valableJusRGEAud);
+      // setqualifiRGEAud(data?.auditeurs?.qualifiRGEAud);
+      // setnumRGEAud(data?.auditeurs?.numRGEAud);
+      // seteditLeRGEAud(data?.auditeurs?.editLeRGEAud);
+      // setvalableJusRGEAud(data?.auditeurs?.valableJusRGEAud);
 
 
       setsirenIdentAud(data?.auditeurs?.sirenIdentAud);
@@ -142,7 +142,7 @@ const AuditeurDetails = () => {
   
           <span className="text-md font-bold">Forme juridique: {formJurAud}</span>
           <span className="text-md font-bold">Numéro de téléphone: {numTelAud}</span>
-          <span className="text-md font-bold">Email : {emailAud}</span>
+          <span className="text-md font-bold">Email : {email}</span>
           <span className="text-md font-bold">Adresse: {adresseAud}</span>
           <span className="text-md font-bold">Code postal: {codePostalAud}</span>
           <span className="text-md font-bold">Ville: {villeAud}</span>

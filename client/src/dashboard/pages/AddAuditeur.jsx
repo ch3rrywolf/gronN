@@ -15,27 +15,17 @@ const AddAuditeur = () => {
     raiSocAud: "",
     numTelAud: "",
     formJurAud: "",
-    emailAud: "",
     adresseAud: "",
     villeAud: "",
     codePostalAud: "",
     siteWebAud: "",
     montCapAud: "",
-    tauxTVAAud: "",
-    signatureAud: "",
-                            // represent par
                             nomRepParAud: "",
                             prenomRepParAud: "",
                             genreRepParAud: "",
                             fonctionRepParAud: "",
                             numTelRepParAud: "",
                             emailRepParAud: "",
-                            // RGE
-                            qualifiRGEAud: "",
-                            numRGEAud: "",
-                            editLeRGEAud: "",
-                            valableJusRGEAud: "",
-                            //Identifiants
                             sirenIdentAud: "",
                             siretIdentAud: "",
                             identTVAIdentAud: "",
@@ -43,13 +33,11 @@ const AddAuditeur = () => {
                             numAPEIdentAud: "",
                             numAgrIdentAud: "",
                             numDecIdentAud: "",
-                            // Assurance
                             raisocAssAud: "",
                             adresseAssAud: "",
                             numPolAssAud: "",
                             dateEmiAssAud: "",
                             dateFinAssAud: "",
-                            documentsAud: "",
   })
 
   const inputHandler = (e) => {
@@ -75,8 +63,7 @@ const AddAuditeur = () => {
       navigate('/dashboard/auditeurs')
     } catch (error) {
       setLoader(false)
-      toast.error(error.response.data.message)
-      // console.log(error)
+      toast.error(error?.response?.data?.message || 'Une erreur est survenue')
     }
   }
 
@@ -90,7 +77,7 @@ const AddAuditeur = () => {
        
              <div className='flex justify-between items-center p-4 border-b border-gray-200'>
                <h2 className='text-xl text-[#1960a9] hover:text-[#9fc327] font-bold'>Ajoute Auditeur</h2>
-               <Link className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]' to='/dashboard/benificaires'>Bénificaires</Link>
+               <Link className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]' to='/dashboard/benificaires'>Auditeurs</Link>
              </div>
       <div className='p-4'>
         <form onSubmit={submit}>
@@ -152,20 +139,8 @@ const AddAuditeur = () => {
               <label className='text-md font-medium text-gray-600' htmlFor='montCapAud'>Montant du capital</label>
               <input onChange={inputHandler} value={state.montCapAud}  type='text' placeholder='Montant du capital' name='montCapAud' id='montCapAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='tauxTVAAud'>Taux TVA</label>
-              <input onChange={inputHandler} value={state.tauxTVAAud}  type='text' placeholder='Taux TVA' name='tauxTVAAud' id='tauxTVAAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
-            </div>
-            </div>
-
-            {/* <div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='signatureAud'>Signature</label>
-              <input onChange={inputHandler} value={state.signatureAud}  type='file' placeholder='signatureAud' name='signatureAud' id='signatureAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
             
-            </div> */}
-
+            </div>
             </details>
 
           
@@ -208,34 +183,6 @@ const AddAuditeur = () => {
             </div>
 </details>
             
-
-
-            {/* <div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>RGE</label>
-            </div>
-            
-            </div>
-
-            <div className='grid grid-cols-4 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='qualifiRGEAud'>Qualification</label>
-              <input onChange={inputHandler} value={state.qualifiRGEAud}  type='text' placeholder='qualifiRGEAud' name='qualifiRGEAud' id='qualifiRGEAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='numRGEAud'>Numéro RGE</label>
-              <input onChange={inputHandler} value={state.numRGEAud}  type='text' placeholder='numRGEAud' name='numRGEAud' id='numRGEAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
-            </div>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='editLeRGEAud'>Edité le</label>
-              <input onChange={inputHandler} value={state.editLeRGEAud}  type='date' placeholder='editLeRGEAud' name='editLeRGEAud' id='editLeRGEAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='valableJusRGEAud'>VALABLE JUSQU'AU</label>
-              <input onChange={inputHandler} value={state.valableJusRGEAud}  type='date' placeholder='valableJusRGEAud' name='valableJusRGEAud' id='valableJusRGEAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
-            </div>
-            </div> */}
-
 
 <details className='p-4 border rounded-md'>
   <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>IDENTIFIANTS</summary>
@@ -319,44 +266,27 @@ const AddAuditeur = () => {
 
             </details>
 
-            
-{/* 
-            <div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>DOCUMENTS</label>
-            </div>
-            
-            </div>
 
-            <div className='grid grid-cols-2 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='documentsAud'>Importer des fichiers</label>
-              <input onChange={inputHandler} value={state.documentsAud}  type='file' placeholder='documentsAud' name='documentsAud' id='documentsAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
-            </div> */}
 
 <details className='p-4 border rounded-md'>
   <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>INFORMATION Session Auditeur</summary>
 
 
 
-            <div className='grid grid-cols-1 gap-x-8 mb-3'>
+  <div className='flex flex-col gap-y-2'>
+  <label className='text-md font-medium text-gray-600' htmlFor='name'>Nom *</label>
+  <input onChange={inputHandler} value={state.name} required type='text' name='name' placeholder='Nom' id='name' className='px-3 py-2 rounded-md border h-10' />
+</div>
 
-          <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='name'>name*</label>
-              <input onChange={inputHandler} value={state.name} required type='text' placeholder='name' name='name' id='name' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='email'>email*</label>
-              <input onChange={inputHandler} value={state.email} required type='email' placeholder='email' name='email' id='email' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
-            
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='password'>Mot de Passe*</label>
-              <input onChange={inputHandler} value={state.password} required type='password' placeholder='Password' name='password' id='password' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
-            </div>
-           
-          </div>
+<div className='flex flex-col gap-y-2'>
+  <label className='text-md font-medium text-gray-600' htmlFor='email'>Email *</label>
+  <input onChange={inputHandler} value={state.email} required type='email' name='email' placeholder='Email' id='email' className='px-3 py-2 rounded-md border h-10' />
+</div>
+
+<div className='flex flex-col gap-y-2'>
+  <label className='text-md font-medium text-gray-600' htmlFor='password'>Mot de passe *</label>
+  <input onChange={inputHandler} value={state.password} required type='password' name='password' placeholder='Mot de passe' id='password' className='px-3 py-2 rounded-md border h-10' />
+</div>
 
 </details>
             

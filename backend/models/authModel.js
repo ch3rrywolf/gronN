@@ -33,7 +33,6 @@ const authSchema = new Schema({
    
     roleIns: {
         type: String,
-        required: true
     },
     superviseur: {
         type: String,
@@ -63,9 +62,7 @@ const authSchema = new Schema({
     formJurAud: {
         type: String,
     },
-    emailAud: {
-        type: String,
-    },
+    
     adresseAud: {
         type: String,
     },
@@ -81,12 +78,7 @@ const authSchema = new Schema({
     montCapAud: {
         type: String,
     },
-    tauxTVAAud: {
-        type: String,
-    },
-    signatureAud: {
-        type: String,
-    },
+  
     //AUditeur Represente par
     nomRepParAud: {
         type: String,
@@ -106,19 +98,7 @@ const authSchema = new Schema({
     emailRepParAud: {
         type: String,
     },
-    // Auditeur RGE
-    qualifiRGEAud: {
-        type: String,
-    },
-    numRGEAud: {
-        type: String,
-    },
-    editLeRGEAud: {
-        type: String,
-    },
-    valableJusRGEAud: {
-        type: String,
-    },
+    
     // auditeur Identifiants
     sirenIdentAud: {
         type: String,
@@ -157,9 +137,7 @@ const authSchema = new Schema({
     dateFinAssAud: {
         type: String,
     },
-    documentsAud: {
-        type: String,
-    },
+    
 
 
 
