@@ -11,6 +11,9 @@ const Inspecteurs = () => {
   const [inspecteurs, setInspecteurs] = useState([]);
   const [editInspecteur, setEditInspecteur] = useState(null);
   const [newRoleIns, setNewRoleIns] = useState('');
+  const [newSuperIns, setNewSuperRoleIns] = useState('');
+  const [newVilleIns, setNewVilleIns] = useState('');
+  const [newCodePostalIns, setNewCodePostalIns] = useState('');
   const [newName, setNewName] = useState('');
   const [newEmail, setNewEmail] = useState('');
 //   const [newPassword, setNewPassword] = useState('');
@@ -60,6 +63,9 @@ const Inspecteurs = () => {
             email: (newEmail || '').trim(),        
             numTelIns: (newnumTelIns || '').trim(),
             adresseIns: (newadresseIns || '').trim(),
+            superviseur: (newSuperIns || '').trim(),
+            villeIns: (newVilleIns || '').trim(),
+            codePostalIns: (newCodePostalIns || '').trim(),
           };
 
     //   if (newPassword.trim()) {
@@ -77,7 +83,7 @@ const Inspecteurs = () => {
       setInspecteurs((prev) =>
         prev.map((op) =>
           op._id === id
-            ? { ...op, name: newName, email: newEmail, roleIns: newRoleIns, numTelIns: newnumTelIns, adresseIns: newadresseIns, }
+            ? { ...op, name: newName, email: newEmail, roleIns: newRoleIns, numTelIns: newnumTelIns, adresseIns: newadresseIns, superviseur:newSuperIns, villeIns:newVilleIns, codePostalIns:newCodePostalIns }
             : op
         )
       );
@@ -89,6 +95,9 @@ const Inspecteurs = () => {
       setNewRoleIns('');
       setNewnumTelIns('');
       setNewadresseIns('');
+      setNewSuperRoleIns('');
+      setNewVilleIns('');
+      setNewCodePostalIns('');
       alert(data.message);
     } catch (error) {
       console.error('Error updating inspecteur:', error);
@@ -129,9 +138,12 @@ const Inspecteurs = () => {
               <th className='px-7 py-3'>Status</th>
               <th className='px-7 py-3'>Intitulée</th>
               <th className='px-7 py-3'>Rôle</th>
+              <th className='px-7 py-3'>Superviseur</th>
               <th className='px-7 py-3'>Email</th>
               <th className='px-7 py-3'>Numéro de Téléphone</th>
               <th className='px-7 py-3'>Adresse</th>
+              <th className='px-7 py-3'>Ville</th>
+              <th className='px-7 py-3'>Code Postal</th>
               <th className='px-7 py-3'>Actions</th>
             </tr>
           </thead>
@@ -182,6 +194,14 @@ const Inspecteurs = () => {
                         <option value='superviseur'>Superviseur</option>
                       </select>
                     </td>
+                    <td className='px-6 py-4'>
+                    <input
+                        type='text'
+                        value={newSuperIns}
+                        onChange={(e) => setNewSuperRoleIns(e.target.value)}
+                        className='border px-2 py-1 w-full'
+                      />
+                    </td>
 
                     <td className='px-6 py-4'>
                       <input
@@ -207,14 +227,33 @@ const Inspecteurs = () => {
                         className='border px-2 py-1 w-full'
                       />
                     </td>
+                    <td className='px-6 py-4'>
+                      <input
+                        type='text'
+                        value={newVilleIns}
+                        onChange={(e) => setNewVilleIns(e.target.value)}
+                        className='border px-2 py-1 w-full'
+                      />
+                    </td>
+                    <td className='px-6 py-4'>
+                      <input
+                        type='text'
+                        value={newCodePostalIns}
+                        onChange={(e) => setNewCodePostalIns(e.target.value)}
+                        className='border px-2 py-1 w-full'
+                      />
+                    </td>
                   </>
                 ) : (
                   <>
                     <td className='px-6 py-4'>{r.name}</td>
                     <td className='px-6 py-4'>{r.roleIns}</td>
+                    <td className='px-6 py-4'>{r.superviseur}</td>
                     <td className='px-6 py-4'>{r.email}</td>
-                    <td className='px-6 py-4'>{"numtel"}</td>
-                    <td className='px-6 py-4'>{"Adresse"}</td>
+                    <td className='px-6 py-4'>{r.numTelIns}</td>
+                    <td className='px-6 py-4'>{r.adresseIns}</td>
+                    <td className='px-6 py-4'>{r.villeIns}</td>
+                    <td className='px-6 py-4'>{r.codePostalIns}</td>
                   </>
                 )}
 
@@ -250,6 +289,9 @@ const Inspecteurs = () => {
                           setNewEmail(r.email);
                           setNewnumTelIns(r.numTelIns);
                           setNewadresseIns(r.adresseIns);
+                          setNewSuperRoleIns(r.superviseur);
+                          setNewVilleIns(r.villeIns);
+                          setNewCodePostalIns(r.codePostalIns);
                         }}
                         className='p-[6px] bg-[#1960a9] rounded hover:shadow-lg hover:shadow-yellow-500/50'
                       >

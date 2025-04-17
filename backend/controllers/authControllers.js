@@ -328,14 +328,9 @@ update_backoffice_status = async (req, res) => {
 
         add_inspecteur = async (req, res) => {
 
-            const {name, email, nomIns,prenomIns, roleIns, superviseur,villeIns,adresseIns,codePostalIns,emailIns,numTelIns, password } = req.body
+            const {name, email, roleIns, superviseur,villeIns,adresseIns,codePostalIns,numTelIns, password } = req.body
     
-            if (!nomIns) {
-                return res.status(404).json({ message: 'Veuillez fournir le nom' })
-            }
-            if (!prenomIns) {
-                return res.status(404).json({ message: 'Veuillez fournir le prenom' })
-            }
+           
             if (!roleIns) {
                 return res.status(404).json({ message: 'Veuillez fournir le roleIns' })
             }
@@ -343,9 +338,6 @@ update_backoffice_status = async (req, res) => {
                 return res.status(404).json({ message: 'Veuillez fournir votre mot de passe' })
             }
             
-            if (emailIns && !emailIns.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
-                return res.status(404).json({ message: 'veuillez fournir emailIns form valide' })
-            }
             if (!name) {
                 return res.status(404).json({ message: 'Veuillez fournir votre name' })
             }
@@ -365,14 +357,11 @@ update_backoffice_status = async (req, res) => {
                         email: email.trim(),
                         password: await bcrypt.hash(password.trim(), 10),
                         role: 'inspecteur',
-                        nomIns: nomIns.trim(),
-                        prenomIns: prenomIns.trim(),
                         roleIns: roleIns.trim(),
                         superviseur: superviseur.trim(),
                         villeIns: villeIns.trim(),
                         adresseIns: adresseIns.trim(),
                         codePostalIns: codePostalIns.trim(),
-                        emailIns: emailIns.trim(),
                         numTelIns: numTelIns.trim(),
                         
                     })
@@ -420,7 +409,7 @@ update_backoffice_status = async (req, res) => {
               } 
             update_inspecteur = async (req, res) => {
                 const { id } = req.params;
-                const { name, email, password, role,accountStatus,nomIns,prenomIns,roleIns,superviseur,villeIns,adresseIns,codePostalIns,emailIns,numTelIns } = req.body;
+                const { name, email, password, role,accountStatus,roleIns,superviseur,villeIns,adresseIns,codePostalIns,numTelIns } = req.body;
             
                 if (!name) {
                     return res.status(400).json({ message: 'Please provide a name' });
@@ -449,12 +438,7 @@ update_backoffice_status = async (req, res) => {
                         updateFields.accountStatus = accountStatus.trim();
                     }
 
-                    if (nomIns) {
-                        updateFields.nomIns = nomIns.trim();
-                    }
-                    if (prenomIns) {
-                        updateFields.prenomIns = prenomIns.trim();
-                    }
+                    
                     if (roleIns) {
                         updateFields.roleIns = roleIns.trim();
                     }
@@ -469,9 +453,6 @@ update_backoffice_status = async (req, res) => {
                     }
                     if (codePostalIns) {
                         updateFields.codePostalIns = codePostalIns.trim();
-                    }
-                    if (emailIns) {
-                        updateFields.emailIns = emailIns.trim();
                     }
                     if (numTelIns) {
                         updateFields.numTelIns = numTelIns.trim();

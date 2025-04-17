@@ -30,14 +30,10 @@ const authSchema = new Schema({
 
     //
     //inspecteur
-    nomIns: {
-        type: String,  
-    },
-    prenomIns: {
-        type: String,
-    },
+   
     roleIns: {
         type: String,
+        required: true
     },
     superviseur: {
         type: String,
@@ -49,9 +45,6 @@ const authSchema = new Schema({
         type: String,
     },
     codePostalIns: {
-        type: String,
-    },
-    emailIns: {
         type: String,
     },
     numTelIns: {
