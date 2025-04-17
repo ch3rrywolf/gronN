@@ -80,111 +80,99 @@ const AddAuditeur = () => {
     }
   }
 
-  const lotDocuments = [
-    {
-      title: "RES 010",
-      section: 1
-    },
-    
-  ];
-
   
 
-  const [openSection, setOpenSection] = useState(null);
-
-  const toggleSection = (section) => {
-    setOpenSection(openSection === section ? null : section);
-  };
+ 
 
   return (
-    <div className='bg-white rounded-md'>
-      <div className='flex justify-between p-4'>
-        <h2 className='text-xl font-medium'>Add Auditeur</h2>
-        <Link className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]' to='/dashboard/auditeurs'>Auditeurs</Link>
-      </div>
+     <div className='flex justify-center items-start min-h-screen bg-gray-100 py-10'>
+           <div className='bg-white rounded-lg shadow-lg w-full max-w-4xl border border-gray-300'>
+       
+             <div className='flex justify-between items-center p-4 border-b border-gray-200'>
+               <h2 className='text-xl text-[#1960a9] hover:text-[#9fc327] font-bold'>Ajoute Auditeur</h2>
+               <Link className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]' to='/dashboard/benificaires'>Bénificaires</Link>
+             </div>
       <div className='p-4'>
         <form onSubmit={submit}>
 
-        <div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>INFORMATIONS GENERALES</label>
-            </div>
-            
-            </div>
+        <details className='p-4 border rounded-md'>
+  <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>INFORMATION GÉNÉRALE</summary>
 
 
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='raiSocAud'>Raison Social *</label>
-              <input onChange={inputHandler} value={state.raiSocAud} required type='text' placeholder='raiSocAud' name='raiSocAud' id='raiSocAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <input onChange={inputHandler} value={state.raiSocAud} required type='text' placeholder='Raison Social' name='raiSocAud' id='raiSocAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
           
           
           <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='numTelAud'>Numéro de téléphone</label>
-              <input onChange={inputHandler} value={state.numTelAud} type='text' placeholder='numTelAud' name='numTelAud' id='numTelAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <input onChange={inputHandler} value={state.numTelAud} type='text' placeholder='Numéro de téléphone' name='numTelAud' id='numTelAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='formJurAud'>Forme juridique</label>
-              <input onChange={inputHandler} value={state.formJurAud} type='text' placeholder='formJurAud' name='formJurAud' id='formJurAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+              <input onChange={inputHandler} value={state.formJurAud} type='text' placeholder='Forme juridique' name='formJurAud' id='formJurAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
             </div>
             </div>
 
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='emailAud'>Email</label>
-              <input onChange={inputHandler} value={state.emailAud} required type='email' placeholder='emailAud' name='emailAud' id='emailAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
+
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='adresseAud'>Adresse *</label>
               <input onChange={inputHandler} value={state.adresseAud} required type='text' placeholder='Adresse' name='adresseAud' id='adresseAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
             </div>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='villeAud'>Ville *</label>
+              <input onChange={inputHandler} value={state.villeAud} required type='text' placeholder='Ville' name='villeAud' id='villeAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+            </div>
+            
             </div>
 
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='villeAud'>Ville *</label>
-              <input onChange={inputHandler} value={state.villeAud} required type='text' placeholder='villeAud' name='villeAud' id='villeAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
+            
             
             </div>
 
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='codePostalAud'>Code postal*</label>
-              <input onChange={inputHandler} value={state.codePostalAud} required type='text' placeholder='codePostalAud' name='codePostalAud' id='codePostalAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <input onChange={inputHandler} value={state.codePostalAud} required type='text' placeholder='Code postal' name='codePostalAud' id='codePostalAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='siteWebAud'>Site Web</label>
-              <input onChange={inputHandler} value={state.siteWebAud} type='text' placeholder='siteWebAud' name='siteWebAud' id='siteWebAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+              <input onChange={inputHandler} value={state.siteWebAud} type='text' placeholder='Site Web' name='siteWebAud' id='siteWebAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
             </div>
             </div>
+
+            
 
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='montCapAud'>Montant du capital</label>
-              <input onChange={inputHandler} value={state.montCapAud}  type='text' placeholder='montCapAud' name='montCapAud' id='montCapAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <input onChange={inputHandler} value={state.montCapAud}  type='text' placeholder='Montant du capital' name='montCapAud' id='montCapAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='tauxTVAAud'>Taux TVA</label>
-              <input onChange={inputHandler} value={state.tauxTVAAud}  type='text' placeholder='tauxTVAAud' name='tauxTVAAud' id='tauxTVAAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
+              <input onChange={inputHandler} value={state.tauxTVAAud}  type='text' placeholder='Taux TVA' name='tauxTVAAud' id='tauxTVAAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
             </div>
             </div>
 
-            <div className='grid grid-cols-1 gap-x-8 mb-3'>
+            {/* <div className='grid grid-cols-1 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='signatureAud'>Signature</label>
               <input onChange={inputHandler} value={state.signatureAud}  type='file' placeholder='signatureAud' name='signatureAud' id='signatureAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             
-            </div>
+            </div> */}
 
-            <div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>REPRESENTE PAR</label>
-            </div>
-            
-            </div>
+            </details>
+
+          
+
+            <details className='p-4 border rounded-md'>
+  <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>REPRESENTE PAR</summary>
+
 
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
@@ -218,11 +206,11 @@ const AddAuditeur = () => {
               <input onChange={inputHandler} value={state.emailRepParAud}  type='text' placeholder='emailRepParEntRe' name='emailRepParAud' id='emailRepParAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
             </div>
             </div>
-
+</details>
             
 
 
-            <div className='grid grid-cols-1 gap-x-8 mb-3'>
+            {/* <div className='grid grid-cols-1 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>RGE</label>
             </div>
@@ -246,15 +234,12 @@ const AddAuditeur = () => {
               <label className='text-md font-medium text-gray-600' htmlFor='valableJusRGEAud'>VALABLE JUSQU'AU</label>
               <input onChange={inputHandler} value={state.valableJusRGEAud}  type='date' placeholder='valableJusRGEAud' name='valableJusRGEAud' id='valableJusRGEAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
             </div>
-            </div>
+            </div> */}
 
 
-            <div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>IDENTIFIANTS</label>
-            </div>
-            
-            </div>
+<details className='p-4 border rounded-md'>
+  <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>IDENTIFIANTS</summary>
+
 
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
@@ -296,13 +281,12 @@ const AddAuditeur = () => {
             </div>
             
             </div>
+            </details>
 
-            <div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>ASSURANCE</label>
-            </div>
-            
-            </div>
+
+            <details className='p-4 border rounded-md'>
+  <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>ASSURANCE</summary>
+
 
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
@@ -333,10 +317,10 @@ const AddAuditeur = () => {
             </div>
             </div>
 
-            
+            </details>
 
             
-
+{/* 
             <div className='grid grid-cols-1 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>DOCUMENTS</label>
@@ -349,15 +333,11 @@ const AddAuditeur = () => {
               <label className='text-md font-medium text-gray-600' htmlFor='documentsAud'>Importer des fichiers</label>
               <input onChange={inputHandler} value={state.documentsAud}  type='file' placeholder='documentsAud' name='documentsAud' id='documentsAud' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
-            </div>
+            </div> */}
 
+<details className='p-4 border rounded-md'>
+  <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>INFORMATION Session Auditeur</summary>
 
-            <div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>IDENTIFIANT PLATEFORME</label>
-            </div>
-            
-            </div>
 
 
             <div className='grid grid-cols-1 gap-x-8 mb-3'>
@@ -378,17 +358,19 @@ const AddAuditeur = () => {
            
           </div>
 
-
+</details>
             
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='mt-4'>
             <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Add Auditeur'}</button>
             </div>
             </div>
+
         </form>
       </div>
 
 
+    </div>
     </div>
   )
 }

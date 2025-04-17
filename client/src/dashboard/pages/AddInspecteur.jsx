@@ -146,7 +146,7 @@ const AddInspecteur = () => {
             </details>
             
         <details className='p-4 border rounded-md'>
-  <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>INFORMATION Session inspecteur</summary>
+  <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>INFORMATION Session Inspecteur</summary>
 
 
   <div className='grid grid-cols-2 gap-x-8 mb-3'>
