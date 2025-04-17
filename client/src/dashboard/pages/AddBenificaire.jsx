@@ -30,8 +30,6 @@ const AddBenificaire = () => {
     RIBBeni:"",
     IBANBeni:"",
     ZoneClimaBeni:"",
-    nomprenomPerConf:"",
-    enQualitPerConf:"",
   })
 
   const inputHandler = (e) => {
@@ -63,13 +61,23 @@ const AddBenificaire = () => {
   }
 
   return (
-    <div className='bg-white rounded-md'>
-      <div className='flex justify-between p-4'>
-        <h2 className='text-xl  text-[#1960a9] hover:text-[#9fc327] font-bold'>Add Bénificaires</h2>
-        <Link className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]' to='/dashboard/benificaires'>Bénificaires</Link>
-      </div>
-      <div className='p-4'>
-        <form onSubmit={submit}>
+     <div className='flex justify-center items-start min-h-screen bg-gray-100 py-10'>
+        <div className='bg-white rounded-lg shadow-lg w-full max-w-4xl border border-gray-300'>
+    
+          <div className='flex justify-between items-center p-4 border-b border-gray-200'>
+            <h2 className='text-xl text-[#1960a9] hover:text-[#9fc327] font-bold'>Ajoute Bénificaire</h2>
+            <Link className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]' to='/dashboard/benificaires'>Bénificaires</Link>
+          </div>
+          
+
+      
+      
+        <form onSubmit={submit} className='space-y-6'>
+
+        <details className='p-4 border rounded-md'>
+  <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>INFORMATION GÉNÉRALE</summary>
+
+
           <div className='grid grid-cols-2 gap-x-8 mb-3'>
           <div className="flex flex-col gap-y-2">
               <label htmlFor="genre" className="text-md font-medium text-gray-600">
@@ -122,30 +130,30 @@ const AddBenificaire = () => {
               <input onChange={inputHandler} value={state.passwordAnah} type='password' placeholder='Mot de passe Anah' name='passwordAnah' id='passwordAnah' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='villeBeni'>Ville  *</label>
-              <input onChange={inputHandler} value={state.villeBeni} required type='text' placeholder='Ville' name='villeBeni' id='villeBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <label className='text-md font-medium text-gray-600' htmlFor='villeBeni'>Ville </label>
+              <input onChange={inputHandler} value={state.villeBeni} type='text' placeholder='Ville' name='villeBeni' id='villeBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
           </div>
 
           <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='numBeni'>N ° *</label>
-              <input onChange={inputHandler} value={state.numBeni} required type='text' placeholder='N °' name='numBeni' id='numBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <label className='text-md font-medium text-gray-600' htmlFor='numBeni'>N °</label>
+              <input onChange={inputHandler} value={state.numBeni} type='text' placeholder='N °' name='numBeni' id='numBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='voieBeni'>Voie *</label>
-              <input onChange={inputHandler} value={state.voieBeni} required type='text' placeholder='Voie' name='voieBeni' id='voieBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <label className='text-md font-medium text-gray-600' htmlFor='voieBeni'>Voie</label>
+              <input onChange={inputHandler} value={state.voieBeni} type='text' placeholder='Voie' name='voieBeni' id='voieBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
           </div>
 
           <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='codepostalBeni'>Code postal *</label>
-              <input onChange={inputHandler} value={state.codepostalBeni} required type='text' placeholder='codepostalBeni' name='codepostalBeni' id='codepostalBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <label className='text-md font-medium text-gray-600' htmlFor='codepostalBeni'>Code postal</label>
+              <input onChange={inputHandler} value={state.codepostalBeni} type='text' placeholder='codepostalBeni' name='codepostalBeni' id='codepostalBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='etageBeni'>Étage *</label>
-              <input onChange={inputHandler} value={state.etageBeni} required type='text' placeholder='Étage' name='etageBeni' id='etageBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <label className='text-md font-medium text-gray-600' htmlFor='etageBeni'>Étage</label>
+              <input onChange={inputHandler} value={state.etageBeni} type='text' placeholder='Étage' name='etageBeni' id='etageBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
           </div>
 
@@ -166,8 +174,8 @@ const AddBenificaire = () => {
               <input onChange={inputHandler} value={state.porteBeni}  type='text' placeholder='Porte' name='porteBeni' id='porteBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='batimentBeni'>Bâtiment *</label>
-              <input onChange={inputHandler} value={state.batimentBeni} required type='text' placeholder='Bâtiment' name='batimentBeni' id='batimentBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <label className='text-md font-medium text-gray-600' htmlFor='batimentBeni'>Bâtiment</label>
+              <input onChange={inputHandler} value={state.batimentBeni} type='text' placeholder='Bâtiment' name='batimentBeni' id='batimentBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
           </div>
 
@@ -177,8 +185,8 @@ const AddBenificaire = () => {
               <input onChange={inputHandler} value={state.numTelBeni} required type='text' placeholder='Numéro de téléphone' name='numTelBeni' id='numTelBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
             <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='numPortableBeni'>Portable *</label>
-              <input onChange={inputHandler} value={state.numPortableBeni} required type='text' placeholder='Portable' name='numPortableBeni' id='numPortableBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+              <label className='text-md font-medium text-gray-600' htmlFor='numPortableBeni'>Portable</label>
+              <input onChange={inputHandler} value={state.numPortableBeni} type='text' placeholder='Portable' name='numPortableBeni' id='numPortableBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
           </div>
 
@@ -193,24 +201,15 @@ const AddBenificaire = () => {
             </div>
           </div>
 
-          <div className='grid grid-cols-2 gap-x-8 mb-3'>
+          <div className='grid grid-cols-1 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='ZoneClimaBeni'>Zone climatique </label>
               <input onChange={inputHandler} value={state.ZoneClimaBeni}  type='text' placeholder='Zone climatique' name='ZoneClimaBeni' id='ZoneClimaBeni' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='nomprenomPerConf'>Nom et prénom</label>
-              <input onChange={inputHandler} value={state.nomprenomPerConf}  type='text' placeholder='Nom et prénom' name='nomprenomPerConf' id='nomprenomPerConf' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
-          </div>
-
-          <div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='enQualitPerConf'>En qualité de</label>
-              <input onChange={inputHandler} value={state.enQualitPerConf} type='text' placeholder='En qualité de' name='enQualitPerConf' id='enQualitPerConf' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
             
           </div>
+
+          
 
           
           
@@ -222,9 +221,11 @@ const AddBenificaire = () => {
             <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Add Bénificaire'}</button>
             </div>
             </div>
-
+            </details>
             
         </form>
+
+
       </div>
     </div>
   )

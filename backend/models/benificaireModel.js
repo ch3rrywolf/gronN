@@ -29,19 +29,15 @@ const benificaireSchema = new Schema({
     },
     villeBeni: {
         type: String,
-        required: true
     },
     numBeni: {
         type: String,
-        required: true
     },
     voieBeni: {
         type: String,
-        required: true
     },
     codepostalBeni: {
         type: String,
-        required: true
     },
     etageBeni: {
         type: String
@@ -72,12 +68,6 @@ const benificaireSchema = new Schema({
         type: String
     },
     ZoneClimaBeni: {
-        type: String
-    },
-    nomprenomPerConf: {
-        type: String
-    },
-    enQualitPerConf: {
         type: String
     },
     pdfs: [

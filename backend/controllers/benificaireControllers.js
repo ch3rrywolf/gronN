@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 class BenificaireController {
     async addi(req, res) {
-            const { genre, nomBeni, prenomBeni, datenaiBeni, emailBeni, emailAnah,passwordAnah,villeBeni,numBeni,voieBeni,codepostalBeni,etageBeni,escalierBeni,communeBeni,porteBeni,batimentBeni,numTelBeni,numPortableBeni,RIBBeni,IBANBeni,ZoneClimaBeni,nomprenomPerConf,enQualitPerConf } = req.body;
+            const { genre, nomBeni, prenomBeni, datenaiBeni, emailBeni, emailAnah,passwordAnah,villeBeni,numBeni,voieBeni,codepostalBeni,etageBeni,escalierBeni,communeBeni,porteBeni,batimentBeni,numTelBeni,numPortableBeni,RIBBeni,IBANBeni,ZoneClimaBeni } = req.body;
         
             if (!emailBeni) {
                 return res.status(400).json({ message: 'Please provide Benificaire Email' });
@@ -38,8 +38,6 @@ class BenificaireController {
                     RIBBeni: RIBBeni.trim(),
                     IBANBeni: IBANBeni.trim(),
                     ZoneClimaBeni: ZoneClimaBeni.trim(),
-                    nomprenomPerConf: nomprenomPerConf.trim(),
-                    enQualitPerConf: enQualitPerConf.trim(),
                 });
         
                 return res.status(201).json({ message: 'Benificaire added successfully', benificaire: new_benificaire });
@@ -78,7 +76,7 @@ class BenificaireController {
 
     async updati(req, res) {
         const { id } = req.params;
-        const { genre, nomBeni, prenomBeni, datenaiBeni, emailBeni, emailAnah,passwordAnah,villeBeni,numBeni,voieBeni,codepostalBeni,etageBeni,escalierBeni,communeBeni,porteBeni,batimentBeni,numTelBeni,numPortableBeni,RIBBeni,IBANBeni,ZoneClimaBeni,nomprenomPerConf,enQualitPerConf } = req.body;
+        const { genre, nomBeni, prenomBeni, datenaiBeni, emailBeni, emailAnah,passwordAnah,villeBeni,numBeni,voieBeni,codepostalBeni,etageBeni,escalierBeni,communeBeni,porteBeni,batimentBeni,numTelBeni,numPortableBeni,RIBBeni,IBANBeni,ZoneClimaBeni } = req.body;
     
         // if (!nom) {
         //     return res.status(400).json({ message: 'Please provide a nom' });
@@ -172,13 +170,6 @@ class BenificaireController {
                         updateFields.ZoneClimaBeni = ZoneClimaBeni.trim();
                     }
 
-                    if (nomprenomPerConf) {
-                        updateFields.nomprenomPerConf = nomprenomPerConf.trim();
-                    }
-
-                    if (enQualitPerConf) {
-                        updateFields.enQualitPerConf = enQualitPerConf.trim();
-                    }
             
                     const updatedBenificaire = await benificaireModel.findByIdAndUpdate(
                         id,

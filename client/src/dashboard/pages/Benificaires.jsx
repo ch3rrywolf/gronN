@@ -32,8 +32,6 @@ const Benificaires = () => {
   const [newRIBBeni, setNewRIBBeni] = useState('');
   const [newIBANBeni, setNewIBANBeni] = useState('');
   const [newZoneClimaBeni, setNewZoneClimaBeni] = useState('');
-  const [newnomprenomPerConf, setNewnomprenomPerConf] = useState('');
-  const [newenQualitPerConf, setNewenQualitPerConf] = useState('');
 
    const [res, set_res] = useState({ id: '', loader: false }); 
 
@@ -76,8 +74,6 @@ const Benificaires = () => {
                     RIBBeni: newRIBBeni.trim(),
                     IBANBeni: newIBANBeni.trim(),
                     ZoneClimaBeni: newZoneClimaBeni.trim(),
-                    nomprenomPerConf: newnomprenomPerConf.trim(),
-                    enQualitPerConf: newenQualitPerConf.trim(),
       };
 
       const { data } = await axios.put(
@@ -91,7 +87,7 @@ const Benificaires = () => {
       setBenificaires((prev) =>
         prev.map((op) =>
           op._id === id
-            ? { ...op, genre: newgenre, nomBeni: newnomBeni, prenomBeni: newprenomBeni, datenaiBeni: newdatenaiBeni, emailBeni: newemailBeni, emailAnah: newemailAnah, passwordAnah: newpasswordAnah, villeBeni: newvilleBeni, numBeni: newnumBeni, voieBeni: newvoieBeni, codepostalBeni: newcodepostalBeni, etageBeni: newetageBeni, escalierBeni: newescalierBeni, communeBeni: newcommuneBeni, porteBeni: newporteBeni, batimentBeni: newbatimentBeni, numTelBeni: newnumTelBeni, numPortableBeni: newnumPortableBeni, RIBBeni: newRIBBeni, IBANBeni: newIBANBeni, ZoneClimaBeni: newZoneClimaBeni, nomprenomPerConf: newnomprenomPerConf, enQualitPerConf: newenQualitPerConf }
+            ? { ...op, genre: newgenre, nomBeni: newnomBeni, prenomBeni: newprenomBeni, datenaiBeni: newdatenaiBeni, emailBeni: newemailBeni, emailAnah: newemailAnah, passwordAnah: newpasswordAnah, villeBeni: newvilleBeni, numBeni: newnumBeni, voieBeni: newvoieBeni, codepostalBeni: newcodepostalBeni, etageBeni: newetageBeni, escalierBeni: newescalierBeni, communeBeni: newcommuneBeni, porteBeni: newporteBeni, batimentBeni: newbatimentBeni, numTelBeni: newnumTelBeni, numPortableBeni: newnumPortableBeni, RIBBeni: newRIBBeni, IBANBeni: newIBANBeni, ZoneClimaBeni: newZoneClimaBeni }
             : op
         )
       );
@@ -118,8 +114,6 @@ const Benificaires = () => {
       setNewRIBBeni('');
       setNewIBANBeni('');
       setNewZoneClimaBeni('');
-      setNewnomprenomPerConf('');
-      setNewenQualitPerConf('');
       alert(data.message);
     } catch (error) {
       console.error('Error updating benificaire:', error);
@@ -178,8 +172,6 @@ const Benificaires = () => {
               <th className='px-7 py-3'>RIB </th>
               <th className='px-7 py-3'>IBAN </th>
               <th className='px-7 py-3'>Zone climatique </th>
-              <th className='px-7 py-3'>Nom et prénom </th>
-              <th className='px-7 py-3'>En qualité de </th>
             </tr>
           </thead>
           <tbody>
@@ -359,22 +351,6 @@ const Benificaires = () => {
                         className='border px-2 py-1 w-full'
                       />
                     </td>
-                    <td className='px-6 py-4'>
-                      <input
-                        type='text'
-                        value={newnomprenomPerConf}
-                        onChange={(e) => setNewnomprenomPerConf(e.target.value)}
-                        className='border px-2 py-1 w-full'
-                      />
-                    </td>
-                    <td className='px-6 py-4'>
-                      <input
-                        type='text'
-                        value={newenQualitPerConf}
-                        onChange={(e) => setNewenQualitPerConf(e.target.value)}
-                        className='border px-2 py-1 w-full'
-                      />
-                    </td>
                     
                     
                   </>
@@ -401,8 +377,6 @@ const Benificaires = () => {
                     <td className='px-6 py-4'>{r.RIBBeni}</td>
                     <td className='px-6 py-4'>{r.IBANBeni}</td>
                     <td className='px-6 py-4'>{r.ZoneClimaBeni}</td>
-                    <td className='px-6 py-4'>{r.nomprenomPerConf}</td>
-                    <td className='px-6 py-4'>{r.enQualitPerConf}</td>
                   </>
                 )}
 
@@ -454,8 +428,6 @@ const Benificaires = () => {
                           setNewRIBBeni(r.RIBBeni);
                           setNewIBANBeni(r.IBANBeni);
                           setNewZoneClimaBeni(r.ZoneClimaBeni);
-                          setNewnomprenomPerConf(r.nomprenomPerConf);
-                          setNewenQualitPerConf(r.enQualitPerConf);
                         }}
                         className='p-[6px] bg-[#1960a9] rounded hover:shadow-lg hover:shadow-yellow-500/50'
                       >

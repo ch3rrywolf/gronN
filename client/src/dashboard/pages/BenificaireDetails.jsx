@@ -33,8 +33,6 @@ const BenificaireDetails = () => {
   const [RIBBeni, setRIBBeni] = useState("");
   const [IBANBeni, setIBANBeni] = useState("");
   const [ZoneClimaBeni, setZoneClimaBeni] = useState("");
-  const [nomprenomPerConf, setnomprenomPerConf] = useState("");
-  const [enQualitPerConf, setenQualitPerConf] = useState("");
   
 
 
@@ -71,8 +69,6 @@ const BenificaireDetails = () => {
       setRIBBeni(data?.benificaires?.RIBBeni);
       setIBANBeni(data?.benificaires?.IBANBeni);
       setZoneClimaBeni(data?.benificaires?.ZoneClimaBeni);
-      setnomprenomPerConf(data?.benificaires?.nomprenomPerConf);
-      setenQualitPerConf(data?.benificaires?.enQualitPerConf);
     } catch (error) {
       console.error("Error fetching bénificaire details:", error);
     }
@@ -128,6 +124,7 @@ const BenificaireDetails = () => {
 
 useEffect(() => {
     getBenificaires();
+    getFiles();
   }, [benificaires_id]);
   return (
 
@@ -157,22 +154,19 @@ useEffect(() => {
           <span className='text-md font-bold'>{nomBeni} {prenomBeni}</span>
         </div>
 
-        <span className='text-md font-bold'>Date de naissance : {datenaiBeni}</span>
+        <hr className='border-t my-2 border-red-500' />
+
+        <span className='text-md font-bold'>Numéro de téméphone: {numTelBeni}</span>
         <span className='text-md font-bold'>Email (1): {emailBeni}</span>
         <span className='text-md font-bold'>Adresse: {numBeni} {voieBeni}</span>
-
-        <hr className='border-t my-2 border-red-500' />
-        <span className='text-red-600 font-bold text-center'>-------- Anah --------</span>
-        <span className='text-md font-bold'>Email : {emailBeni}</span>
-        <span className='text-md font-bold'>Mot de passe : {passwordAnah}</span>
-        <span className='text-md font-bold'>N°: {numBeni}</span>
         <span className='text-md font-bold'>Voie: {voieBeni}</span>
         <span className='text-md font-bold'>Code Postal: {codepostalBeni}</span>
         <span className='text-md font-bold'>Ville: {villeBeni}</span>
 
+       
+
         <hr className='border-t my-2 border-red-500' />
         <span className='text-red-600 font-bold text-center'>-------- Ménage --------</span>
-        <span className='text-md font-bold'>Commune: {communeBeni}</span>
       </div>
 
       {/* Right Panel - ID / Code */}
@@ -222,7 +216,7 @@ useEffect(() => {
     </div>
 
     {/* List of Files */}
-    <div className='p-4 border-t border-gray-200'>
+    {/* <div className='p-4 border-t border-gray-200'>
       <h3 className='text-lg font-bold mb-3'>Liste des fichiers</h3>
       {filesList.length > 0 ? (
         <div className='flex gap-4 overflow-x-auto'>
@@ -248,7 +242,20 @@ useEffect(() => {
       ) : (
         <p>Aucun document ajouté.</p>
       )}
-    </div>
+    </div> */}
+
+     <ul className='mt-4 space-y-2'>
+        {filesList.map(file => (
+          <li key={file._id} className='flex justify-between items-center border p-2 rounded'>
+            <a  href={`${base_url}/files/${file.pdf}`}  target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
+              {file.title}
+            </a>
+            <button onClick={() => deleteFile(benificaires_id, file._id)} className='text-red-600 hover:text-red-800'>
+              <Trash2 size={18} />
+            </button>
+          </li>
+        ))}
+      </ul>
 
   </div>
 </div>
