@@ -152,9 +152,6 @@ const authSchema = new Schema({
     formJurEntRe: {
         type: String,
     },
-    emailEntRe: {
-        type: String,
-    },
     adresseEntRe: {
         type: String,
     },
@@ -171,9 +168,6 @@ const authSchema = new Schema({
         type: String,
     },
     tauxTVAEntRe: {
-        type: String,
-    },
-    signatureEntRe: {
         type: String,
     },
     //EntRe Represente par
@@ -197,18 +191,6 @@ const authSchema = new Schema({
         type: String,
     },
     // EntRe RGE
-    qualifiRGEEntRe: {
-        type: String,
-    },
-    numRGEEntRe: {
-        type: String,
-    },
-    editLeRGEEntRe: {
-        type: String,
-    },
-    valableJusRGEEntRe: {
-        type: String,
-    },
     //EntRe Identifiants
     sirenIdentEntRe: {
         type: String,
@@ -254,10 +236,6 @@ const authSchema = new Schema({
     genDevisEntRe: {
         type: String,
     },
-    documentsEntRe: {
-        type: String,
-    },
-
 
 
     // 

@@ -884,14 +884,14 @@ update_backoffice_status = async (req, res) => {
                             raiSocEntRe: raiSocEntRe.trim(),
                             numTelEntRe: numTelEntRe.trim(),
                             formJurEntRe: formJurEntRe.trim(),
-                            emailEntRe: emailEntRe.trim(),
+                           
                             adresseEntRe: adresseEntRe.trim(),
                             villeEntRe: villeEntRe.trim(),
                             codePostalEntRe: codePostalEntRe.trim(),
                             siteWebEntRe: siteWebEntRe.trim(),
                             montCapEntRe: montCapEntRe.trim(),
                             tauxTVAEntRe: tauxTVAEntRe.trim(),
-                            signatureEntRe: signatureEntRe.trim(),
+                            
                             // represent par
                             nomRepParEntRe: nomRepParEntRe.trim(),
                             prenomRepParEntRe: prenomRepParEntRe.trim(),
@@ -900,10 +900,7 @@ update_backoffice_status = async (req, res) => {
                             numTelRepParEntRe: numTelRepParEntRe.trim(),
                             emailRepParEntRe: emailRepParEntRe.trim(),
                             // RGE
-                            qualifiRGEEntRe: qualifiRGEEntRe.trim(),
-                            numRGEEntRe: numRGEEntRe.trim(),
-                            editLeRGEEntRe: editLeRGEEntRe.trim(),
-                            valableJusRGEEntRe: valableJusRGEEntRe.trim(),
+                            
                             //Identifiants
                             sirenIdentEntRe: sirenIdentEntRe.trim(),
                             siretIdentEntRe: siretIdentEntRe.trim(),
@@ -918,7 +915,6 @@ update_backoffice_status = async (req, res) => {
                             numPolAssEntRe: numPolAssEntRe.trim(),
                             dateEmiAssEntRe: dateEmiAssEntRe.trim(),
                             dateFinAssEntRe: dateFinAssEntRe.trim(),
-                            documentsEntRe: documentsEntRe.trim(),
                             // Parametrage
                             genRevAudEntRe: genRevAudEntRe.trim(),
                             genDevisEntRe: genDevisEntRe.trim(),
@@ -969,7 +965,7 @@ update_backoffice_status = async (req, res) => {
                   }        
                 update_entrete = async (req, res) => {
                     const { id } = req.params;
-                    const { name, email, password,raiSocEntRe,numTelEntRe,formJurEntRe, emailEntRe,adresseEntRe, villeEntRe,codePostalEntRe,siteWebEntRe,montCapEntRe,tauxTVAEntRe,signatureEntRe,nomRepParEntRe,prenomRepParEntRe,genreRepParEntRe,fonctionRepParEntRe,numTelRepParEntRe,emailRepParEntRe,qualifiRGEEntRe,numRGEEntRe,editLeRGEEntRe,valableJusRGEEntRe,sirenIdentEntRe,siretIdentEntRe,identTVAIdentEntRe,rcsIdentEntRe,numAPEIdentEntRe,numAgrIdentEntRe,numDecIdentEntRe,raisocAssEntRe,adresseAssEntRe,numPolAssEntRe,dateEmiAssEntRe,dateFinAssEntRe,documentsEntRe,genRevAudEntRe,genDevisEntRe } = req.body;
+                    const { name, email, password,raiSocEntRe,numTelEntRe,formJurEntRe, adresseEntRe, villeEntRe,codePostalEntRe,siteWebEntRe,montCapEntRe,tauxTVAEntRe,signatureEntRe,nomRepParEntRe,prenomRepParEntRe,genreRepParEntRe,fonctionRepParEntRe,numTelRepParEntRe,emailRepParEntRe,sirenIdentEntRe,siretIdentEntRe,identTVAIdentEntRe,rcsIdentEntRe,numAPEIdentEntRe,numAgrIdentEntRe,numDecIdentEntRe,raisocAssEntRe,adresseAssEntRe,numPolAssEntRe,dateEmiAssEntRe,dateFinAssEntRe,genRevAudEntRe,genDevisEntRe } = req.body;
                 
                     if (!name) {
                         return res.status(400).json({ message: 'Please provide a name' });
@@ -1021,6 +1017,109 @@ update_backoffice_status = async (req, res) => {
                         return res.status(500).json({ message: 'Internal server error' });
                     }
                 };
+
+
+                get_rges_entretes = async (req, res) => {
+                    console.log("✅ get -rges route executed");
+                
+                    const { entretes_id } = req.params;
+                    console.log("Received entretes_id:", entretes_id);
+                
+                    if (!entretes_id || !mongoose.Types.ObjectId.isValid(entretes_id)) {
+                        return res.status(400).json({ message: "Invalid entretes_id ID" });
+                    }
+                
+                    try {
+                        const entrete = await authModel.findById(entretes_id).populate("rges");
+                
+                        if (!entrete) {
+                            return res.status(404).json({ message: "entrete not found" });
+                        }
+                
+                        res.status(200).json({ status: "ok", rges: entrete.rges });
+                    } catch (error) {
+                        console.error("Get rges error:", error);
+                        res.status(500).json({ status: "error", message: error.message });
+                    }
+                };
+
+                upload_files_entretes = async (req, res) => {
+                        const { title, entretes_id } = req.body;
+                        const fileName = req.file.filename;
+                    
+                        if (!entretes_id || !mongoose.Types.ObjectId.isValid(entretes_id)) {
+                            return res.status(400).json({ message: "Invalid entrete ID" });
+                        }
+                    
+                        try {
+                            const pdf = await PdfDetails.create({ title, pdf: fileName });
+                    
+                            await authModel.findByIdAndUpdate(
+                                entretes_id,
+                                { $push: { pdfs: pdf._id } },
+                                { new: true }
+                            );
+                    
+                            res.send({ status: "ok", pdf });
+                        } catch (error) {
+                            res.status(500).json({ status: "error", message: error.message });
+                        }
+                    };
+                
+                    get_files_entretes = async (req, res) => {
+                        console.log("✅ get-files route executed");
+                    
+                        const { entretes_id } = req.params;
+                        console.log("Received entretes_id:", entretes_id);
+                    
+                        if (!entretes_id || !mongoose.Types.ObjectId.isValid(entretes_id)) {
+                            return res.status(400).json({ message: "Invalid entrete ID" });
+                        }
+                    
+                        try {
+                            const entrete = await authModel.findById(entretes_id).populate("pdfs");
+                    
+                            if (!entrete) {
+                                return res.status(404).json({ message: "entrete not found" });
+                            }
+                    
+                            res.status(200).json({ status: "ok", files: entrete.pdfs });
+                        } catch (error) {
+                            console.error("Get files error:", error);
+                            res.status(500).json({ status: "error", message: error.message });
+                        }
+                    };
+                
+                    delete_file_entretes = async (req, res) => {
+                        const { entretes_id, pdf_id } = req.params;
+                    
+                        if (!mongoose.Types.ObjectId.isValid(entretes_id) || !mongoose.Types.ObjectId.isValid(pdf_id)) {
+                            return res.status(400).json({ message: "Invalid entrete ID or PDF ID" });
+                        }
+                    
+                        try {
+                            const entrete = await authModel.findById(entretes_id);
+                            if (!entrete) {
+                                return res.status(404).json({ message: "entrete not found" });
+                            }
+                    
+                            if (!entrete.pdfs.includes(pdf_id)) {
+                                return res.status(404).json({ message: "PDF not found in auditeur" });
+                            }
+                    
+                            await PdfDetails.findByIdAndDelete(pdf_id);
+                    
+                            await authModel.findByIdAndUpdate(
+                                entretes_id,
+                                { $pull: { pdfs: pdf_id } },
+                                { new: true }
+                            );
+                    
+                            res.status(200).json({ message: "PDF deleted successfully" });
+                        } catch (error) {
+                            res.status(500).json({ message: "Internal server error", error: error.message });
+                        }
+                    };
 
                 //Mandataires
 
@@ -1200,6 +1299,108 @@ update_backoffice_status = async (req, res) => {
                             return res.status(500).json({ message: 'Internal server error' });
                         }
                     };
+
+                    get_rges_mandas = async (req, res) => {
+                        console.log("✅ get -rges route executed");
+                    
+                        const { mandas_id } = req.params;
+                        console.log("Received mandas_id:", mandas_id);
+                    
+                        if (!mandas_id || !mongoose.Types.ObjectId.isValid(mandas_id)) {
+                            return res.status(400).json({ message: "Invalid mandas_id ID" });
+                        }
+                    
+                        try {
+                            const manda = await authModel.findById(mandas_id).populate("rges");
+                    
+                            if (!manda) {
+                                return res.status(404).json({ manda: "manda not found" });
+                            }
+                    
+                            res.status(200).json({ status: "ok", rges: manda.rges });
+                        } catch (error) {
+                            console.error("Get rges error:", error);
+                            res.status(500).json({ status: "error", message: error.message });
+                        }
+                    };
+    
+                    upload_files_mandas = async (req, res) => {
+                            const { title, mandas_id } = req.body;
+                            const fileName = req.file.filename;
+                        
+                            if (!mandas_id || !mongoose.Types.ObjectId.isValid(mandas_id)) {
+                                return res.status(400).json({ message: "Invalid manda ID" });
+                            }
+                        
+                            try {
+                                const pdf = await PdfDetails.create({ title, pdf: fileName });
+                        
+                                await authModel.findByIdAndUpdate(
+                                    mandas_id,
+                                    { $push: { pdfs: pdf._id } },
+                                    { new: true }
+                                );
+                        
+                                res.send({ status: "ok", pdf });
+                            } catch (error) {
+                                res.status(500).json({ status: "error", message: error.message });
+                            }
+                        };
+                    
+                        get_files_mandas = async (req, res) => {
+                            console.log("✅ get-files route executed");
+                        
+                            const { mandas_id } = req.params;
+                            console.log("Received mandas_id:", mandas_id);
+                        
+                            if (!mandas_id || !mongoose.Types.ObjectId.isValid(mandas_id)) {
+                                return res.status(400).json({ message: "Invalid manda ID" });
+                            }
+                        
+                            try {
+                                const manda = await authModel.findById(mandas_id).populate("pdfs");
+                        
+                                if (!manda) {
+                                    return res.status(404).json({ message: "manda not found" });
+                                }
+                        
+                                res.status(200).json({ status: "ok", files: manda.pdfs });
+                            } catch (error) {
+                                console.error("Get files error:", error);
+                                res.status(500).json({ status: "error", message: error.message });
+                            }
+                        };
+                    
+                        delete_file_mandas = async (req, res) => {
+                            const { mandas_id, pdf_id } = req.params;
+                        
+                            if (!mongoose.Types.ObjectId.isValid(mandas_id) || !mongoose.Types.ObjectId.isValid(pdf_id)) {
+                                return res.status(400).json({ message: "Invalid manda ID or PDF ID" });
+                            }
+                        
+                            try {
+                                const manda = await authModel.findById(mandas_id);
+                                if (!manda) {
+                                    return res.status(404).json({ message: "manda not found" });
+                                }
+                        
+                                if (!manda.pdfs.includes(pdf_id)) {
+                                    return res.status(404).json({ message: "PDF not found in auditeur" });
+                                }
+                        
+                                await PdfDetails.findByIdAndDelete(pdf_id);
+                        
+                                await authModel.findByIdAndUpdate(
+                                    mandas_id,
+                                    { $pull: { pdfs: pdf_id } },
+                                    { new: true }
+                                );
+                        
+                                res.status(200).json({ message: "PDF deleted successfully" });
+                            } catch (error) {
+                                res.status(500).json({ message: "Internal server error", error: error.message });
+                            }
+                        };
 }
 
 module.exports = new authController()

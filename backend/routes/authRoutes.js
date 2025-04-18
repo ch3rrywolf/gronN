@@ -49,6 +49,10 @@ router.get('/api/entretes/:entretes_id', middleware.auth, authController.get_ent
 router.put('/api/entretes/update/:id',middleware.auth,middleware.role, authController.update_entrete)
 router.delete('/api/entretes/delete/:id',middleware.auth,middleware.role, authController.delete_entrete)
 router.put('/api/entretes/status-update/:entretes_id', middleware.auth, authController.update_entrete_status)
+router.get('/api/entretes/get-rges/:entretes_id', authController.get_rges_entretes);
+router.post('/api/entretes/upload-files', upload.single('file'), authController.upload_files_entretes)
+router.get('/api/entretes/get-files/:entretes_id', authController.get_files_entretes);
+router.delete('/api/entretes/:entretes_id/pdf/:pdf_id', authController.delete_file_entretes);
 
 router.post('/api/manda/add',middleware.auth,middleware.role, authController.add_manda)
 router.get('/api/mandas',middleware.auth,middleware.role, authController.get_mandas)
@@ -56,6 +60,10 @@ router.get('/api/mandas/:mandas_id', middleware.auth, authController.get_mandas_
 router.put('/api/mandas/update/:id',middleware.auth,middleware.role, authController.update_manda)
 router.delete('/api/mandas/delete/:id',middleware.auth,middleware.role, authController.delete_manda)
 router.put('/api/mandas/status-update/:mandas_id', middleware.auth, authController.update_manda_status)
+router.get('/api/mandas/get-rges/:mandas_id', authController.get_rges_mandas);
+router.post('/api/mandas/upload-files', upload.single('file'), authController.upload_files_mandas)
+router.get('/api/mandas/get-files/:mandas_id', authController.get_files_mandas);
+router.delete('/api/mandas/:mandas_id/pdf/:pdf_id', authController.delete_file_mandas);
 
 router.post('/api/auditeur/add',middleware.auth,middleware.role, authController.add_auditeur)
 router.get('/api/auditeurs',middleware.auth,middleware.role, authController.get_auditeurs)

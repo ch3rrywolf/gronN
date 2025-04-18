@@ -15,14 +15,12 @@ const AddEntrete = () => {
     raiSocEntRe: "",
                             numTelEntRe: "",
                             formJurEntRe: "",
-                            emailEntRe: "",
                             adresseEntRe: "",
                             villeEntRe: "",
                             codePostalEntRe: "",
                             siteWebEntRe: "",
                             montCapEntRe: "",
                             tauxTVAEntRe: "",
-                            signatureEntRe: "",
                             // represent par
                             nomRepParEntRe: "",
                             prenomRepParEntRe: "",
@@ -31,10 +29,6 @@ const AddEntrete = () => {
                             numTelRepParEntRe: "",
                             emailRepParEntRe: "",
                             // RGE
-                            qualifiRGEEntRe: "",
-                            numRGEEntRe: "",
-                            editLeRGEEntRe: "",
-                            valableJusRGEEntRe: "",
                             //Identifiants
                             sirenIdentEntRe: "",
                             siretIdentEntRe: "",
@@ -49,7 +43,6 @@ const AddEntrete = () => {
                             numPolAssEntRe: "",
                             dateEmiAssEntRe: "",
                             dateFinAssEntRe: "",
-                            documentsEntRe: "",
                             // Parametrage
                             genRevAudEntRe: "",
                             genDevisEntRe: "",
@@ -83,22 +76,9 @@ const AddEntrete = () => {
     }
   }
 
-  const lotDocuments = [
-    {
-      title: "RES 010",
-      section: 1
-    },
-    
-  ];
-
   
 
-  const [openSection, setOpenSection] = useState(null);
-
-  const toggleSection = (section) => {
-    setOpenSection(openSection === section ? null : section);
-  };
-
+ 
   return (
     <div className='bg-white rounded-md'>
       <div className='flex justify-between p-4'>
@@ -134,10 +114,7 @@ const AddEntrete = () => {
             </div>
 
             <div className='grid grid-cols-2 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='emailEntRe'>Email</label>
-              <input onChange={inputHandler} value={state.emailEntRe} required type='email' placeholder='emailEntRe' name='emailEntRe' id='emailEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
+            
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='adresseEntRe'>Adresse *</label>
               <input onChange={inputHandler} value={state.adresseEntRe} required type='text' placeholder='Adresse' name='adresseEntRe' id='adresseEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
@@ -174,13 +151,7 @@ const AddEntrete = () => {
             </div>
             </div>
 
-            <div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='signatureEntRe'>Signature</label>
-              <input onChange={inputHandler} value={state.signatureEntRe}  type='file' placeholder='signatureEntRe' name='signatureEntRe' id='signatureEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
             
-            </div>
 
             <div className='grid grid-cols-1 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
@@ -225,31 +196,7 @@ const AddEntrete = () => {
             
 
 
-            <div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>RGE</label>
-            </div>
-            
-            </div>
 
-            <div className='grid grid-cols-4 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='qualifiRGEEntRe'>Qualification</label>
-              <input onChange={inputHandler} value={state.qualifiRGEEntRe}  type='text' placeholder='qualifiRGEEntRe' name='qualifiRGEEntRe' id='qualifiRGEEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='numRGEEntRe'>Numéro RGE</label>
-              <input onChange={inputHandler} value={state.numRGEEntRe}  type='text' placeholder='numRGEEntRe' name='numRGEEntRe' id='numRGEEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
-            </div>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='editLeRGEEntRe'>Edité le</label>
-              <input onChange={inputHandler} value={state.editLeRGEEntRe}  type='date' placeholder='editLeRGEEntRe' name='editLeRGEEntRe' id='editLeRGEEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='valableJusRGEEntRe'>VALABLE JUSQU'AU</label>
-              <input onChange={inputHandler} value={state.valableJusRGEEntRe}  type='date' placeholder='valableJusRGEEntRe' name='valableJusRGEEntRe' id='valableJusRGEEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />         
-            </div>
-            </div>
 
 
             <div className='grid grid-cols-1 gap-x-8 mb-3'>
@@ -397,19 +344,7 @@ const AddEntrete = () => {
   </div>
 </div>
 
-            <div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md text-left font-medium bg-green-300 text-gray-600' htmlFor=''>DOCUMENTS</label>
-            </div>
-            
-            </div>
 
-            <div className='grid grid-cols-2 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='documentsEntRe'>Importer des fichiers</label>
-              <input onChange={inputHandler} value={state.documentsEntRe}  type='file' placeholder='documentsEntRe' name='documentsEntRe' id='documentsEntRe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
-            </div>
 
 
             <div className='grid grid-cols-1 gap-x-8 mb-3'>
