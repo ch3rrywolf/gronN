@@ -1098,7 +1098,13 @@ const FolderDetails = () => {
     
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
                 <div className='flex flex-col gap-y-2'>
-                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Confirmer Dossier'}</button>
+                <button
+      disabled={loader}
+      onClick={() => window.location.reload()}
+      className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'
+    >
+      {loader ? 'Loading...' : 'Confirmer Dossier'}
+    </button>
               </div>
               </div>
             

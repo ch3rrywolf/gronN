@@ -348,98 +348,6 @@ const FolderDetailsFinal = () => {
     </details>
 
 
-    <form onSubmit={"submitS2ep"} className='space-y-1'>
-
-    <div className="relative">
-  <div className="absolute top-2 right-2 z-50">
-    {state.isValidS2ep ? (
-      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
-    ) : (
-      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
-    )}
-  </div>
-</div>
-
-    <details  className='p-4 border rounded-md'>
-    
-    
-    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
-    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
-    2
-  </span>
-  Entreprise retenue 
-
-</summary>  
-
-<div className='grid grid-cols-1 gap-x-8 mb-3'>
-<div className='flex flex-col gap-y-2'>
-              
-              {s2epsR && s2epsR.length > 0 ? (
-               s2epsR.map((rep, index) => (
-                 <div key={index}>
-                   <span className="text-xs font-bold">entreprise retenue: </span><span>{rep.EntrepriseRetenue}</span>
-                   
-                 </div>
-               ))
-             ) : (
-               <p>Aucun Entreprise Retenue trouvé.</p>
-             )}
-            </div>
-          </div>
-    
-    </details>
-
-    </form>
-<form onSubmit={"submitS3ep"} className='space-y-1'>
-
-<div className="relative">
-  <div className="absolute top-2 right-2 z-50">
-    {state.isValidS3ep ? (
-      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
-    ) : (
-      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
-    )}
-  </div>
-</div>
-    <details  className='p-4 border rounded-md'>
-    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
-    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
-    3
-  </span>
-  Planification de(s) 1ère(s) Visite(s)  
-</summary>  
-<div className='grid grid-cols-3 gap-x-8 mb-3'>
-<div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='numbTotOLA'>l’entreprise retenue sélectionnée</label>
-             {s2epsR && s2epsR.length > 0 ? (
-               s2epsR.map((rep, index) => (
-                 <div key={index}>
-                   <span className="text-xs font-bold">entreprise retenue: </span><span>{rep.EntrepriseRetenue}</span>
-                   
-                 </div>
-               ))
-             ) : (
-               <p>Aucun Entreprise Retenue trouvé.</p>
-             )}
-            </div>
-
-           
-          </div>
-          {s3epsR && s3epsR.length > 0 ? (
-               s3epsR.map((rep3, index) => (
-                 <div key={index}>
-                   <span className="text-xs font-bold">technicien: </span><span>{rep3.inspecteur3} <span className="text-xs font-bold">Date visite: </span> {rep3.dateVisite}</span>
-                   
-                 </div>
-               ))
-             ) : (
-               <p>Aucun planification trouvé.</p>
-             )}
-
-        
-    
-    </details>
-    </form>
 
     <div className="relative">
   <div className="absolute top-2 right-2 z-50">
@@ -459,7 +367,7 @@ const FolderDetailsFinal = () => {
         
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
-    4
+    2
   </span>
   SIMULATION
 </summary> 
@@ -518,7 +426,7 @@ const FolderDetailsFinal = () => {
                  </div>
                ))
              ) : (
-               <p>Aucun planification trouvé.</p>
+               <p>Aucun Simulation trouvé.</p>
              )}
     
     </details>
@@ -610,6 +518,102 @@ const FolderDetailsFinal = () => {
     
     </details>
     </form>
+
+
+    <form onSubmit={"submitS2ep"} className='space-y-1'>
+
+    <div className="relative">
+  <div className="absolute top-2 right-2 z-50">
+    {state.isValidS2ep ? (
+      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
+    ) : (
+      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
+    )}
+  </div>
+</div>
+
+    <details  className='p-4 border rounded-md'>
+    
+    
+    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
+    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
+    3
+  </span>
+  Entreprise retenue 
+
+</summary>  
+
+<div className='grid grid-cols-1 gap-x-8 mb-3'>
+<div className='flex flex-col gap-y-2'>
+              
+              {s2epsR && s2epsR.length > 0 ? (
+               s2epsR.map((rep, index) => (
+                 <div key={index}>
+                   <span className="text-xs font-bold">entreprise retenue: </span><span>{rep.EntrepriseRetenue}</span>
+                   
+                 </div>
+               ))
+             ) : (
+               <p>Aucun Entreprise Retenue trouvé.</p>
+             )}
+            </div>
+          </div>
+    
+    </details>
+
+    </form>
+<form onSubmit={"submitS3ep"} className='space-y-1'>
+
+<div className="relative">
+  <div className="absolute top-2 right-2 z-50">
+    {state.isValidS3ep ? (
+      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
+    ) : (
+      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
+    )}
+  </div>
+</div>
+    <details  className='p-4 border rounded-md'>
+    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
+    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
+    4
+  </span>
+  Planification de(s) 1ère(s) Visite(s)  
+</summary>  
+<div className='grid grid-cols-3 gap-x-8 mb-3'>
+<div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='numbTotOLA'>l’entreprise retenue sélectionnée</label>
+             {s2epsR && s2epsR.length > 0 ? (
+               s2epsR.map((rep, index) => (
+                 <div key={index}>
+                   <span className="text-xs font-bold">entreprise retenue: </span><span>{rep.EntrepriseRetenue}</span>
+                   
+                 </div>
+               ))
+             ) : (
+               <p>Aucun Entreprise Retenue trouvé.</p>
+             )}
+            </div>
+
+           
+          </div>
+          {s3epsR && s3epsR.length > 0 ? (
+               s3epsR.map((rep3, index) => (
+                 <div key={index}>
+                   <span className="text-xs font-bold">technicien: </span><span>{rep3.inspecteur3} <span className="text-xs font-bold">Date visite: </span> {rep3.dateVisite}</span>
+                   
+                 </div>
+               ))
+             ) : (
+               <p>Aucun planification trouvé.</p>
+             )}
+
+        
+    
+    </details>
+    </form>
+
+    
 
     
 
@@ -789,7 +793,13 @@ const FolderDetailsFinal = () => {
     
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
                 <div className='flex flex-col gap-y-2'>
-                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Confirmer Dossier'}</button>
+                <button
+      disabled={loader}
+      onClick={() => window.location.reload()}
+      className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'
+    >
+      {loader ? 'Loading...' : 'Confirmer Dossier'}
+    </button>
               </div>
               </div>
             
