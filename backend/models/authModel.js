@@ -353,6 +353,12 @@ const authSchema = new Schema({
     dateFinAssMan: {
         type: String,
     },
+    rges: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Rge",
+        },
+      ],
 
 }, { timestamps: true })
 

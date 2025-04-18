@@ -3,6 +3,7 @@ import {  useParams } from "react-router-dom";
 import axios from "axios";
 import storeContext from "../../context/storeContext";
 import { base_url } from "../config/config";
+import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa6"
 
 
@@ -55,11 +56,15 @@ const AuditeurDetails = () => {
   const [dateEmiAssAud, setdateEmiAssAud] = useState("");
   const [dateFinAssAud, setdateFinAssAud] = useState("");
 
-  useEffect(() => {
-    getMandas();
-  }, [auditeurs_id]);
 
-  const getMandas = async () => {
+    const [rges, setRges] = useState([]); 
+    const [newqualification, setNewqualification] = useState("");
+    const [newnumeroRGE, setNewnumeroRGE] = useState("");
+    const [neweditLe, setNeweditLe] = useState("");
+    const [newvalableJA, setNewvalableJA] = useState("");
+
+
+  const getAuditeurs = async () => {
     try {
       const { data } = await axios.get(`${base_url}/api/auditeurs/${auditeurs_id}`, {
         headers: { Authorization: `Bearer ${store.token}` },
@@ -116,7 +121,64 @@ const AuditeurDetails = () => {
 
 
  
+  
+  
+  const getRges = async () => {
+    try {
+      const { data } = await axios.get(`${base_url}/api/auditeurs/get-rges/${auditeurs_id}`);
+      setRges(data.rges);
+    } catch (error) {
+      console.error("Error fetching rges:", error);
+    }
+  };
+  
+  const submitRge = async (e) => {
+    e.preventDefault();
+    if (!newqualification.trim()) {
+      toast.error("Le quali ne peut pas être vide !");
+      return;
+    }
 
+    if (!newnumeroRGE.trim()) {
+      toast.error("Le num  ne peut pas être vide !");
+      return;
+    }
+
+    if (!neweditLe.trim()) {
+      toast.error("Le date ne peut pas être vide !");
+      return;
+    }
+
+    if (!newvalableJA.trim()) {
+      toast.error("Le date ne peut pas être vide !");
+      return;
+    }
+  
+  
+    try {
+      const response = await axios.post(
+        `${base_url}/api/auditeurs/rge/${auditeurs_id}`,
+        { qualification: newqualification, numeroRGE: newnumeroRGE, editLe:neweditLe, valableJA: newvalableJA},
+        { headers: { Authorization: `Bearer ${store.token}` } }
+      );
+      toast.success("rge ajouté !");
+      setNewqualification(""); 
+      setNewnumeroRGE(""); 
+      setNeweditLe(""); 
+      setNewvalableJA(""); 
+      setRges([...rges, response.data.data]);
+    } catch (error) {
+      console.error("Error submitting rge:", error);
+      toast.error("Erreur lors de l'ajout du rge.");
+    }
+  };
+
+
+  
+  useEffect(() => {
+    getAuditeurs();
+    getRges();
+  }, [auditeurs_id]);
 
   return (
     <div className='flex justify-center items-start min-h-screen bg-gray-100 py-10'>
@@ -126,7 +188,7 @@ const AuditeurDetails = () => {
         <h2 className='text-xl text-[#1960a9] hover:text-[#9fc327] font-bold'>Détails de l'Auditeur</h2>
       </div>
   
-      <div className="grid grid-cols-3 gap-4 p-4">
+      <div className="grid grid-cols-4 gap-4 p-4">
   
         {/* INFO SECTION */}
         <div className="w-full flex flex-col gap-2 bg-white text-slate-700">
@@ -174,6 +236,96 @@ const AuditeurDetails = () => {
         <div className="w-full flex flex-col items-center bg-white text-slate-700 border border-gray-100 rounded-md shadow-sm p-4">
           <h3 className="text-lg font-semibold text-[#1960a9] mb-2">Liste des fichiers</h3>
           <p></p>
+        </div>
+
+        {/* RGE SECTION */}
+        <div className="w-full flex flex-col items-center bg-white text-slate-700 border border-gray-100 rounded-md shadow-sm p-4">
+          <h3 className="text-lg font-semibold text-[#1960a9] mb-2">RGE</h3>
+          
+          
+          <div className="bg-white shadow-md rounded-lg p-6 mt-5">
+  {/* Display Comments */}
+  <div className="space-y-4">
+    {rges.map((rge, index) => (
+      <div key={index} className="p-4 border rounded-lg shadow-sm bg-gray-50">
+        {/* User Info */}
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center space-x-3">
+            {/* Profile Icon */}
+            {/* <div className="w-10 h-10 bg-blue-500 text-white font-bold flex items-center justify-center rounded-full">
+              {rge.name.charAt(0).toUpperCase()}
+            </div> */}
+            <div>
+              
+             
+              <span className="text-xs text-gray-500">
+                {new Date(rge.createdAt).toLocaleString()}
+              </span>
+            </div>
+          </div>
+        </div>
+        {/* Comment Text */}
+        <p className="text-gray-700 bg-white p-3 rounded-md shadow-inner">
+        <p className="font-semibold text-gray-800">{rge.qualification}</p>
+        <p className="font-semibold text-gray-800">{rge.numeroRGE}</p>
+              <p className="font-semibold text-gray-800">{rge.editLe}</p>
+              <p className="font-semibold text-gray-800">{rge.valableJA}</p>
+        </p>
+      </div>
+    ))}
+  </div>
+
+  {/* Comment Input Section */}
+  <form onSubmit={submitRge} className="mt-6">
+  <details className='p-4 border rounded-md'>
+  <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>Ajouter RGE</summary>
+
+
+    <div className="flex flex-col gap-3">
+      <label className="text-md font-medium text-gray-700">Ajouter un RGE</label>
+      
+
+<select
+                required
+                name="genre"
+                id="genre"
+                value={newqualification}
+                onChange={(e) => setNewqualification(e.target.value)}
+                className="px-3 py-2 rounded-md border border-gray-300 focus:border-green-500 h-10"
+              >
+                <option value="">-- Sélectionner Qualification --</option>
+                <option value="QUALIBAT">QUALIBAT</option>
+                <option value="QualiBOIS">QualiBOIS</option>
+                <option value="QualiSOL">QualiSOL</option>
+                <option value="QualiPV">QualiPV</option>
+                <option value="QualiPAC">QualiPAC</option>
+                <option value="Ventilation +">Ventilation +</option>
+                <option value="OPQIBI">OPQIBI</option>
+                <option value="AFNOR">AFNOR</option>
+              </select>
+    </div>
+    <div className="flex flex-col gap-3">
+      <label className="text-md font-medium text-gray-700">Numéro RGE</label>
+       <input onChange={(e) => setNewnumeroRGE(e.target.value)} value={newnumeroRGE} required type='text' placeholder='Numéro RGE' name='newnumeroRGE' id='newnumeroRGE' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+    </div>
+    <div className="flex flex-col gap-3">
+      <label className="text-md font-medium text-gray-700">Edité Le</label>
+      <input onChange={(e) => setNeweditLe(e.target.value)} value={neweditLe} required type='date' placeholder='Edité Le' name='neweditLe' id='neweditLe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+    </div>
+    <div className="flex flex-col gap-3">
+      <label className="text-md font-medium text-gray-700">VALABLE JUSQU'AU</label>   
+      <input onChange={(e) => setNewvalableJA(e.target.value)} value={newvalableJA} required type='date' placeholder='VALABLE JUSQU"AU' name='newvalableJA' id='newvalableJA' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+    </div>
+    <button
+      type="submit"
+      className="w-full mt-4 py-3 rounded-lg text-white font-medium bg-gradient-to-r from-blue-600 to-green-500 hover:opacity-90 transition"
+    >
+      Ajouter RGE
+    </button>
+</details>
+
+  </form>
+</div>
         </div>
   
       </div>

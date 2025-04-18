@@ -733,6 +733,30 @@ update_backoffice_status = async (req, res) => {
                     }
                 };
 
+                 get_rges = async (req, res) => {
+                                console.log("✅ get -rges route executed");
+                            
+                                const { auditeurs_id } = req.params;
+                                console.log("Received dossiers_id:", auditeurs_id);
+                            
+                                if (!auditeurs_id || !mongoose.Types.ObjectId.isValid(auditeurs_id)) {
+                                    return res.status(400).json({ message: "Invalid auditeurs_id ID" });
+                                }
+                            
+                                try {
+                                    const auditeur = await authModel.findById(auditeurs_id).populate("rges");
+                            
+                                    if (!auditeur) {
+                                        return res.status(404).json({ message: "auditeur not found" });
+                                    }
+                            
+                                    res.status(200).json({ status: "ok", rges: auditeur.rges });
+                                } catch (error) {
+                                    console.error("Get rges error:", error);
+                                    res.status(500).json({ status: "error", message: error.message });
+                                }
+                            };
+
 
             // Entreprise retenue
             add_entrete = async (req, res) => {

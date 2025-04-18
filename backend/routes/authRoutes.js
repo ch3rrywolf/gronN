@@ -48,6 +48,6 @@ router.get('/api/auditeurs/:auditeurs_id', middleware.auth, authController.get_a
 router.put('/api/auditeurs/update/:id',middleware.auth,middleware.role, authController.update_auditeur)
 router.delete('/api/auditeurs/delete/:id',middleware.auth,middleware.role, authController.delete_auditeur)
 router.put('/api/auditeurs/status-update/:auditeurs_id', middleware.auth, authController.update_auditeur_status)
-
+router.get('/api/auditeurs/get-rges/:auditeurs_id', authController.get_rges);
 
 module.exports = router
