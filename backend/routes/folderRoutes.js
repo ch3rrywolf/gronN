@@ -28,6 +28,10 @@ router.post('/api/folders/upload-files', upload.single('file'), folderController
 router.get('/api/folders/get-files/:folders_id', folderController.get_files);
 // router.get('/api/folders/get-comments/:folders_id', folderController.get_comments);
 router.get('/api/folders/get-s2eps/:folders_id', folderController.get_s2eps);
+router.get('/api/folders/get-s3eps/:folders_id', folderController.get_s3eps);
+router.get('/api/folders/get-s4eps/:folders_id', folderController.get_s4eps);
+router.get('/api/folders/get-s5eps/:folders_id', folderController.get_s5eps);
+router.get('/api/folders/get-s6eps/:folders_id', folderController.get_s6eps);
 router.delete('/api/folders/:folders_id/pdf/:pdf_id', folderController.delete_file);
 router.put('/api/folders/status-update/:folders_id', middleware.auth, folderController.update_folders_status)
 // router.put('/api/folders/update-ass-rep/:folders_id',  folderController.upload_representants)

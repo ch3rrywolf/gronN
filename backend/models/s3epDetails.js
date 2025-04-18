@@ -3,7 +3,6 @@ const { model, Schema } = require('mongoose');
 const S3epeDetailsSchema = new Schema({
     inspecteur3: {
         type: String,
-        required: true
     },
     dateVisite: {
         type: String,

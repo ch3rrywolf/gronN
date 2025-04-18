@@ -141,10 +141,10 @@ const FolderDetails = () => {
     //   return;
     // }
 
-    if (!newinspecteur3.trim()) {
-      toast.error("Technicien ne peut pas être vide !");
-      return;
-    }
+    // if (!newinspecteur3.trim()) {
+    //   toast.error("Technicien ne peut pas être vide !");
+    //   return;
+    // }
 
     if (!newdateVisite.trim()) {
       toast.error("Date Visite ne peut pas être vide !");
@@ -856,7 +856,7 @@ const FolderDetails = () => {
 
             <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='newinspecteur3'>sélectionner le technicien</label>
-              <select onChange={(e) => setNewinspecteur3(e.target.value)} value={newinspecteur3 || ""} required name='newinspecteur3' id='newinspecteur3' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
+              <select onChange={(e) => setNewinspecteur3(e.target.value)} value={newinspecteur3 || ""} name='newinspecteur3' id='newinspecteur3' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
                 <option value=''>Sélectionner technicien</option>
                 {inspecteurs.map(b => (
                   <option key={b._id} value={b.prenomIns}>{b.nomIns} {b.prenomIns}</option>
@@ -945,7 +945,7 @@ const FolderDetails = () => {
 
   <div className='grid grid-cols-1 gap-x-8 mb-3'>
           <div className='flex flex-col gap-y-2'>
-  <label className='text-xs font-medium text-gray-600' htmlFor='newrepensConfirm'>Est-ce que vous avez terminé la visite ?*</label>
+  <label className='text-xs font-medium text-gray-600' htmlFor='newrepensConfirm'> Confirmation*</label>
   <select
     onChange={(e) => setNewrepensConfirm(e.target.value)}
     value={newrepensConfirm || ""}
@@ -954,21 +954,22 @@ const FolderDetails = () => {
     className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
   >
     <option value=''></option>
-    <option value='Oui'>OUI</option>
-    <option value='Non'>NON</option>
+    <option value='Oui'>Oui</option>
+    <option value='Non'>Non</option>
   </select>
 </div>      
           </div>
 
   
 </details>
-</form>
-
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
                 <div className='flex flex-col gap-y-2'>
                   <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Confirmer Documents Et ENREGISTRER'}</button>
               </div>
               </div>
+</form>
+
+
     
     </details>
    
@@ -1024,11 +1025,11 @@ const FolderDetails = () => {
     
     <div className="relative">
   <div className="absolute top-2 right-2 z-50">
-    {state.isValidS7ep ? (
+    {/* {state.isValidS7ep ? (
       <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
     ) : (
       <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
-    )}
+    )} */}
   </div>
 </div>
     <details className='p-4 border rounded-md'>
@@ -1052,18 +1053,15 @@ const FolderDetails = () => {
   </form>
  </div>
 
-  {/* <ul className='mt-4 space-y-2'>
-    {filesListr.map(file => (
-      <li key={file._id} className='flex justify-between items-center border p-2 rounded'>
-        <a  href={`${base_url}/filesr/${file.pdfrap}`}  target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
-          {file.titler}
-        </a>
-        <button onClick={() => deleteFilerap(folders_id, file._id)} className='text-red-600 hover:text-red-800'>
-          <Trash2 size={18} />
-        </button>
-      </li>
-    ))}
-  </ul> */}
+   <ul className='mt-4 space-y-2'>
+      {filesList.map(file => (
+        <li key={file._id} className='flex justify-between items-center border p-2 rounded'>
+          <a  href={`${base_url}/files/${file.pdf}`}  target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
+            {file.title}
+          </a>
+        </li>
+      ))}
+    </ul>
 </details>
 
 

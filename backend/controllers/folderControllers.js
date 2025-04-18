@@ -468,6 +468,103 @@ class folderController {
                                             res.status(500).json({ message: "Internal server error", error: error.message });
                                         }
                                     };
+
+                                    get_s3eps = async (req, res) => {
+                                        console.log("✅ get-s3eps route executed");
+                                    
+                                        const { folders_id } = req.params;
+                                        console.log("Received folders_id:", folders_id);
+                                    
+                                        if (!folders_id || !mongoose.Types.ObjectId.isValid(folders_id)) {
+                                            return res.status(400).json({ message: "Invalid dossier ID" });
+                                        }
+                                    
+                                        try {
+                                            const folder = await folderModel.findById(folders_id).populate("s3eps");
+                                    
+                                            if (!folder) {
+                                                return res.status(404).json({ message: "folder not found" });
+                                            }
+                                    
+                                            res.status(200).json({ status: "ok", s3eps: folder.s3eps });
+                                        } catch (error) {
+                                            console.error("Get s3eps error:", error);
+                                            res.status(500).json({ status: "error", message: error.message });
+                                        }
+                                    };
+
+                                    get_s4eps = async (req, res) => {
+                                        console.log("✅ get-s4eps route executed");
+                                    
+                                        const { folders_id } = req.params;
+                                        console.log("Received folders_id:", folders_id);
+                                    
+                                        if (!folders_id || !mongoose.Types.ObjectId.isValid(folders_id)) {
+                                            return res.status(400).json({ message: "Invalid dossier ID" });
+                                        }
+                                    
+                                        try {
+                                            const folder = await folderModel.findById(folders_id).populate("s4eps");
+                                    
+                                            if (!folder) {
+                                                return res.status(404).json({ message: "folder not found" });
+                                            }
+                                    
+                                            res.status(200).json({ status: "ok", s4eps: folder.s4eps });
+                                        } catch (error) {
+                                            console.error("Get s4eps error:", error);
+                                            res.status(500).json({ status: "error", message: error.message });
+                                        }
+                                    };
+
+                                    get_s5eps = async (req, res) => {
+                                        console.log("✅ get-s5eps route executed");
+                                    
+                                        const { folders_id } = req.params;
+                                        console.log("Received folders_id:", folders_id);
+                                    
+                                        if (!folders_id || !mongoose.Types.ObjectId.isValid(folders_id)) {
+                                            return res.status(400).json({ message: "Invalid dossier ID" });
+                                        }
+                                    
+                                        try {
+                                            const folder = await folderModel.findById(folders_id).populate("s5eps");
+                                    
+                                            if (!folder) {
+                                                return res.status(404).json({ message: "folder not found" });
+                                            }
+                                    
+                                            res.status(200).json({ status: "ok", s5eps: folder.s5eps });
+                                        } catch (error) {
+                                            console.error("Get s5eps error:", error);
+                                            res.status(500).json({ status: "error", message: error.message });
+                                        }
+                                    };
+
+                                    get_s6eps = async (req, res) => {
+                                        console.log("✅ get-s6eps route executed");
+                                    
+                                        const { folders_id } = req.params;
+                                        console.log("Received folders_id:", folders_id);
+                                    
+                                        if (!folders_id || !mongoose.Types.ObjectId.isValid(folders_id)) {
+                                            return res.status(400).json({ message: "Invalid dossier ID" });
+                                        }
+                                    
+                                        try {
+                                            const folder = await folderModel.findById(folders_id).populate("s6eps");
+                                    
+                                            if (!folder) {
+                                                return res.status(404).json({ message: "folder not found" });
+                                            }
+                                    
+                                            res.status(200).json({ status: "ok", s6eps: folder.s6eps });
+                                        } catch (error) {
+                                            console.error("Get s6eps error:", error);
+                                            res.status(500).json({ status: "error", message: error.message });
+                                        }
+                                    };
+
 }
 
 module.exports = new folderController()

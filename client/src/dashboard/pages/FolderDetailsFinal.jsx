@@ -19,28 +19,11 @@ const FolderDetailsFinal = () => {
   const [gestes, setGestes] = useState([]);
   const navigate = useNavigate()
 
-   const [title, setTitle] = useState("");
-    const [file, setFile] = useState(null);
+   
     const [filesList, setFilesList] = useState([]);
 
-     const [news2epi, setNews2epi] = useState("");
-     const [news3epi, setNews3epi] = useState("");
-     const [news4epi, setNews4epi] = useState("");
-     const [news5epi, setNews5epi] = useState("");
-     const [news6epi, setNews6epi] = useState("");
+    
 
-     const [newEntrepriseRetenue, setNewEntrepriseRetenue] = useState("");
-
-     const [newinspecteur3, setNewinspecteur3] = useState("");
-     const [newdateVisite, setNewdateVisite] = useState("");
-
-     const [newshab, setNewshab] = useState("");
-     const [newnbrEtage, setNewnbrEtage] = useState("");
-     const [newqusMSI, setNewqusMSI] = useState("");
-     const [newsurfaceIso, setNewsurfaceIso] = useState("");
-     const [newclassEnerInit, setNewclassEnerInit] = useState("");
-     const [newsautsClassPre, setNewsautsClassPre] = useState("");
-     const [newcategori, setNewcategori] = useState("");
 
      const [newrepensConfirm, setNewrepensConfirm] = useState("");
 
@@ -48,6 +31,10 @@ const FolderDetailsFinal = () => {
 
     //  const [s2eps, setS2eps] = useState([]); 
      const [s2epsR, setS2epsR] = useState([]); 
+     const [s3epsR, setS3epsR] = useState([]); 
+     const [s4epsR, setS4epsR] = useState([]); 
+     const [s5epsR, setS5epsR] = useState([]); 
+     const [s6epsR, setS6epsR] = useState([]); 
  
 
 
@@ -55,12 +42,6 @@ const FolderDetailsFinal = () => {
     gestesep4: [],
     offreMar: "Offre MAR",
     numFolderAnah: '',
-    isValidS2ep: false,
-    isValidS3ep: false,
-    isValidS4ep: false,
-    isValidS5ep: false,
-    isValidpdfs: false,
-    isValidS6ep: false,
     data: null,
   });
 
@@ -205,8 +186,7 @@ const FolderDetailsFinal = () => {
         const isValid5 = Array.isArray(s5eps) && s5eps.length > 0;
         const isValidpdfs = Array.isArray(pdfs) && pdfs.length > 0;
         const isValid6 = Array.isArray(s6eps) && s6eps.length > 0;
-        // const isValid3 = Array.isArray(s3eps) && s3eps.length > 0 && s3eps.some(item => item !== '');
-        // const isValid3 =  Array.isArray(s2epsR) && s2epsR.length > 0 && s2epsR.some(item => item?.EntrepriseRetenue?.trim() !== '')
+        
         console.log("isValidS2ep:", isValid);
         console.log("isValidS3ep:", isValid3);
         console.log("isValidS4ep:", isValid4);
@@ -244,16 +224,42 @@ const FolderDetailsFinal = () => {
     }
   };
 
-  const deleteS2epsEntreprise = async (folders_id, s2eps_id) => {
+  const getS3epsR = async () => {
     try {
-      await axios.delete(`${base_url}/api/folders/${folders_id}/s2eps-entreprise/${s2eps_id}`);
-      toast.success("steps entreprise supprimé avec succès !");
-      getS2epsR();
+      const { data } = await axios.get(`${base_url}/api/folders/get-s3eps/${folders_id}`);
+      setS3epsR(data.s3eps);
     } catch (error) {
-      console.error("Error deleting s2eps entreprise:", error);
-      toast.error("Échec de la suppression du fichier.");
+      console.error("Error fetching S3epsR:", error);
     }
   };
+
+  const getS4epsR = async () => {
+    try {
+      const { data } = await axios.get(`${base_url}/api/folders/get-s4eps/${folders_id}`);
+      setS4epsR(data.s4eps);
+    } catch (error) {
+      console.error("Error fetching S4epsR:", error);
+    }
+  };
+
+  const getS5epsR = async () => {
+    try {
+      const { data } = await axios.get(`${base_url}/api/folders/get-s5eps/${folders_id}`);
+      setS5epsR(data.s5eps);
+    } catch (error) {
+      console.error("Error fetching S5epsR:", error);
+    }
+  };
+
+  const getS6epsR = async () => {
+    try {
+      const { data } = await axios.get(`${base_url}/api/folders/get-s6eps/${folders_id}`);
+      setS6epsR(data.s6eps);
+    } catch (error) {
+      console.error("Error fetching S6epsR:", error);
+    }
+  };
+  
 
   const handleToggleGeste = (id) => {
     setState(prev => {
@@ -286,6 +292,10 @@ const FolderDetailsFinal = () => {
     getFiles();
     
     getS2epsR();
+    getS3epsR();
+    getS4epsR();
+    getS5epsR();
+    getS6epsR();
   }, [folders_id]);
 
   return (
@@ -405,13 +415,7 @@ const FolderDetailsFinal = () => {
                s2epsR.map((rep, index) => (
                  <div key={index}>
                    <span className="text-xs font-bold">entreprise retenue: </span><span>{rep.EntrepriseRetenue}</span>
-                   <button
-                         onClick={() => deleteS2epsEntreprise(folders_id, rep._id)}
-                         className="mt-2 text-red-500 hover:text-red-700"
-                       >
-                         <Trash2 className="w-5 h-5" />
-                         
-                       </button>
+                   
                  </div>
                ))
              ) : (
@@ -419,27 +423,20 @@ const FolderDetailsFinal = () => {
              )}
             </div>
 
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='newinspecteur3'>sélectionner le technicien</label>
-              <select onChange={(e) => setNewinspecteur3(e.target.value)} value={newinspecteur3 || ""} required name='newinspecteur3' id='newinspecteur3' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
-                <option value=''>Sélectionner technicien</option>
-                {inspecteurs.map(b => (
-                  <option key={b._id} value={b.prenomIns}>{b.nomIns} {b.prenomIns}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='newdateVisite'>date et l’heure de la visite</label>
-              <input onChange={(e) => setNewdateVisite(e.target.value)} value={newdateVisite || ""} type='datetime-local'  name='newdateVisite' id='newdateVisite' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
-            </div>
+           
           </div>
+          {s3epsR && s3epsR.length > 0 ? (
+               s3epsR.map((rep3, index) => (
+                 <div key={index}>
+                   <span className="text-xs font-bold">technicien: </span><span>{rep3.inspecteur3} <span className="text-xs font-bold">Date visite: </span> {rep3.dateVisite}</span>
+                   
+                 </div>
+               ))
+             ) : (
+               <p>Aucun planification trouvé.</p>
+             )}
 
-          <div className='grid grid-cols-1 gap-x-8 mb-3'>
-                <div className='flex flex-col gap-y-2'>
-                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'ENREGISTRER'}</button>
-              </div>
-              </div>
+        
     
     </details>
     </form>
@@ -470,101 +467,59 @@ const FolderDetailsFinal = () => {
       <details className='p-4 border rounded-md'>
       <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>INFORMATIONS GENERALES</summary>
     
-      <div className='grid grid-cols-2 gap-x-8 mb-3'>
+      
+
+          {s4epsR && s4epsR.length > 0 ? (
+               s4epsR.map((rep4, index) => (
+                 <div key={index}>
+                   <div className='grid grid-cols-2 gap-x-8 mb-3'>
 <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='newshab'>SHAB</label>
-              <input onChange={(e) => setNewshab(e.target.value)} value={newshab || ""} type='text'   name='newshab' id='newshab' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <span className="text-xs font-bold"> </span><span>{rep4.shab}</span>
             </div>
 
             <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='newnbrEtage'>Nombre d'étage</label>
-              <input onChange={(e) => setNewnbrEtage(e.target.value)} value={newnbrEtage || ""} type='text'   name='newnbrEtage' id='newnbrEtage' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <span className="text-xs font-bold"> </span><span>{rep4.nbrEtage}</span>
             </div>
           </div>
 
           <div className='grid grid-cols-2 gap-x-8 mb-3'>
           <div className='flex flex-col gap-y-2'>
   <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Est-ce que vous avez les mesures des surfaces à isoler ?*</label>
-  <select
-    onChange={(e) => setNewqusMSI(e.target.value)}
-    value={newqusMSI || ""}
-    name='newqusMSI'
-    id='newqusMSI'
-    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
-  >
-    <option value=''></option>
-    <option value='Oui'>OUI</option>
-    <option value='Non'>NON</option>
-  </select>
+  <span className="text-xs font-bold"> </span><span>{rep4.qusMSI}</span>
 </div>
 
             <div className='flex flex-col gap-y-2'>
               <label className='text-xs font-medium text-gray-600' htmlFor='newsurfaceIso'>Surface à isoler:*</label>
-              <input onChange={(e) => setNewsurfaceIso(e.target.value)} value={newsurfaceIso || ""} type='text'   name='newsurfaceIso' id='newsurfaceIso' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+              <span className="text-xs font-bold"> </span><span>{rep4.surfaceIso}</span>
             </div>
           </div>
 
           <div className='grid grid-cols-2 gap-x-8 mb-3'>
           <div className='flex flex-col gap-y-2'>
   <label className='text-xs font-medium text-gray-600' htmlFor='newclassEnerInit'>Classe énergétique initial *</label>
-  <select
-    onChange={(e) => setNewclassEnerInit(e.target.value)}
-    value={newclassEnerInit || ""}
-    name='newclassEnerInit'
-    id='newclassEnerInit'
-    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
-  >
-    <option value=''></option>
-    <option value='Aucun'>Aucun</option>
-    <option value='G'>G</option>
-    <option value='F'>F</option>
-    <option value='E'>E</option>
-    <option value='D'>D</option>
-    <option value='C'>C</option>
-    <option value='B'>B</option>
-    <option value='A'>A</option>
-  </select>
+  <span className="text-xs font-bold"> </span><span>{rep4.classEnerInit}</span>
 </div>
 
 <div className='flex flex-col gap-y-2'>
   <label className='text-xs font-medium text-gray-600' htmlFor='newsautsClassPre'>Sauts de classe prévu *</label>
-  <select
-    onChange={(e) => setNewsautsClassPre(e.target.value)}
-    value={newsautsClassPre || ""}
-    name='newsautsClassPre'
-    id='newsautsClassPre'
-    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
-  >
-    <option value=''></option>
-    <option value='4 ou plus'>4 ou plus</option>
-    <option value='4'>4</option>
-    <option value='3'>3</option>
-    <option value='2'>2</option>
-    <option value='1'>1</option>
-  </select>
+  <span className="text-xs font-bold"> </span><span>{rep4.sautsClassPre}</span>
 </div>
           </div>
 
           <div className='grid grid-cols-2 gap-x-8 mb-3'>
           <div className='flex flex-col gap-y-2'>
   <label className='text-xs font-medium text-gray-600' htmlFor='newcategori'>Catégorie *</label>
-  <select
-    onChange={(e) => setNewcategori(e.target.value)}
-    value={newcategori || ""}
-    name='newcategori'
-    id='newcategori'
-    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
-  >
-    <option value=''></option>
-    <option value='Aucun'>Aucun</option>
-    <option value='Classique'>Classique</option>
-    <option value='Intérmédiaires'>Intérmédiaires</option>
-    <option value='Modestes'>Modestes</option>
-    <option value='Trés Modeste'>Trés Modeste</option>
-  </select>
+  <span className="text-xs font-bold"> </span><span>{rep4.categori}</span>
 </div>
 
           </div>
+                 </div>
+               ))
+             ) : (
+               <p>Aucun planification trouvé.</p>
+             )}
     
     </details>
 
@@ -651,11 +606,7 @@ const FolderDetailsFinal = () => {
 </div>
 </details>
     
-    <div className='grid grid-cols-1 gap-x-8 mb-3'>
-                <div className='flex flex-col gap-y-2'>
-                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'ENREGISTRER'}</button>
-              </div>
-              </div>
+ 
     
     </details>
     </form>
@@ -701,32 +652,32 @@ const FolderDetailsFinal = () => {
 <details className='p-4 border rounded-md'>
   <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>Confirmation visite. </summary>
 
-  <div className='grid grid-cols-1 gap-x-8 mb-3'>
+  
+  <label className='text-xs font-medium text-gray-600' htmlFor='newrepensConfirm'></label>
+          {s5epsR && s5epsR.length > 0 ? (
+               s5epsR.map((rep5, index) => (
+                 <div key={index}>
+                   
+                   <div className='grid grid-cols-2 gap-x-8 mb-3'>
           <div className='flex flex-col gap-y-2'>
-  <label className='text-xs font-medium text-gray-600' htmlFor='newrepensConfirm'>Est-ce que vous avez terminé la visite ?*</label>
-  <select
-    onChange={(e) => setNewrepensConfirm(e.target.value)}
-    value={newrepensConfirm || ""}
-    name='newrepensConfirm'
-    id='newrepensConfirm'
-    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
-  >
-    <option value=''></option>
-    <option value='Oui'>OUI</option>
-    <option value='Non'>NON</option>
-  </select>
+          <span className="text-xs font-bold">nom confirmateur: </span> {rep5.name} 
+ 
 </div>      
+<div className='flex flex-col gap-y-2'>
+          <span className="text-xs font-bold">Réponse: </span>{rep5.repensConfirm}
+ 
+</div> 
           </div>
+                 </div>
+               ))
+             ) : (
+               <p>Aucun Confirmation trouvé.</p>
+             )}
 
   
 </details>
 </form>
 
-<div className='grid grid-cols-1 gap-x-8 mb-3'>
-                <div className='flex flex-col gap-y-2'>
-                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Confirmer Documents Et ENREGISTRER'}</button>
-              </div>
-              </div>
     
     </details>
    
@@ -755,25 +706,29 @@ const FolderDetailsFinal = () => {
   <div className='grid grid-cols-1 gap-x-8 mb-3'>
           <div className='flex flex-col gap-y-2'>
   <label className='text-xs font-medium text-gray-600' htmlFor='newrepenVerif'> Vérifier tous les documents en relation avec le dossier*</label>
-  <select
-    onChange={(e) => setNewrepenVerif(e.target.value)}
-    value={newrepenVerif || ""}
-    name='newrepenVerif'
-    id='newrepenVerif'
-    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
-  >
-    <option value=''></option>
-    <option value='Vérifié'>Vérifié</option>
-    <option value='Non Vérifié'>NON Vérifié</option>
-  </select>
+  
+  {s6epsR && s6epsR.length > 0 ? (
+               s6epsR.map((rep6, index) => (
+                 <div key={index}>
+                   
+                   <div className='grid grid-cols-2 gap-x-8 mb-3'>
+          <div className='flex flex-col gap-y-2'>
+          <span className="text-xs font-bold">Vérifié par: </span> {rep6.name} 
+ 
+</div>      
+<div className='flex flex-col gap-y-2'>
+          <span className="text-xs font-bold">Réponse: </span>{rep6.repenVerif}
+ 
+</div> 
+          </div>
+                 </div>
+               ))
+             ) : (
+               <p>Aucun Vérification trouvé.</p>
+             )}
 </div>      
           </div>
 
-<div className='grid grid-cols-1 gap-x-8 mb-3'>
-                <div className='flex flex-col gap-y-2'>
-                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'Confirmer visite Et ENREGISTRER'}</button>
-              </div>
-              </div>
     
     </details>
     </form>
@@ -782,11 +737,11 @@ const FolderDetailsFinal = () => {
     
     <div className="relative">
   <div className="absolute top-2 right-2 z-50">
-    {state.isValidS7ep ? (
+    {/* {state.isValidS7ep ? (
       <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
     ) : (
       <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
-    )}
+    )} */}
   </div>
 </div>
     <details className='p-4 border rounded-md'>
@@ -800,18 +755,15 @@ const FolderDetailsFinal = () => {
 </summary> 
 
 
-{/* <ul className='mt-4 space-y-2'>
-    {filesListr.map(file => (
+<ul className='mt-4 space-y-2'>
+    {filesList.map(file => (
       <li key={file._id} className='flex justify-between items-center border p-2 rounded'>
-        <a  href={`${base_url}/filesr/${file.pdfrap}`}  target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
-          {file.titler}
+        <a  href={`${base_url}/files/${file.pdf}`}  target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
+          {file.title}
         </a>
-        <button onClick={() => deleteFilerap(folders_id, file._id)} className='text-red-600 hover:text-red-800'>
-          <Trash2 size={18} />
-        </button>
       </li>
     ))}
-  </ul>  */}
+  </ul>
 </details>
 
 
