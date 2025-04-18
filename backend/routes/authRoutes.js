@@ -3,6 +3,21 @@ const authController = require('../controllers/authControllers')
 const middleware = require('../middlewares/middleware')
 const { default: mongoose } = require('mongoose');
 
+
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './files');
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now();
+        cb(null, uniqueSuffix + file.originalname);
+    }
+})
+
+const upload = multer({ storage: storage})
+
 router.post('/api/login', authController.login)
 router.post('/api/profile', authController.getProfile)
 
@@ -49,5 +64,7 @@ router.put('/api/auditeurs/update/:id',middleware.auth,middleware.role, authCont
 router.delete('/api/auditeurs/delete/:id',middleware.auth,middleware.role, authController.delete_auditeur)
 router.put('/api/auditeurs/status-update/:auditeurs_id', middleware.auth, authController.update_auditeur_status)
 router.get('/api/auditeurs/get-rges/:auditeurs_id', authController.get_rges);
-
+router.post('/api/auditeurs/upload-files', upload.single('file'), authController.upload_files)
+router.get('/api/auditeurs/get-files/:auditeurs_id', authController.get_files);
+router.delete('/api/auditeurs/:auditeurs_id/pdf/:pdf_id', authController.delete_file);
 module.exports = router

@@ -5,6 +5,7 @@ import storeContext from "../../context/storeContext";
 import { base_url } from "../config/config";
 import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa6"
+import { Trash2 } from "lucide-react";
 
 
 const AuditeurDetails = () => {
@@ -20,14 +21,11 @@ const AuditeurDetails = () => {
   const [raiSocAud, setraiSocAud] = useState("");
   const [numTelAud, setnumTelAud] = useState("");
   const [formJurAud, setformJurAud] = useState("");
-  // const [emailAud, setemailAud] = useState("");
   const [adresseAud, setadresseAud] = useState("");
   const [villeAud, setvilleAud] = useState("");
   const [codePostalAud, setcodePostalAud] = useState("");
   const [siteWebAud, setsiteWebAud] = useState("");
   const [montCapAud, setmontCapAud] = useState("");
-  // const [tauxTVAAud, settauxTVAAud] = useState("");
-  // const [signatureAud, setsignatureAud] = useState("");
 
   const [nomRepParAud, setnomRepParAud] = useState("");
   const [prenomRepParAud, setprenomRepParAud] = useState("");
@@ -35,12 +33,6 @@ const AuditeurDetails = () => {
   const [fonctionRepParAud, setfonctionRepParAud] = useState("");
   const [numTelRepParAud, setnumTelRepParAud] = useState("");
   const [emailRepParAud, setemailRepParAud] = useState("");
-
-  // const [qualifiRGEAud, setqualifiRGEAud] = useState("");
-  // const [numRGEAud, setnumRGEAud] = useState("");
-  // const [editLeRGEAud, seteditLeRGEAud] = useState("");
-  // const [valableJusRGEAud, setvalableJusRGEAud] = useState("");
-
 
   const [sirenIdentAud, setsirenIdentAud] = useState("");
   const [siretIdentAud, setsiretIdentAud] = useState("");
@@ -62,6 +54,10 @@ const AuditeurDetails = () => {
     const [newnumeroRGE, setNewnumeroRGE] = useState("");
     const [neweditLe, setNeweditLe] = useState("");
     const [newvalableJA, setNewvalableJA] = useState("");
+
+     const [title, setTitle] = useState("");
+      const [file, setFile] = useState(null);
+      const [filesList, setFilesList] = useState([]);
 
 
   const getAuditeurs = async () => {
@@ -175,9 +171,59 @@ const AuditeurDetails = () => {
 
 
   
+  const getFiles = async () => {
+    try {
+      const { data } = await axios.get(`${base_url}/api/auditeurs/get-files/${auditeurs_id}`);
+      setFilesList(data.files);
+    } catch (error) {
+      console.error("Error fetching files:", error);
+    }
+  };
+
+  const submitFile = async (e) => {
+    e.preventDefault();
+    if (!file || !title) {
+      toast.error("Veuillez remplir tous les champs.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("file", file);
+    formData.append("auditeurs_id", auditeurs_id);
+
+    try {
+      await axios.post(`${base_url}/api/auditeurs/upload-files`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      toast.success("Fichier importé avec succès !");
+      setTitle("");
+      setFile(null);
+      getFiles();
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      toast.error("Échec de l'importation du fichier.");
+    }
+  };
+
+  const deleteFile = async (auditeurs_id, pdf_id) => {
+    try {
+      await axios.delete(`${base_url}/api/auditeurs/${auditeurs_id}/pdf/${pdf_id}`);
+      toast.success("Fichier supprimé avec succès !");
+      getFiles();
+    } catch (error) {
+      console.error("Error deleting file:", error);
+      toast.error("Échec de la suppression du fichier.");
+    }
+};
+
+
+
+  
   useEffect(() => {
     getAuditeurs();
     getRges();
+    getFiles();
   }, [auditeurs_id]);
 
   return (
@@ -235,8 +281,68 @@ const AuditeurDetails = () => {
         {/* FILE LIST SECTION */}
         <div className="w-full flex flex-col items-center bg-white text-slate-700 border border-gray-100 rounded-md shadow-sm p-4">
           <h3 className="text-lg font-semibold text-[#1960a9] mb-2">Liste des fichiers</h3>
-          <p></p>
-        </div>
+          
+          <div className="bg-white p-4 mt-5">
+                  <form onSubmit={submitFile}>
+                    <div className="grid grid-cols-2 gap-x-8 mb-3">
+                      <div className="flex flex-col gap-y-2">
+                        <label className="text-md font-medium text-gray-600">Titre*</label>
+                        <input
+                          onChange={(e) => setTitle(e.target.value)}
+                          value={title}
+                          required
+                          type="text"
+                          placeholder="Titre du fichier"
+                          className="px-3 py-2 rounded-md border border-gray-300 focus:border-green-500"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-y-2">
+                        <label className="text-md font-medium text-gray-600">Importer PDF*</label>
+                        <input
+                          onChange={(e) => setFile(e.target.files[0])}
+                          required
+                          type="file"
+                          accept="application/pdf"
+                          className="px-3 py-2 rounded-md border border-gray-300 focus:border-green-500"
+                        />
+                      </div>
+                    </div>
+                    <button type="submit" className="px-3 py-2 bg-[#1960a9] rounded text-white hover:bg-[#9fc327]">
+                      Importer PDF
+                    </button>
+                  </form>
+                </div>
+          
+                <div className="bg-white p-4 mt-5">
+            <h3 className="text-lg font-bold">Rapports téléchargés</h3>
+            {filesList.length > 0 ? (
+              <div className="mt-3 flex gap-4 overflow-x-auto">
+                {filesList.map((file, index) => (
+                  <div key={index} className="py-2 border p-2 rounded shadow-md min-w-[150px] flex flex-col items-center">
+                    <a 
+                      href={`${base_url}/files/${file.pdf}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-blue-500 block text-center mb-2"
+                    >
+                      {file.title}
+                    </a>
+                    <button
+                      onClick={() => deleteFile(auditeurs_id, file._id)}
+                      className="mt-2 text-red-500 hover:text-red-700"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                      
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>Aucun fichier téléchargé.</p>
+            )}
+          </div>
+          
+                  </div>
 
         {/* RGE SECTION */}
         <div className="w-full flex flex-col items-center bg-white text-slate-700 border border-gray-100 rounded-md shadow-sm p-4">

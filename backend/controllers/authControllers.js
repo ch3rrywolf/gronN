@@ -1,4 +1,5 @@
 const authModel = require('../models/authModel')
+const PdfDetails =  require("../models/pdfDetails")
 const { default: mongoose } = require('mongoose');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -737,7 +738,7 @@ update_backoffice_status = async (req, res) => {
                                 console.log("✅ get -rges route executed");
                             
                                 const { auditeurs_id } = req.params;
-                                console.log("Received dossiers_id:", auditeurs_id);
+                                console.log("Received auditeurs_id:", auditeurs_id);
                             
                                 if (!auditeurs_id || !mongoose.Types.ObjectId.isValid(auditeurs_id)) {
                                     return res.status(400).json({ message: "Invalid auditeurs_id ID" });
@@ -756,6 +757,84 @@ update_backoffice_status = async (req, res) => {
                                     res.status(500).json({ status: "error", message: error.message });
                                 }
                             };
+
+                            upload_files = async (req, res) => {
+                                    const { title, auditeurs_id } = req.body;
+                                    const fileName = req.file.filename;
+                                
+                                    if (!auditeurs_id || !mongoose.Types.ObjectId.isValid(auditeurs_id)) {
+                                        return res.status(400).json({ message: "Invalid auditeur ID" });
+                                    }
+                                
+                                    try {
+                                        const pdf = await PdfDetails.create({ title, pdf: fileName });
+                                
+                                        await authModel.findByIdAndUpdate(
+                                            auditeurs_id,
+                                            { $push: { pdfs: pdf._id } },
+                                            { new: true }
+                                        );
+                                
+                                        res.send({ status: "ok", pdf });
+                                    } catch (error) {
+                                        res.status(500).json({ status: "error", message: error.message });
+                                    }
+                                };
+                            
+                                get_files = async (req, res) => {
+                                    console.log("✅ get-files route executed");
+                                
+                                    const { auditeurs_id } = req.params;
+                                    console.log("Received auditeurs_id:", auditeurs_id);
+                                
+                                    if (!auditeurs_id || !mongoose.Types.ObjectId.isValid(auditeurs_id)) {
+                                        return res.status(400).json({ message: "Invalid auditeur ID" });
+                                    }
+                                
+                                    try {
+                                        const auditeur = await authModel.findById(auditeurs_id).populate("pdfs");
+                                
+                                        if (!auditeur) {
+                                            return res.status(404).json({ message: "auditeur not found" });
+                                        }
+                                
+                                        res.status(200).json({ status: "ok", files: auditeur.pdfs });
+                                    } catch (error) {
+                                        console.error("Get files error:", error);
+                                        res.status(500).json({ status: "error", message: error.message });
+                                    }
+                                };
+                            
+                                delete_file = async (req, res) => {
+                                    const { auditeurs_id, pdf_id } = req.params;
+                                
+                                    if (!mongoose.Types.ObjectId.isValid(auditeurs_id) || !mongoose.Types.ObjectId.isValid(pdf_id)) {
+                                        return res.status(400).json({ message: "Invalid auditeur ID or PDF ID" });
+                                    }
+                                
+                                    try {
+                                        const auditeur = await authModel.findById(auditeurs_id);
+                                        if (!auditeur) {
+                                            return res.status(404).json({ message: "auditeur not found" });
+                                        }
+                                
+                                        if (!auditeur.pdfs.includes(pdf_id)) {
+                                            return res.status(404).json({ message: "PDF not found in auditeur" });
+                                        }
+                                
+                                        await PdfDetails.findByIdAndDelete(pdf_id);
+                                
+                                        await authModel.findByIdAndUpdate(
+                                            auditeurs_id,
+                                            { $pull: { pdfs: pdf_id } },
+                                            { new: true }
+                                        );
+                                
+                                        res.status(200).json({ message: "PDF deleted successfully" });
+                                    } catch (error) {
+                                        res.status(500).json({ message: "Internal server error", error: error.message });
+                                    }
+                                };
 
 
             // Entreprise retenue

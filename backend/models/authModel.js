@@ -359,6 +359,12 @@ const authSchema = new Schema({
           ref: "Rge",
         },
       ],
+    pdfs: [
+          {
+            type: Schema.Types.ObjectId, 
+            ref: 'PdfDetails',
+          },
+        ],
 
 }, { timestamps: true })
 
