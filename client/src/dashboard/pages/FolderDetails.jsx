@@ -552,6 +552,15 @@ const FolderDetails = () => {
 
 
 
+    <div className="relative">
+  <div className="absolute top-2 right-2 z-50">
+    {state.isValidS4ep ? (
+      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
+    ) : (
+      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
+    )}
+  </div>
+</div>
 
 
     
@@ -879,15 +888,6 @@ const FolderDetails = () => {
     </details>
     </form>
 
-    <div className="relative">
-  <div className="absolute top-2 right-2 z-50">
-    {state.isValidS4ep ? (
-      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
-    ) : (
-      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
-    )}
-  </div>
-</div>
 
 
     
@@ -1063,6 +1063,226 @@ const FolderDetails = () => {
       ))}
     </ul>
 </details>
+
+
+
+<div className="relative">
+  <div className="absolute top-2 right-2 z-50">
+    {state.isValidS4ep ? (
+      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
+    ) : (
+      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
+    )}
+  </div>
+</div>
+
+
+    
+<form onSubmit={submitS4ep} className='space-y-1'>
+    <details className='p-4 border rounded-md'>
+
+
+    
+        
+    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
+    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
+    8
+  </span>
+  sélection de(s) artisan(s) et génération de(s) devis 
+</summary> 
+
+      <details className='p-4 border rounded-md'>
+      <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>INFORMATIONS GENERALES</summary>
+    
+      <div className='grid grid-cols-2 gap-x-8 mb-3'>
+<div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='newshab'>SHAB</label>
+              <input onChange={(e) => setNewshab(e.target.value)} value={newshab || ""} type='text'   name='newshab' id='newshab' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+            </div>
+
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='newnbrEtage'>Nombre d'étage</label>
+              <input onChange={(e) => setNewnbrEtage(e.target.value)} value={newnbrEtage || ""} type='text'   name='newnbrEtage' id='newnbrEtage' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+            </div>
+          </div>
+
+          <div className='grid grid-cols-2 gap-x-8 mb-3'>
+          <div className='flex flex-col gap-y-2'>
+  <label className='text-xs font-medium text-gray-600' htmlFor='classeRevenue'>Est-ce que vous avez les mesures des surfaces à isoler ?*</label>
+  <select
+    onChange={(e) => setNewqusMSI(e.target.value)}
+    value={newqusMSI || ""}
+    name='newqusMSI'
+    id='newqusMSI'
+    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
+  >
+    <option value=''></option>
+    <option value='Oui'>OUI</option>
+    <option value='Non'>NON</option>
+  </select>
+</div>
+
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='newsurfaceIso'>Surface à isoler:*</label>
+              <input onChange={(e) => setNewsurfaceIso(e.target.value)} value={newsurfaceIso || ""} type='text'   name='newsurfaceIso' id='newsurfaceIso' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+            </div>
+          </div>
+
+          <div className='grid grid-cols-2 gap-x-8 mb-3'>
+          <div className='flex flex-col gap-y-2'>
+  <label className='text-xs font-medium text-gray-600' htmlFor='newclassEnerInit'>Classe énergétique initial *</label>
+  <select
+    onChange={(e) => setNewclassEnerInit(e.target.value)}
+    value={newclassEnerInit || ""}
+    name='newclassEnerInit'
+    id='newclassEnerInit'
+    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
+  >
+    <option value=''></option>
+    <option value='Aucun'>Aucun</option>
+    <option value='G'>G</option>
+    <option value='F'>F</option>
+    <option value='E'>E</option>
+    <option value='D'>D</option>
+    <option value='C'>C</option>
+    <option value='B'>B</option>
+    <option value='A'>A</option>
+  </select>
+</div>
+
+<div className='flex flex-col gap-y-2'>
+  <label className='text-xs font-medium text-gray-600' htmlFor='newsautsClassPre'>Sauts de classe prévu *</label>
+  <select
+    onChange={(e) => setNewsautsClassPre(e.target.value)}
+    value={newsautsClassPre || ""}
+    name='newsautsClassPre'
+    id='newsautsClassPre'
+    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
+  >
+    <option value=''></option>
+    <option value='4 ou plus'>4 ou plus</option>
+    <option value='4'>4</option>
+    <option value='3'>3</option>
+    <option value='2'>2</option>
+    <option value='1'>1</option>
+  </select>
+</div>
+          </div>
+
+          <div className='grid grid-cols-2 gap-x-8 mb-3'>
+          <div className='flex flex-col gap-y-2'>
+  <label className='text-xs font-medium text-gray-600' htmlFor='newcategori'>Catégorie *</label>
+  <select
+    onChange={(e) => setNewcategori(e.target.value)}
+    value={newcategori || ""}
+    name='newcategori'
+    id='newcategori'
+    className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
+  >
+    <option value=''></option>
+    <option value='Aucun'>Aucun</option>
+    <option value='Classique'>Classique</option>
+    <option value='Intérmédiaires'>Intérmédiaires</option>
+    <option value='Modestes'>Modestes</option>
+    <option value='Trés Modeste'>Trés Modeste</option>
+  </select>
+</div>
+
+          </div>
+    
+    </details>
+
+    <details className="p-4 border rounded-md">
+  <summary className="text-lg font-bold text-[#1960a9] cursor-pointer mb-4 select-none">GESTES</summary>
+
+  <div className="flex flex-wrap gap-4 mt-4">
+    {gestes.map(g => {
+      const isSelected = state.gestesep4.includes(g._id);
+
+      return (
+        <div
+          key={g._id}
+          onClick={() => handleToggleGeste(g._id)}
+          className={`w-40 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition duration-200
+            border shadow-sm cursor-pointer hover:shadow-md
+            ${isSelected ? 'bg-green-400 text-white border-green-300' : 'bg-gray-50 text-gray-700 border-gray-300'}
+          `}
+        >
+          {g.reference}
+        </div>
+      );
+    })}
+  </div>
+
+  {state.gestesep4.length > 0 && (
+  <div className="w-full mt-6 text-center text-sm text-gray-700">
+    <span className="font-medium text-gray-500"></span>
+    {gestes
+      .filter(g => state.gestesep4.includes(g._id))
+      .map(g => g.reference)
+      .join(' + ')}
+  </div>
+)}
+
+
+<div className="overflow-x-auto mt-8">
+  <table className="w-full border-collapse text-center text-sm">
+    <thead>
+      <tr className="bg-[#f1f5f9] text-gray-700">
+        {['Libelle', 'QTE', 'PRIX', 'UNITE', 'MONTANT', 'TVA', 'TTC'].map((title, i) => (
+          <th key={i} className="border px-4 py-2 font-semibold">
+            {title}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {gestes
+        .filter(g => state.gestesep4.includes(g._id))
+        .map((geste, idx) => (
+          <tr key={geste._id}>
+            <td className="border px-2 py-1">{geste.reference}</td>
+            <td className="border px-2 py-1">1</td> {/* Default QTE */}
+            <td className="border px-2 py-1">{geste.montantEtimatif}</td> {/* PRIX */}
+            <td className="border px-2 py-1">U</td> {/* UNITE */}
+            <td className="border px-2 py-1">{geste.montantEtimatif}</td> {/* MONTANT */}
+            <td className="border px-2 py-1">5.50%</td> {/* TVA */}
+            <td className="border px-2 py-1">0.00</td> {/* TTC */}
+          </tr>
+        ))}
+    </tbody>
+  </table>
+</div>
+
+<div className="flex justify-between items-center mt-8 px-4">
+  {/* Left: Logo */}
+  <div className="w-40">
+    <img src="/src/assets/globgLogo.png" alt="Logo" className="w-full h-auto object-contain" />
+  </div>
+
+  {/* Right: Total */}
+  <div className="text-right text-sm text-gray-800">
+    <div className="font-semibold">Montant Total TTC :</div>
+    <div className="text-lg font-bold text-green-600">
+      {
+        gestes
+          .filter(g => state.gestesep4.includes(g._id))
+          .reduce((total, g) => total + Number(g.montantEtimatif || 0), 0)
+          .toFixed(2)
+      } €
+    </div>
+  </div>
+</div>
+</details>
+    
+    <div className='grid grid-cols-1 gap-x-8 mb-3'>
+                <div className='flex flex-col gap-y-2'>
+                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'ENREGISTRER'}</button>
+              </div>
+              </div>
+    
+    </details>
+    </form>
 
 
 
