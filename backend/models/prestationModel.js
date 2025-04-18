@@ -10,10 +10,6 @@ const prestationSchema = new Schema({
         type: String,
         default: "Non valide"
     },
-    societe: {
-        type: String,
-        required: true
-    },
     designation: {
         type: String,
         required: true

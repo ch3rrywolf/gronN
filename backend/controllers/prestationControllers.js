@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 class PrestationController {
     async addi(req, res) {
-            const { societe, designation,unite,Geste } = req.body;
+            const { designation,unite,Geste } = req.body;
         
             if (!designation) {
                 return res.status(400).json({ message: 'Please provide designation' });
@@ -16,7 +16,6 @@ class PrestationController {
                 }
         
                 const new_prestation = await prestationModel.create({
-                    societe: societe.trim(),
                     designation: designation.trim(),
                     unite: unite.trim(),
                     Geste: Geste.trim(),
@@ -58,7 +57,7 @@ class PrestationController {
 
     async updati(req, res) {
         const { id } = req.params;
-        const { societe,  designation,unite,Geste } = req.body;
+        const {  designation,unite,Geste } = req.body;
     
         // if (!nom) {
         //     return res.status(400).json({ message: 'Please provide a nom' });
@@ -68,9 +67,7 @@ class PrestationController {
             let updateFields = {}
                     // let updateFields = { nom: nom.trim() };
         
-                    if (societe) {
-                        updateFields.societe = societe.trim();
-                    }
+                   
 
                     if (designation) {
                         updateFields.designation = designation.trim();

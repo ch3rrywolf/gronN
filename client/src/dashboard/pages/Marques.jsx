@@ -137,8 +137,8 @@ const update_status_validate = async (validationMar, marques_id) => {
             <tr>
               <th className='px-7 py-3'>Etat</th>
               <th className='px-7 py-3'>Validation Mar</th>
-              <th className='px-7 py-3'>Société</th>
               <th className='px-7 py-3'>Intitulé</th>
+              <th className='px-7 py-3'>Déscription</th>
               <th className='px-7 py-3'>Actions</th>
             </tr>
           </thead>

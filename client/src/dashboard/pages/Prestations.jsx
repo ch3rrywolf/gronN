@@ -10,7 +10,6 @@ const Prestations = () => {
   const { store } = useContext(storeContext);
   const [prestations, setPrestations] = useState([]);
   const [editPrestation, setEditPrestation] = useState(null);
-  const [newsociete, setNewsociete] = useState('');
   const [newdesignation, setNewdesignation] = useState('');
   const [newunite, setNewunite] = useState('');
   const [newGeste, setNewGeste] = useState('');
@@ -74,7 +73,6 @@ const update_status_validate = async (validationMar, prestations_id) => {
   const handleUpdate = async (id) => {
     try {
       const updateData = {
-        societe: newsociete.trim(),
         designation: newdesignation.trim(),
         unite: newunite.trim(),
         Geste: newGeste.trim(),
@@ -93,13 +91,12 @@ const update_status_validate = async (validationMar, prestations_id) => {
       setPrestations((prev) =>
         prev.map((op) =>
           op._id === id
-            ? { ...op, societe: newsociete, designation: newdesignation, unite: newunite, Geste: newGeste }
+            ? { ...op, designation: newdesignation, unite: newunite, Geste: newGeste }
             : op
         )
       );
 
       setEditPrestation(null);
-      setNewsociete('');
       setNewdesignation('');
       setNewunite('');
       setNewGeste('');
@@ -142,7 +139,6 @@ const update_status_validate = async (validationMar, prestations_id) => {
             <tr>
               <th className='px-7 py-3'>Etat</th>
               <th className='px-7 py-3'>Validation Mar</th>
-              <th className='px-7 py-3'>Société</th>
               <th className='px-7 py-3'>Désignation</th>
               <th className='px-7 py-3'>Geste</th>
               <th className='px-7 py-3'>Actions</th>
@@ -181,14 +177,6 @@ const update_status_validate = async (validationMar, prestations_id) => {
                     <td className='px-6 py-4'>
                       <input
                         type='text'
-                        value={newsociete}
-                        onChange={(e) => setNewsociete(e.target.value)}
-                        className='border px-2 py-1 w-full'
-                      />
-                    </td>
-                    <td className='px-6 py-4'>
-                      <input
-                        type='text'
                         value={newdesignation}
                         onChange={(e) => setNewdesignation(e.target.value)}
                         className='border px-2 py-1 w-full'
@@ -218,7 +206,6 @@ const update_status_validate = async (validationMar, prestations_id) => {
                   <>
                     
                     
-                    <td className='px-6 py-4'>{r.societe}</td>
                     <td className='px-6 py-4'>{r.designation}</td>
                     <td className='px-6 py-4'>{r.unite}</td>
                     <td className='px-6 py-4'>{r.Geste}</td>
@@ -247,7 +234,6 @@ const update_status_validate = async (validationMar, prestations_id) => {
                       <button
                         onClick={() => {
                             setEditPrestation(r._id);
-                            setNewsociete(r.societe);
                             setNewdesignation(r.designation);
                             setNewunite(r.unite);
                             setNewGeste(r.Geste);

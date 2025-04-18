@@ -9,7 +9,6 @@ const AddPrestation = () => {
   const navigate = useNavigate()
   const {store} = useContext(storeContext)
   const [state, setState] = useState({
-    societe:"",
     designation:"",
     unite:"",
     Geste:""
@@ -57,10 +56,7 @@ const gesteOptions = ["MENUISERIE FENETRE 2V", "MENUISERIE FENETRE 1V", "VMC sim
       <div className='p-4'>
         <form onSubmit={submit}>
           <div className='grid grid-cols-2 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='societe'>societe *</label>
-              <input onChange={inputHandler} value={state.societe} required type='text' placeholder='societe' name='societe' id='societe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
+          
             <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='designation'>Désignation *</label>
               <input onChange={inputHandler} value={state.designation} required type='text' placeholder='designation' name='designation' id='designation' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
