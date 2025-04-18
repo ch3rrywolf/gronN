@@ -3,20 +3,20 @@ const mongoose = require('mongoose');
 
 class MarqueController {
     async addi(req, res) {
-            const { societe, intitule } = req.body;
+            const { description, intitule } = req.body;
         
-            if (!societe) {
-                return res.status(400).json({ message: 'Please provide societe' });
+            if (!intitule) {
+                return res.status(400).json({ message: 'Please provide intitule' });
             }
         
             try {
-                const marque = await marqueModel.findOne({ societe: societe.trim() });
+                const marque = await marqueModel.findOne({ intitule: intitule.trim() });
                 if (marque) {
                     return res.status(409).json({ message: 'marque already exists' });
                 }
         
                 const new_marque = await marqueModel.create({
-                    societe: societe.trim(),
+                    description: description.trim(),
                     intitule: intitule.trim(),
                 });
         
@@ -56,7 +56,7 @@ class MarqueController {
 
     async updati(req, res) {
         const { id } = req.params;
-        const { societe, intitule } = req.body;
+        const { description, intitule } = req.body;
     
         // if (!nom) {
         //     return res.status(400).json({ message: 'Please provide a nom' });
@@ -66,8 +66,8 @@ class MarqueController {
             let updateFields = {}
                     // let updateFields = { nom: nom.trim() };
         
-                    if (societe) {
-                        updateFields.societe = societe.trim();
+                    if (description) {
+                        updateFields.societe = description.trim();
                     }
 
                     if (intitule) {

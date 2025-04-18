@@ -10,9 +10,8 @@ const marqueSchema = new Schema({
         type: String,
         default: "Non valide"
     },
-    societe: {
+    description: {
         type: String,
-        required: true
     },
     intitule: {
         type: String,

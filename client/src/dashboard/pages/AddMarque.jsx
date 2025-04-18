@@ -9,7 +9,7 @@ const AddMarque = () => {
   const navigate = useNavigate()
   const {store} = useContext(storeContext)
   const [state, setState] = useState({
-    societe:"",
+    description:"",
     intitule:""
   })
 
@@ -51,12 +51,12 @@ const AddMarque = () => {
         <form onSubmit={submit}>
           <div className='grid grid-cols-2 gap-x-8 mb-3'>
             <div className='flex flex-col gap-y-2'>
-              <label className='text-md font-medium text-gray-600' htmlFor='societe'>societe *</label>
-              <input onChange={inputHandler} value={state.societe} required type='text' placeholder='societe' name='societe' id='societe' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
-            </div>
-            <div className='flex flex-col gap-y-2'>
               <label className='text-md font-medium text-gray-600' htmlFor='intitule'>intitule *</label>
               <input onChange={inputHandler} value={state.intitule} required type='text' placeholder='intitule' name='intitule' id='intitule' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
+            </div>
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-md font-medium text-gray-600' htmlFor='intitule'>intitule </label>
+              <input onChange={inputHandler} value={state.description}  type='text' placeholder='description' name='description' id='description' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10' />
             </div>
           </div>
     

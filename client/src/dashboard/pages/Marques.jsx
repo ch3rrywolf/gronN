@@ -10,7 +10,7 @@ const Marques = () => {
   const { store } = useContext(storeContext);
   const [marques, setMarques] = useState([]);
   const [editMarque, setEditMarque] = useState(null);
-  const [newsociete, setNewsociete] = useState('');
+  const [newdescription, setNewdescription] = useState('');
   const [newintitule, setNewintitule] = useState('');
   
    const [res, set_res] = useState({ id: '', loader: false }); 
@@ -72,8 +72,9 @@ const update_status_validate = async (validationMar, marques_id) => {
   const handleUpdate = async (id) => {
     try {
       const updateData = {
-        societe: newsociete.trim(),
         intitule: newintitule.trim(),
+        description: newdescription.trim(),
+        
       };
 
       
@@ -89,13 +90,13 @@ const update_status_validate = async (validationMar, marques_id) => {
       setMarques((prev) =>
         prev.map((op) =>
           op._id === id
-            ? { ...op, societe: newsociete, intitule: newintitule }
+            ? { ...op, description: newdescription, intitule: newintitule }
             : op
         )
       );
 
       setEditMarque(null);
-      setNewsociete('');
+      setNewdescription('');
       setNewintitule('');
       alert(data.message);
     } catch (error) {
@@ -171,19 +172,21 @@ const update_status_validate = async (validationMar, marques_id) => {
 
                 {editMarque === r._id ? (
                   <>
-                    <td className='px-6 py-4'>
-                      <input
-                        type='text'
-                        value={newsociete}
-                        onChange={(e) => setNewsociete(e.target.value)}
-                        className='border px-2 py-1 w-full'
-                      />
-                    </td>
+                    
                     <td className='px-6 py-4'>
                       <input
                         type='text'
                         value={newintitule}
                         onChange={(e) => setNewintitule(e.target.value)}
+                        className='border px-2 py-1 w-full'
+                      />
+                    </td>
+
+                    <td className='px-6 py-4'>
+                      <input
+                        type='text'
+                        value={newdescription}
+                        onChange={(e) => setNewdescription(e.target.value)}
                         className='border px-2 py-1 w-full'
                       />
                     </td>
@@ -194,8 +197,9 @@ const update_status_validate = async (validationMar, marques_id) => {
                   <>
                     
                     
-                    <td className='px-6 py-4'>{r.societe}</td>
+                    
                     <td className='px-6 py-4'>{r.intitule}</td>
+                    <td className='px-6 py-4'>{r.description}</td>
                   </>
                 )}
 
@@ -221,8 +225,9 @@ const update_status_validate = async (validationMar, marques_id) => {
                       <button
                         onClick={() => {
                             setEditMarque(r._id);
-                            setNewsociete(r.societe);
                             setNewintitule(r.intitule);
+                            setNewdescription(r.description);
+                            
                         }}
                         className='p-[6px] bg-[#1960a9] rounded hover:shadow-lg hover:shadow-yellow-500/50'
                       >
