@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 class PrestationmarController {
     async addi(req, res) {
-            const { societe, designation,unite, prixdevente,Geste } = req.body;
+            const { designation,unite, prixdevente,Geste } = req.body;
         
             if (!designation) {
                 return res.status(400).json({ message: 'Please provide designation' });
@@ -16,7 +16,6 @@ class PrestationmarController {
                 }
         
                 const new_prestationmar = await prestationmarModel.create({
-                    societe: societe.trim(),
                     designation: designation.trim(),
                     prixdevente: prixdevente.trim(),
                     unite: unite.trim(),
@@ -59,7 +58,7 @@ class PrestationmarController {
 
     async updati(req, res) {
         const { id } = req.params;
-        const { societe,  designation,prixdevente, unite,Geste } = req.body;
+        const {  designation,prixdevente, unite,Geste } = req.body;
     
         // if (!nom) {
         //     return res.status(400).json({ message: 'Please provide a nom' });
@@ -69,9 +68,6 @@ class PrestationmarController {
             let updateFields = {}
                     // let updateFields = { nom: nom.trim() };
         
-                    if (societe) {
-                        updateFields.societe = societe.trim();
-                    }
 
                     if (designation) {
                         updateFields.designation = designation.trim();

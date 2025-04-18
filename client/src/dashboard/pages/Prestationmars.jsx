@@ -10,7 +10,6 @@ const Prestationmars = () => {
   const { store } = useContext(storeContext);
   const [prestationmars, setPrestationmars] = useState([]);
   const [editPrestationmar, setEditPrestationmar] = useState(null);
-  const [newsociete, setNewsociete] = useState('');
   const [newdesignation, setNewdesignation] = useState('');
   const [newunite, setNewunite] = useState('');
   const [newprixdevente, setNewprixdevente] = useState('');
@@ -75,7 +74,6 @@ const update_status_validate = async (validationMar, prestationmars_id) => {
   const handleUpdate = async (id) => {
     try {
       const updateData = {
-        societe: newsociete.trim(),
         designation: newdesignation.trim(),
         unite: newunite.trim(),
         prixdevente: newprixdevente.trim(),
@@ -95,13 +93,12 @@ const update_status_validate = async (validationMar, prestationmars_id) => {
       setPrestationmars((prev) =>
         prev.map((op) =>
           op._id === id
-            ? { ...op, societe: newsociete, designation: newdesignation, unite: newunite, prixdevente: newprixdevente,  Geste: newGeste }
+            ? { ...op, designation: newdesignation, unite: newunite, prixdevente: newprixdevente,  Geste: newGeste }
             : op
         )
       );
 
       setEditPrestationmar(null);
-      setNewsociete('');
       setNewdesignation('');
       setNewunite('');
       setNewprixdevente('');
@@ -145,7 +142,6 @@ const update_status_validate = async (validationMar, prestationmars_id) => {
             <tr>
               <th className='px-7 py-3'>Etat</th>
               <th className='px-7 py-3'>Validation Mar</th>
-              <th className='px-7 py-3'>Société</th>
               <th className='px-7 py-3'>Désignation</th>
               <th className='px-7 py-3'>Unité</th>
               <th className='px-7 py-3'>Prix de vente HT</th>
@@ -186,14 +182,6 @@ const update_status_validate = async (validationMar, prestationmars_id) => {
                     <td className='px-6 py-4'>
                       <input
                         type='text'
-                        value={newsociete}
-                        onChange={(e) => setNewsociete(e.target.value)}
-                        className='border px-2 py-1 w-full'
-                      />
-                    </td>
-                    <td className='px-6 py-4'>
-                      <input
-                        type='text'
                         value={newdesignation}
                         onChange={(e) => setNewdesignation(e.target.value)}
                         className='border px-2 py-1 w-full'
@@ -231,8 +219,6 @@ const update_status_validate = async (validationMar, prestationmars_id) => {
                 ) : (
                   <>
                     
-                    
-                    <td className='px-6 py-4'>{r.societe}</td>
                     <td className='px-6 py-4'>{r.designation}</td>
                     <td className='px-6 py-4'>{r.unite}</td>
                     <td className='px-6 py-4'>{r.prixdevente}</td>
@@ -262,7 +248,6 @@ const update_status_validate = async (validationMar, prestationmars_id) => {
                       <button
                         onClick={() => {
                             setEditPrestationmar(r._id);
-                            setNewsociete(r.societe);
                             setNewdesignation(r.designation);
                             setNewprixdevente(r.prixdevente);
                             setNewunite(r.unite);
