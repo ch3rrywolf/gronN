@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { Trash2 } from "lucide-react";
 import { FiSave } from 'react-icons/fi';
 
-const FolderDetails = () => {
+const FolderDetailsFinal = () => {
   const { folders_id } = useParams();
   const { store } = useContext(storeContext);
 
@@ -111,166 +111,6 @@ const FolderDetails = () => {
 
   // submit entreprise step 2
 
-  const submitS2ep = async (e) => {
-    e.preventDefault();
-    if (!newEntrepriseRetenue.trim()) {
-      toast.error("Le Entreprise Retenue ne peut pas être vide !");
-      return;
-    }
-  
-  
-    try {
-      const s2epi = await axios.post(
-        `${base_url}/api/folders/s2ep/${folders_id}`,
-        { EntrepriseRetenue: newEntrepriseRetenue },
-        { headers: { Authorization: `Bearer ${store.token}` } }
-      );
-      toast.success("S2ep ajouté !");
-      setNews2epi(""); 
-      // setS2eps([...s2eps, response.data.data]);
-    } catch (error) {
-      console.error("Error submitting S2ep:", error);
-      toast.error("Erreur lors de l'ajout du S2ep.");
-    }
-  };
-
-  const submitS3ep = async (e) => {
-    e.preventDefault();
-    // if (!newEntrepriseRetenue.trim()) {
-    //   toast.error("Le Entreprise Retenue ne peut pas être vide !");
-    //   return;
-    // }
-
-    if (!newinspecteur3.trim()) {
-      toast.error("Technicien ne peut pas être vide !");
-      return;
-    }
-
-    if (!newdateVisite.trim()) {
-      toast.error("Date Visite ne peut pas être vide !");
-      return;
-    }
-  
-  
-    try {
-      const s3epi = await axios.post(
-        `${base_url}/api/folders/s3ep/${folders_id}`,
-        { inspecteur3: newinspecteur3, dateVisite: newdateVisite },
-        { headers: { Authorization: `Bearer ${store.token}` } }
-      );
-      toast.success("S3ep ajouté !");
-      setNews3epi(""); 
-      // setS2eps([...s2eps, response.data.data]);
-    } catch (error) {
-      console.error("Error submitting S3ep:", error);
-      toast.error("Erreur lors de l'ajout du S3ep.");
-    }
-  };
-
-
-  const submitS4ep = async (e) => {
-    e.preventDefault();
-
-    if (!newshab.trim()) {
-      toast.error("Technicien ne peut pas être vide !");
-      return;
-    }
-
-    if (!newnbrEtage.trim()) {
-      toast.error("Date Visite ne peut pas être vide !");
-      return;
-    }
-
-    if (!newqusMSI.trim()) {
-      toast.error("qusMSI ne peut pas être vide !");
-      return;
-    }
-
-    if (!newsurfaceIso.trim()) {
-      toast.error("surfaceIso ne peut pas être vide !");
-      return;
-    }
-
-    if (!newclassEnerInit.trim()) {
-      toast.error("surfaceIso ne peut pas être vide !");
-      return;
-    }
-
-    
-
-  
-  
-    try {
-      const s4epi = await axios.post(
-        `${base_url}/api/folders/s4ep/${folders_id}`,
-        { shab: newshab, nbrEtage: newnbrEtage, qusMSI: newqusMSI, surfaceIso: newsurfaceIso, classEnerInit: newclassEnerInit, sautsClassPre: newsautsClassPre, categori: newcategori },
-        { headers: { Authorization: `Bearer ${store.token}` } }
-      );
-      toast.success("S4ep ajouté !");
-      setNews4epi(""); 
-      // setS2eps([...s2eps, response.data.data]);
-    } catch (error) {
-      console.error("Error submitting S4ep:", error);
-      toast.error("Erreur lors de l'ajout du S4ep.");
-    }
-  };
-
-  const submitS5ep = async (e) => {
-    e.preventDefault();
-
-    if (!newrepensConfirm.trim()) {
-      toast.error("Reponse ne peut pas être vide !");
-      return;
-    }
-
-    if (!store.userInfo || !store.userInfo.name) {
-      toast.error("Utilisateur non authentifié !");
-      return;
-    }
-  
-    try {
-      const s5epi = await axios.post(
-        `${base_url}/api/folders/s5ep/${folders_id}`,
-        { name: store.userInfo.name, repensConfirm: newrepensConfirm },
-        { headers: { Authorization: `Bearer ${store.token}` } }
-      );
-      toast.success("S5ep ajouté !");
-      setNews5epi(""); 
-      // setS2eps([...s2eps, response.data.data]);
-    } catch (error) {
-      console.error("Error submitting S5ep:", error);
-      toast.error("Erreur lors de l'ajout du S5ep.");
-    }
-  };
-
-  const submitS6ep = async (e) => {
-    e.preventDefault();
-
-    if (!newrepenVerif.trim()) {
-      toast.error("Reponse ne peut pas être vide !");
-      return;
-    }
-
-    if (!store.userInfo || !store.userInfo.name) {
-      toast.error("Utilisateur non authentifié !");
-      return;
-    }
-  
-    try {
-      const s6epi = await axios.post(
-        `${base_url}/api/folders/s6ep/${folders_id}`,
-        { name: store.userInfo.name, repenVerif: newrepenVerif },
-        { headers: { Authorization: `Bearer ${store.token}` } }
-      );
-      toast.success("S6ep ajouté !");
-      setNews6epi(""); 
-      // setS2eps([...s2eps, response.data.data]);
-    } catch (error) {
-      console.error("Error submitting S6ep:", error);
-      toast.error("Erreur lors de l'ajout du S6ep.");
-    }
-  };
-  
 
   useEffect(() => {
     const fetchBenificaires = async () => {
@@ -436,42 +276,8 @@ const FolderDetails = () => {
     }
   };
 
-  const submitFile = async (e) => {
-    e.preventDefault();
-    if (!file || !title) {
-      toast.error("Veuillez remplir tous les champs.");
-      return;
-    }
+ 
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("file", file);
-    formData.append("folders_id", folders_id);
-
-    try {
-      await axios.post(`${base_url}/api/folders/upload-files`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      toast.success("Fichier importé avec succès !");
-      setTitle("");
-      setFile(null);
-      getFiles();
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      toast.error("Échec de l'importation du fichier.");
-    }
-  };
-
-  const deleteFile = async (folders_id, pdf_id) => {
-    try {
-      await axios.delete(`${base_url}/api/folders/${folders_id}/pdf/${pdf_id}`);
-      toast.success("Fichier supprimé avec succès !");
-      getFiles();
-    } catch (error) {
-      console.error("Error deleting file:", error);
-      toast.error("Échec de la suppression du fichier.");
-    }
-};
 
 
 
@@ -487,9 +293,8 @@ const FolderDetails = () => {
         <div className='bg-white rounded-lg shadow-lg w-full max-w-4xl border border-gray-300'>
     
           <div className='flex justify-between items-center p-4 border-b border-gray-200'>
-            <h2 className='text-xl text-[#1960a9] hover:text-[#9fc327] font-bold'>Confirmation Dossier</h2>
-            <Link className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]' to='/dashboard/folders'>Dossiers</Link>
-            <Link className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]' to={`/dashboard/folders/view/final/${folders_id}`}>Dernière consultation</Link>
+            <h2 className='text-xl text-[#1960a9] hover:text-[#9fc327] font-bold'>Dernière consultation du dossier</h2>
+            <Link className='px-3 py-[6px] bg-[#9fc327] rounded-sm text-white hover:bg-[#1960a9]' to={`/dashboard/folders/view/${folders_id}`}>Retour à la page de confirmation</Link>
           </div>
           
     
@@ -500,25 +305,8 @@ const FolderDetails = () => {
   </summary>
   
   <div className='grid grid-cols-1 gap-x-8 mb-3'>
-    <div className='flex flex-col gap-y-2'>
-      <label className='text-xs font-medium text-gray-600' htmlFor='numFolderAnah'>N° DOSSIER ANAH</label>
-      <input
-        onChange={inputHandler}
-        value={state.numFolderAnah || ""}
-        type='text'
-        placeholder='N° DOSSIER ANAH'
-        name='numFolderAnah'
-        id='numFolderAnah'
-        className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8'
-      />
-    </div>
-    <button
-  onClick={handleUpdate}
-  className="mt-2 p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 flex items-center justify-center"
-  title="mettre à jour N° DOSSIER ANAH"
->
-  <FiSave size={20} />
-</button>
+    
+    <span className="text-xs font-bold"> </span><span>{state.numFolderAnah}</span>
   </div>
 
   
@@ -542,20 +330,131 @@ const FolderDetails = () => {
   Offres MAR
 </summary>           
 <div className='grid grid-cols-1 gap-x-8 mb-3'>
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='offreMar'>Offre MAR</label>
-              <input onChange={inputHandler} value={state.offreMar || "Offre MAR"} type='text' readOnly placeholder='Offre MAR' name='offreMar' id='offreMar' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
-            </div>
+            
+
+            <span className="text-xs font-bold"> </span><span>{state.offreMar}</span>
           </div>
     
     </details>
 
 
+    <form onSubmit={"submitS2ep"} className='space-y-1'>
 
+    <div className="relative">
+  <div className="absolute top-2 right-2 z-50">
+    {state.isValidS2ep ? (
+      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
+    ) : (
+      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
+    )}
+  </div>
+</div>
 
-
+    <details  className='p-4 border rounded-md'>
     
-<form onSubmit={submitS4ep} className='space-y-1'>
+    
+    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
+    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
+    2
+  </span>
+  Entreprise retenue 
+
+</summary>  
+
+<div className='grid grid-cols-1 gap-x-8 mb-3'>
+<div className='flex flex-col gap-y-2'>
+              
+              {s2epsR && s2epsR.length > 0 ? (
+               s2epsR.map((rep, index) => (
+                 <div key={index}>
+                   <span className="text-xs font-bold">entreprise retenue: </span><span>{rep.EntrepriseRetenue}</span>
+                   
+                 </div>
+               ))
+             ) : (
+               <p>Aucun Entreprise Retenue trouvé.</p>
+             )}
+            </div>
+          </div>
+    
+    </details>
+
+    </form>
+<form onSubmit={"submitS3ep"} className='space-y-1'>
+
+<div className="relative">
+  <div className="absolute top-2 right-2 z-50">
+    {state.isValidS3ep ? (
+      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
+    ) : (
+      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
+    )}
+  </div>
+</div>
+    <details  className='p-4 border rounded-md'>
+    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
+    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
+    3
+  </span>
+  Planification de(s) 1ère(s) Visite(s)  
+</summary>  
+<div className='grid grid-cols-3 gap-x-8 mb-3'>
+<div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='numbTotOLA'>l’entreprise retenue sélectionnée</label>
+             {s2epsR && s2epsR.length > 0 ? (
+               s2epsR.map((rep, index) => (
+                 <div key={index}>
+                   <span className="text-xs font-bold">entreprise retenue: </span><span>{rep.EntrepriseRetenue}</span>
+                   <button
+                         onClick={() => deleteS2epsEntreprise(folders_id, rep._id)}
+                         className="mt-2 text-red-500 hover:text-red-700"
+                       >
+                         <Trash2 className="w-5 h-5" />
+                         
+                       </button>
+                 </div>
+               ))
+             ) : (
+               <p>Aucun Entreprise Retenue trouvé.</p>
+             )}
+            </div>
+
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='newinspecteur3'>sélectionner le technicien</label>
+              <select onChange={(e) => setNewinspecteur3(e.target.value)} value={newinspecteur3 || ""} required name='newinspecteur3' id='newinspecteur3' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
+                <option value=''>Sélectionner technicien</option>
+                {inspecteurs.map(b => (
+                  <option key={b._id} value={b.prenomIns}>{b.nomIns} {b.prenomIns}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className='flex flex-col gap-y-2'>
+              <label className='text-xs font-medium text-gray-600' htmlFor='newdateVisite'>date et l’heure de la visite</label>
+              <input onChange={(e) => setNewdateVisite(e.target.value)} value={newdateVisite || ""} type='datetime-local'  name='newdateVisite' id='newdateVisite' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
+            </div>
+          </div>
+
+          <div className='grid grid-cols-1 gap-x-8 mb-3'>
+                <div className='flex flex-col gap-y-2'>
+                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'ENREGISTRER'}</button>
+              </div>
+              </div>
+    
+    </details>
+    </form>
+
+    <div className="relative">
+  <div className="absolute top-2 right-2 z-50">
+    {state.isValidS4ep ? (
+      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
+    ) : (
+      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
+    )}
+  </div>
+</div>
+
+<form onSubmit={"submitS4ep"} className='space-y-1'>
     <details className='p-4 border rounded-md'>
 
 
@@ -563,7 +462,7 @@ const FolderDetails = () => {
         
     <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
-    2
+    4
   </span>
   SIMULATION
 </summary> 
@@ -761,135 +660,6 @@ const FolderDetails = () => {
     </details>
     </form>
 
-
-    <form onSubmit={submitS2ep} className='space-y-1'>
-
-    <div className="relative">
-  <div className="absolute top-2 right-2 z-50">
-    {state.isValidS2ep ? (
-      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
-    ) : (
-      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
-    )}
-  </div>
-</div>
-
-    <details  className='p-4 border rounded-md'>
-    
-    
-    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
-    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
-    3
-  </span>
-  Sélection Des Entreprises 
-
-</summary>  
-
-<div className='grid grid-cols-1 gap-x-8 mb-3'>
-<div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='newEntrepriseRetenue'>Entreprises retenue *</label>
-              <select
-  onChange={(e) => setNewEntrepriseRetenue(e.target.value)}
-  value={newEntrepriseRetenue || ""}
-  required
-  name='newEntrepriseRetenue'
-  id='newEntrepriseRetenue'
-  className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'
->
-  <option value=''>Sélectionner un Entreprises retenue</option>
-  {entretes.map((b) => (
-    <option key={b._id} value={b.raiSocEntRe}>
-      {b.raiSocEntRe}
-    </option>
-  ))}
-</select>
-            </div>
-          </div>
-
-          <div className='grid grid-cols-1 gap-x-8 mb-3'>
-                <div className='flex flex-col gap-y-2'>
-                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'ENREGISTRER'}</button>
-              </div>
-              </div>
-    
-    </details>
-
-    </form>
-<form onSubmit={submitS3ep} className='space-y-1'>
-
-<div className="relative">
-  <div className="absolute top-2 right-2 z-50">
-    {state.isValidS3ep ? (
-      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
-    ) : (
-      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
-    )}
-  </div>
-</div>
-    <details  className='p-4 border rounded-md'>
-    <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4 flex items-center gap-2'>
-    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1960a9] text-white text-sm font-bold">
-    4
-  </span>
-  Planification de(s) 1ère(s) Visite(s)  
-</summary>  
-<div className='grid grid-cols-3 gap-x-8 mb-3'>
-<div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='numbTotOLA'>l’entreprise retenue sélectionnée</label>
-             {s2epsR && s2epsR.length > 0 ? (
-               s2epsR.map((rep, index) => (
-                 <div key={index}>
-                   <span className="text-xs font-bold">entreprise retenue: </span><span>{rep.EntrepriseRetenue}</span>
-                   <button
-                         onClick={() => deleteS2epsEntreprise(folders_id, rep._id)}
-                         className="mt-2 text-red-500 hover:text-red-700"
-                       >
-                         <Trash2 className="w-5 h-5" />
-                         
-                       </button>
-                 </div>
-               ))
-             ) : (
-               <p>Aucun Entreprise Retenue trouvé.</p>
-             )}
-            </div>
-
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='newinspecteur3'>sélectionner le technicien</label>
-              <select onChange={(e) => setNewinspecteur3(e.target.value)} value={newinspecteur3 || ""} required name='newinspecteur3' id='newinspecteur3' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-10'>
-                <option value=''>Sélectionner technicien</option>
-                {inspecteurs.map(b => (
-                  <option key={b._id} value={b.prenomIns}>{b.nomIns} {b.prenomIns}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className='flex flex-col gap-y-2'>
-              <label className='text-xs font-medium text-gray-600' htmlFor='newdateVisite'>date et l’heure de la visite</label>
-              <input onChange={(e) => setNewdateVisite(e.target.value)} value={newdateVisite || ""} type='datetime-local'  name='newdateVisite' id='newdateVisite' className='px-3 py-2 rounded-md outline-0 border border-gray-300 focus:border-green-500 h-8' />
-            </div>
-          </div>
-
-          <div className='grid grid-cols-1 gap-x-8 mb-3'>
-                <div className='flex flex-col gap-y-2'>
-                  <button disabled={loader} className='px-3 py-[6px] bg-[#1960a9] rounded-sm text-white hover:bg-[#9fc327]'>{loader ? 'Loading...':'ENREGISTRER'}</button>
-              </div>
-              </div>
-    
-    </details>
-    </form>
-
-    <div className="relative">
-  <div className="absolute top-2 right-2 z-50">
-    {state.isValidS4ep ? (
-      <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Validé</span>
-    ) : (
-      <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">Non Validé</span>
-    )}
-  </div>
-</div>
-
-
     
 
     <div className="relative">
@@ -914,16 +684,7 @@ const FolderDetails = () => {
 <details className='p-4 border rounded-md'>
   <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>Attachez tous les documents nécessaires lors de la première visite. </summary>
 
- <div>
- <form onSubmit={submitFile} className='space-y-4'>
-    <div className='flex flex-col gap-2'>
-      <label>Titre du fichier</label>
-      <input type="text" value={title} onChange={e => setTitle(e.target.value)} className="border px-2 py-1" />
-      <input type="file" onChange={e => setFile(e.target.files[0])} />
-      <button type="submit" className='px-3 py-2 bg-[#1960a9] text-white rounded'>Uploader</button>
-    </div>
-  </form>
- </div>
+ 
 
   <ul className='mt-4 space-y-2'>
     {filesList.map(file => (
@@ -931,15 +692,12 @@ const FolderDetails = () => {
         <a  href={`${base_url}/files/${file.pdf}`}  target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
           {file.title}
         </a>
-        <button onClick={() => deleteFile(folders_id, file._id)} className='text-red-600 hover:text-red-800'>
-          <Trash2 size={18} />
-        </button>
       </li>
     ))}
   </ul>
 </details>
 
-<form onSubmit={submitS5ep} className='space-y-1'>
+<form onSubmit={"submitS5ep"} className='space-y-1'>
 <details className='p-4 border rounded-md'>
   <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>Confirmation visite. </summary>
 
@@ -975,7 +733,7 @@ const FolderDetails = () => {
 
 
 
-    <form onSubmit={submitS6ep} className='space-y-1'>
+    <form onSubmit={"submitS6ep"} className='space-y-1'>
 
     <div className="relative">
   <div className="absolute top-2 right-2 z-50">
@@ -1041,18 +799,8 @@ const FolderDetails = () => {
   Rapport d’audit   
 </summary> 
 
- <div>
- <form onSubmit={submitFile} className='space-y-4'>
-    <div className='flex flex-col gap-2'>
-      <label>Titre du Rapport d’audit</label>
-      <input type="text" value={title} onChange={e => setTitle(e.target.value)} className="border px-2 py-1" />
-      <input type="file" onChange={e => setFile(e.target.files[0])} />
-      <button type="submit" className='px-3 py-2 bg-[#1960a9] text-white rounded'>import Rapport d’audit</button>
-    </div>
-  </form>
- </div>
 
-  {/* <ul className='mt-4 space-y-2'>
+{/* <ul className='mt-4 space-y-2'>
     {filesListr.map(file => (
       <li key={file._id} className='flex justify-between items-center border p-2 rounded'>
         <a  href={`${base_url}/filesr/${file.pdfrap}`}  target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
@@ -1063,7 +811,7 @@ const FolderDetails = () => {
         </button>
       </li>
     ))}
-  </ul> */}
+  </ul>  */}
 </details>
 
 
@@ -1071,16 +819,7 @@ const FolderDetails = () => {
     <details className='p-4 border rounded-md'>
   <summary className='text-lg font-semibold text-[#1960a9] cursor-pointer mb-4'>Fichiers liés</summary>
 
- <div>
- <form onSubmit={submitFile} className='space-y-4'>
-    <div className='flex flex-col gap-2'>
-      <label>Titre du fichier</label>
-      <input type="text" value={title} onChange={e => setTitle(e.target.value)} className="border px-2 py-1" />
-      <input type="file" onChange={e => setFile(e.target.files[0])} />
-      <button type="submit" className='px-3 py-2 bg-[#1960a9] text-white rounded'>Uploader</button>
-    </div>
-  </form>
- </div>
+
 
   <ul className='mt-4 space-y-2'>
     {filesList.map(file => (
@@ -1088,9 +827,7 @@ const FolderDetails = () => {
         <a  href={`${base_url}/files/${file.pdf}`}  target="_blank" rel="noopener noreferrer" className='text-blue-600 hover:underline'>
           {file.title}
         </a>
-        <button onClick={() => deleteFile(folders_id, file._id)} className='text-red-600 hover:text-red-800'>
-          <Trash2 size={18} />
-        </button>
+        
       </li>
     ))}
   </ul>
@@ -1110,4 +847,4 @@ const FolderDetails = () => {
   );
 };
 
-export default FolderDetails;
+export default FolderDetailsFinal;
